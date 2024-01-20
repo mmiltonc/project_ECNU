@@ -1,5 +1,8 @@
 "use client"
 import {useState} from 'react'
+import Container from './container'
+
+
 const Header = () => {
 
     const [isMenuClicked, setIsMenuClicked] = useState(false)
@@ -15,8 +18,8 @@ const Header = () => {
     return (
         <header>
             <div>
-                <nav className='fixed w-full h-14 flex justify-between'>
-                    <button className='menu-bar w-full flex flex-col items-end justify-center absolute top-5 right-5 z-50' id='menu' onClick={updateMenu}>
+                <nav className='fixed w-full h-14 flex justify-between z-50'>
+                    <button className='menu-bar w-full flex flex-col items-end justify-center absolute top-5 right-14 z-50' id='menu' onClick={updateMenu}>
                         <div className={`icon-menu w-10 h-1 mb-2 transition-all duration-300 ease-out ${isMenuClicked ? '-rotate-45 bg-black relative top-3' : 'bg-white'}`}></div>
                         <div className={`icon-menu w-10 h-1 mb-2 transition-all duration-300 ease-out ${isMenuClicked ? 'rotate-45 bg-black' : 'bg-white'}`}></div>
                         <div className={`icon-menu w-11 h-1 mb-2 bg-white transition-all duration-300 ease-out ${isMenuClicked && 'w-0'}`}></div>

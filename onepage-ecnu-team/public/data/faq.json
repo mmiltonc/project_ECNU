@@ -1,0 +1,22 @@
+[
+    {
+        "idx": 1,
+        "question": "¿Pregunta uno?",
+        "answer": "Respuesta uno"
+    },
+    {
+        "idx": 2,
+        "question": "¿Pregunta dos?",
+        "answer": "Respuesta dos"
+    },
+    {
+        "idx": 3,
+        "question": "¿Pregunta tres?",
+        "answer": "Respuesta tres"
+    },
+    {
+        "idx": 4,
+        "question": "¿Pregunta cuatro?",
+        "answer": "Respuesta cuatro"
+    }
+]
