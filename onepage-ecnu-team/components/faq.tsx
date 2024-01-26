@@ -7,22 +7,22 @@ import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 const Faq = () => {
 
-    const [active, setActive] = useState([false, false, false, false])
+    const [active, setActive] = useState([false, false, false, false, false, false, false, false])
     const isSomeActive = active.some((element) => element)
     const handleClick = () => {
-        isSomeActive ? setActive([false, false, false, false, false]) : setActive([true, true, true, true, true])
+        isSomeActive ? setActive([false, false, false, false, false, false, false ,false]) : setActive([true, true, true, true, true, true, true, true])
     }
 
     return (
         <>
-            <Container className='h-[850px] bg-white'>
+            <Container className='h-auto pb-16 bg-white' id='faq'>
                     <div className='w-full'>
                         <h1 className='flex justify-end pt-14 text-black text-2xl font-bold'>Preguntas Frecuentes</h1>
                     </div>
                     <div className='flex items-center justify-center w-full text-black'>
                         <button onClick={handleClick} 
                         className='flex flex-row items-center justify-center pt-10'>
-                            <span className='text-sm'>{!isSomeActive ? "Cerrar todo" : "Ver todo"}</span>
+                            <span className='text-sm'>{!isSomeActive ? "Cerrar todo" : "Desplegar todo"}</span>
                             <div className='relative w-2 h-2 transition-all ease-in-out duration-500'>
                                 {!isSomeActive ? <ArrowCircleUpIcon/> : <ArrowCircleDownIcon />}
                             </div>

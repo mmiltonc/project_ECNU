@@ -5,7 +5,7 @@ const Changes = () => {
 
     return (
         <>
-            <Container className='w-full h-[750px] '>
+            <Container className='w-full h-[750px]' id='guianutricional'>
                     <div className='flex w-4'>
                         <h1 className='text-white text-4xl font-bold mt-20 mb-10'>Guia Nutricional Basica</h1>
                     </div>

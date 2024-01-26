@@ -5,7 +5,7 @@ const Motivation = () => {
 
     return (
         <>
-            <Container className='flex flex-row mt-10 w-full h-[850px] '>
+            <Container className='flex flex-row mt-10 w-full h-[850px]' id='motivaccion'>
                     <div className='flex flex-col ml-2 mr-10'>
                         <h1 className='w-4 text-center text-white text-4xl font-bold break-all tracking-widest'>Motiv</h1>
                         <h1 className='w-4 text-center text-4xl font-bold break-all text-red-700 tracking-widest'>A</h1>

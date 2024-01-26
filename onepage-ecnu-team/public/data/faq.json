@@ -1,22 +1,37 @@
 [
     {
         "idx": 1,
-        "question": "¿Pregunta uno?",
-        "answer": "Respuesta uno"
+        "question": "¿Cómo recibo mi planificación/reto?",
+        "answer": "Se te enviara un cuestionario con todos los datos necesarios que el entrenador necesita saber para prepararte tu planificación o enviarte el reto. Una vez completo dicho cuestionario y abonado cualquiera de las dos metodologías online, el proceso para enviarte el material es de 48 hs vía mail."
     },
     {
         "idx": 2,
-        "question": "¿Pregunta dos?",
-        "answer": "Respuesta dos"
+        "question": "¿Qué necesito para realizar el reto?",
+        "answer": "El reto son ejercicios con el propio peso corporal que lo podés realizar desde tu casa sin complicaciones.  El reto esta diseñado para compartir en tu Notebook o Smart tv para que puedas realizarlo desde tu hogar, lo único recomendable para acceder a este programa es contar con Wifi."
     },
     {
         "idx": 3,
-        "question": "¿Pregunta tres?",
-        "answer": "Respuesta tres"
+        "question": "¿Necesito materiales para realizar las planificaciones online?",
+        "answer": "Las planificaciones son especificas de calistenia, por lo cual es necesario contar con una barra de dominadas y unas paralelas. Mucha gente no cuenta con esos materiales en su hogar, por lo cual se traslada al parque público más cercano."
     },
     {
         "idx": 4,
-        "question": "¿Pregunta cuatro?",
-        "answer": "Respuesta cuatro"
+        "question": "¿Funciona la metodología online?",
+        "answer": "Las planificaciones y retos se adaptan al nivel de cada persona, cada ejercicio o progresión cumple una función especifica para el progreso del alumno, de esta manera el alumno crece de manera eficiente acompañándolo en el proceso de aprendizaje."
+    },
+    {
+        "idx": 5,
+        "question": "¿Como me corrigen de manera online?",
+        "answer": "Cada alumno le envía al entrenador videos de los ejercicios que le cuesta ejecutar y este mismo le devuelve el video con indicaciones detalladas para la mejoría de su técnica."
+    },
+    {
+        "idx": 6,
+        "question": "¿Si no conozco el ejercicio a ejecutar en mi planificación o reto online, que hago?",
+        "answer": "Los retos cuentan con la rutina totalmente pregrabada por el entrenador, por lo cual cada video tiene su respectiva demostración del ejercicio antes de comenzar a ejecutarse. Las planificaciones online cuentan con un enlace a cada video de los ejercicios correspondientes de ese mes a realizar."
+    },
+    {
+        "idx": 7,
+        "question": "¿Todos los meses hacemos lo mismo?",
+        "answer": "Las rutinas se modifican cada dos semanas, eso hace que vayamos alternando los ejercicios, pero siempre manteniendo el foco en el mismo objetivo."
     }
 ]

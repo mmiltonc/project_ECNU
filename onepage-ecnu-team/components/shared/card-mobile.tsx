@@ -4,23 +4,22 @@ import CheckIcon from '@mui/icons-material/Check';
 import { StaticImageData } from 'next/image';
 
 interface CardProps {
-    title: string;
-    subtitle: string;
-    description: string[];
+    main: boolean;
+    title?: string;
+    subtitle?: string;
+    descripcion: string | string[];
     bPrice: number;
     aPrice: number;
     image?: string | StaticImageData;
 }
 
-const Card: FC<CardProps> = ({ title, subtitle, description, bPrice, aPrice, image }) => {
+const Card: FC<CardProps> = ({ title, subtitle, descripcion, bPrice, aPrice, image }) => {
     return (
         <div className={`w-80 h-[450px] flex flex-col items-center rounded-3xl ${!image ? 'bg-red-700' : 'border-4 border-red-700'}`}>
             <h2 className='mt-20 text-2xl font-bold'>{title}</h2>
             <p className='text-xs'>{subtitle}</p>
             <div className='mt-8 flex flex-col'>
-                {description.map((item) => (
-                    <span><CheckIcon className='text-green-500'/>{item}</span>
-                ))}
+                {descripcion}
             </div>
             <div className='w-4/5 mt-10 flex justify-between'>
                 <div className='flex flex-col justify-center items-center relative left-8'>

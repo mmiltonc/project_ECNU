@@ -33,7 +33,7 @@ const AccordionItem = ({idx, question, answer, turn, setTurn}:Props) => {
                         </div>
                     </div>
                     <div className={`x-4 overflow-hidden text-left  ${turn![idx] ? 'max-h-0' : 'max-h-40'} transition-all duration-200 ease-in-out`}>
-                        <p className='py-1 ml-2 font-normal leading-normal text-justify whitespace-pre-line text-xs'>{answer}</p>
+                        <p className='py-1 ml-2 mr-2 font-normal leading-normal text-justify whitespace-pre-line text-xs'>{answer}</p>
                     </div>
                 </div>
 
