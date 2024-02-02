@@ -4,23 +4,26 @@ import Image from 'next/image'
 
 const Home = () => {
     return (
-        <Container className='h-screen' id='home'>
-                <Image
-                    src='/images/background.jpg'
-                    alt='ECNU fondo'
-                    fill
-                    className='absolute object-cover -z-50'
-                />
+        <section className='h-screen' id='home'>
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className='video-background opacity-40 absolute'
+                    src={require("../public/videos/ecnuvideo.mp4")}
+                >
+                </video>
                 <div className='flex flex-col justify-center items-center 
                     lg:justify-start lg:items-start'
                 >
                     <Image
-                        src='/images/logo.png'
+                        src='/images/logo-white.png'
                         alt='ECNU Logo'
                         fill
                         className='relative top-5 lg:w-72 lg:-left-10 lg:-top-2'
                     />
-                    <p className='lg:text-5xl lg:relative lg:top-44 lg:font-bold lg:ml-20'>EL CAMBIO NACE EN UNO</p>
+                    <p className='lg:text-7xl lg:relative lg:top-44 lg:font-bold lg:ml-20 text-red-700'>EL CAMBIO NACE EN UNO</p>
                 </div>
                 <div className='mt-28 flex flex-col justify-center items-center
                                 lg:justify-start lg:items-start lg:relative lg:mt-52 lg:text-xl lg:ml-20'>
@@ -30,10 +33,10 @@ const Home = () => {
                 </div>
                 <div className='mt-28 mb-24 flex flex-col justify-center items-center'>
                     <button className='w-44 h-14 border-4 border-red-700 text-red-700 rounded-full transition ease-out duration-500'>
-                        <a href='#clasesyretos' className='transition ease-out duration-500'>+ INFO</a>
+                        <a href='#clasesyretos' className='transition ease-in-out duration-350'>+ INFO</a>
                     </button>
                 </div>
-        </Container>
+        </section>
     )
 }
 

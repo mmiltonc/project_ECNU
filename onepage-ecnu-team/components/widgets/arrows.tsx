@@ -6,12 +6,12 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 interface ArrowsProps{
     onClickPrev: () => void;
     onClickNext: () => void;
-    isMobile: boolean;
 }
 
-const Arrows: FC<ArrowsProps> = ({onClickPrev, onClickNext, isMobile}) => {
+const Arrows: FC<ArrowsProps> = ({onClickPrev, onClickNext}) => {
     return (
-        <div className={`relative top-72 ${isMobile ? 'w-80' : 'w-[800px] mx-auto'} z-10 flex justify-between items-center text-red-700`}>
+        <div className={`relative top-72 w-full px-8 z-10 flex justify-between items-center text-red-700
+                         lg:px-0 lg:w-[1000px] lg:top-[350px] lg:mx-auto `}>
             <button onClick={onClickPrev}><ArrowBackIosIcon/></button>
             <button onClick={onClickNext}><ArrowForwardIosIcon/></button>
         </div>

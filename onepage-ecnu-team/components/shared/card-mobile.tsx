@@ -5,34 +5,80 @@ import { StaticImageData } from 'next/image';
 
 interface CardProps {
     main: boolean;
+    type: string;
     title?: string;
     subtitle?: string;
-    descripcion: string | string[];
-    bPrice: number;
-    aPrice: number;
+    descripcion?: string;
+    arrayDescripcion?: string[];
+    price: number;
+    dPrice?: number;
     image?: string | StaticImageData;
+    linkWhapp: string;
 }
 
-const Card: FC<CardProps> = ({ title, subtitle, descripcion, bPrice, aPrice, image }) => {
+const Card: FC<CardProps> = (
+    {main, 
+     type, 
+     title, 
+     subtitle, 
+     descripcion, 
+     arrayDescripcion,
+     price, 
+     dPrice, 
+     image, 
+     linkWhapp 
+    }) => {
+    
+    const onClick = () => {
+        console.log('entra en onClick: ', linkWhapp)
+        const url = window.open(linkWhapp, '_blank')
+        url?.focus()
+    }
+
     return (
-        <div className={`w-80 h-[450px] flex flex-col items-center rounded-3xl ${!image ? 'bg-red-700' : 'border-4 border-red-700'}`}>
-            <h2 className='mt-20 text-2xl font-bold'>{title}</h2>
+        <div className={`w-80 ${type === 'presencial' ? 'h-[500px]' : 'h-[640px]'} flex flex-col items-center rounded-3xl border-2 border-red-700 bg-zinc-700`}>
+            {main && (<span className='relative h-10 px-8 bottom-[15px] -skew-x-12 flex justify-center items-center bg-red-700 font-bold'>RECOMENDADO</span>)}
+            <h2 className='w-full mt-10 text-2xl text-center font-bold'>{title}</h2>
             <p className='text-xs'>{subtitle}</p>
-            <div className='mt-8 flex flex-col'>
+            {type === 'presencial' && (
+                <div className='mt-8 flex flex-col justify-center items-center'>
+                    <div>
+                        <span className='mr-2'>Dias:</span>
+                        <span>Martes, Miércoles y Viernes</span>
+                    </div>
+                    <div>
+                        <span className='mr-2'>Horarios:</span>
+                        <span>18:00 a 19:20 / 19:20 a 20:40</span>
+                    </div>
+                </div>
+            )}
+            {type !== 'presencial' && (
+                <div className='mx-4 mt-10 flex flex-col justify-star items-star'>
+
+                    {arrayDescripcion?.map((item) => {
+                        return(
+                            <div className='mb-4 flex'>
+                                <CheckIcon className='text-green-500'/>
+                                <span className='w-full text-md text-start'>{item}</span>
+                            </div>
+                        )
+                    })}
+                </div>
+            )}
+            <div className='mt-8 flex flex-col font-bold'>
                 {descripcion}
             </div>
-            <div className='w-4/5 mt-10 flex justify-between'>
-                <div className='flex flex-col justify-center items-center relative left-8'>
-                    <p className='text-xs'>ANTES</p>
-                    <span className='text-xl line-through text-black'>{`$${bPrice}`}</span>
-                </div>
-                <div className="absolute left-1/2 -ml-0.5 w-[3px] h-12 bg-black"></div>
+            <div className={`w-4/5 ${type === 'presencial' ? 'mt-10' : 'mt-0'} flex justify-center items-center`}>
                 <div className='flex flex-col items-center'>
-                    <p className='text-xs'>AHORA</p>
-                    <span className='text-3xl font-bold'>{`$${aPrice}`}</span>
+                    <span className='text-3xl font-bold'>{`$${price}`}</span>
                 </div>
             </div>
-            <button className='w-40 h-10 mt-16 rounded-full bg-black'>INSCRIBIRME</ button>
+            <button 
+                className='w-40 h-10 mt-8 rounded-xl bg-black bg-opacity-50' 
+                onClick={onClick}
+            >
+            INSCRIBIRME</ button>
+            <span>cupos disponibles: 3</span>
         </div>
     )
 };

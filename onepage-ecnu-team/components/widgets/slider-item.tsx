@@ -9,25 +9,25 @@ interface SliderItemProps{
     imagen: string | StaticImageData;
     title: string;
     desc: string;
-    isMobile: boolean;
 }
 
-const SliderItem: FC<SliderItemProps> = ({itemActive, id, imagen, title, desc, isMobile}) => {
+const SliderItem: FC<SliderItemProps> = ({itemActive, id, imagen, title, desc}) => {
     return (
-        <li className={`flex flex-col items-center justify-center w-full absolute left-0 mt-8 ${itemActive === id ? "opacity-100" : "opacity-0"}`}>
+        <li className={`flex flex-col items-center justify-center w-full absolute left-0 mt-8 ${itemActive === id ? "opacity-100" : "opacity-0"} transition ease-linear duration-500`}>
             <span className="relative top-12 z-10 text-black font-bold text-3xl bg-white opacity-50 rounded-lg pl-4 pr-4">{title}</span>
             <div className='w-full'>
                 <Image
                 src={imagen}
                 alt='ECNU Logo'
                 fill
-                className={`relative object-cover mx-auto w-3/5 h-[500px] rounded-md shadow-xl`}
+                className={`relative object-cover mx-auto w-full h-[550px] rounded-md shadow-xl
+                            lg:w-3/5 lg:h-[650px]`}
             />
             </div> 
-            <div className={`relative -top-32 rounded-lg w-[320px] h-28 mx-auto bg-black opacity-70
+            <div className={`relative -top-36 rounded-lg w-[320px] h-32 mx-auto bg-black opacity-70
                             lg:w-[400px]`}>
-                <span className='relative top-4 left-4 lg:text-center lg:mx-4'>{desc}</span>
-                <div className='relative w-20 left-52 top-2 flex text-red-700 lg:top-8 lg:left-72'>
+                <span className='w-full h-auto px-4 pt-4 flex justify-start items-start'>{desc}</span>
+                <div className='w-full pr-4 flex justify-end items-end text-red-700 lg:mt-8'>
                     <StarIcon/>
                     <StarIcon/>
                     <StarIcon/>

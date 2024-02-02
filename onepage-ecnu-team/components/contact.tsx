@@ -1,7 +1,7 @@
 "use client"
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Container from './shared/container'
-
+import { getContactApiUrl } from '@/app/api/apiUtils'
 const Contact = () => {
 
     const [formData, setFormData] = useState({
@@ -11,9 +11,30 @@ const Contact = () => {
     })
     const [isLoading, setIsLoading] = useState(false)
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        console.log(e)
+        const contactApiUrl = getContactApiUrl()
+
+        const data = {
+            name: formData.nombre,
+            email: formData.email,
+            message: formData.mensaje
+
+        }
+        const response = await fetch ('/api/sendEmail', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+
+        if (response.ok) {
+            console.log('enviado correcto')
+        }
+        if (!response.ok) {
+            console.log('enviado fallido')
+        }
     }
 
     return (
@@ -46,7 +67,6 @@ const Contact = () => {
                             <input 
                                 required
                                 type='email' 
-                                autoComplete='off' 
                                 name='email' 
                                 className='p-2 rounded-xl text-black' 
                                 minLength={5}

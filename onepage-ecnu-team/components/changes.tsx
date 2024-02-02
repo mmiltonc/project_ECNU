@@ -9,7 +9,7 @@ import FotoLuqui2 from '../public/images/background.jpg'
 const Changes = () => {
     const [itemActive, setItemActive] = useState<number>(1);
     const countItems = 3;
-    const isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+
     const onPrev = () => {
         setItemActive(itemActive - 1)
         if(itemActive === 1) {
@@ -22,8 +22,15 @@ const Changes = () => {
             setItemActive(1)
         }
     }
+
+    const selectedChange = (id: number) => {
+        setItemActive(id)
+    }
+
     return (
-        <section className={`w-full ${isMobile ? 'h-[800px]' : 'h-[1000px]'} bg-white`} id='cambiosvisibles'>
+        <section className={`w-auto h-auto bg-white block
+                            lg:h-[1200px] lg:pt-40`} 
+                id='cambiosvisibles'>
                 <div className='flex w-18 ml-10'>
                     <div>
                         <Image
@@ -33,22 +40,23 @@ const Changes = () => {
                             className='relative w-18 h-36 top-10'
                         /> 
                     </div>
-                    <h1 className={`text-black ${isMobile ? 'text-2xl' : 'text-5xl'} font-bold relative top-24 left-10`}>CAMBIOS VISIBLES</h1>
+                    <h1 className={`text-black text-5xl font-bold relative top-16 left-10
+                                    lg:text-7xl`}
+                    >CAMBIOS VISIBLES.</h1>
                 </div>
-                <div className='w-full'>
+                <div className='w-full h-[650px]
+                                lg:h-[750px]'>
                     <ul className='w-full'>
                         <Slider 
                             itemActive={itemActive}
                             id={1}
-                            isMobile={isMobile}
                             imagen={FotoLuqui}
-                            title="Lucas Pallota"
+                            title="Lucas Pallotta"
                             desc="“Lucas es un gran profesional y profe, siempre pendiente de las consultas. Vamos por mas ! “"
                         />
                         <Slider 
                             itemActive={itemActive}
                             id={2}
-                            isMobile={isMobile}
                             imagen={FotoLuqui2}
                             title="Milton Collard"
                             desc="“Lucas es un gran profesional y profe, siempre pendiente de las consultas. Vamos por mas ! “"
@@ -56,20 +64,46 @@ const Changes = () => {
                         <Slider 
                             itemActive={itemActive}
                             id={3}
-                            isMobile={isMobile}
                             imagen={FotoLuqui}
                             title="Juan Perez"
                             desc="“Lucas es un gran profesional y profe, siempre pendiente de las consultas. Vamos por mas ! “"
                         />
                     </ul>
-                    <Arrows onClickPrev={()=> onPrev()} onClickNext={() => onNext()} isMobile={isMobile}/>
+                    <Arrows onClickPrev={()=> onPrev()} onClickNext={() => onNext()} />
+                </div>
+                <div className='w-full px-4 flex justify-center items-center gap-3'>
+                    <button onClick={() => selectedChange(1)}>
+                        <Image
+                            src={FotoLuqui}
+                            alt='line'
+                            fill
+                            className='relative w-20 h-20 object-cover rounded border-2 border-gray-700'
+                        /> 
+                    </button>
+                    <button onClick={() => selectedChange(2)}>
+                        <Image
+                            src={FotoLuqui2}
+                            alt='line'
+                            fill
+                            className='relative w-20 h-20 object-cover rounded border-2 border-gray-700'
+                        /> 
+                    </button>
+                    <button onClick={() => selectedChange(3)}>
+                        <Image
+                            src={FotoLuqui}
+                            alt='line'
+                            fill
+                            className='relative w-20 h-20 object-cover rounded border-2 border-gray-700'
+                        />                      
+                    </button>
                 </div>
                 <div>
                     <Image
                         src='/images/arrows_down.png'
                         alt='line'
                         fill
-                        className='relative w-14 h-36 top-[557px] left-56 rotate-[270deg]'
+                        className='relative w-14 h-36 top-[70px] left-56 rotate-[270deg]
+                                   lg:-top-2'
                     /> 
                 </div>
         </section>
