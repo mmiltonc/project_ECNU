@@ -13,7 +13,9 @@ interface CardProps {
     price: number;
     dPrice?: number;
     image?: string | StaticImageData;
-    linkWhapp: string;
+    lugar: string;
+    profesor: string;
+    cantDias: number;
 }
 
 const Card: FC<CardProps> = (
@@ -26,14 +28,29 @@ const Card: FC<CardProps> = (
      price, 
      dPrice, 
      image, 
-     linkWhapp 
+     lugar,
+     profesor,
+     cantDias,
     }) => {
     
+    const generateLink = (numero:string, cantDias:number, lugar:string): string => {
+
+        const linkWhatsApp: string = lugar !== '' ? (
+            `https://wa.me/${numero}?text=Hola ${profesor}! Me gustaría consultar sobre las clases en ${lugar} para ${cantDias} veces por semana. Saludos`
+        ) : (
+            `https://wa.me/${numero}?text=Hola ${profesor}! Me gustaría consultar sobre clases para ${cantDias} veces por semana. Saludos`
+        )
+
+        return linkWhatsApp
+    }
+    
     const onClick = () => {
-        console.log('entra en onClick: ', linkWhapp)
-        const url = window.open(linkWhapp, '_blank')
+        const nroCelular:string = profesor === 'Lucas Pallota' ? '1167837231' : '1133009851'
+        const link: string = generateLink(nroCelular, cantDias, lugar)
+        const url = window.open(link, '_blank')
         url?.focus()
     }
+    
 
     return (
         <div className={`w-80 ${type === 'presencial' ? 'h-[500px]' : 'h-[640px]'} flex flex-col items-center rounded-3xl border-2 border-red-700 bg-zinc-700`}>

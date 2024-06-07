@@ -11,7 +11,6 @@ import Motivation from '@/components/motivation'
 import Faq from '@/components/faq'
 import Contact from '../components/contact'
 import { Jost } from 'next/font/google'
-import { useState } from 'react'
 
 
 const jost = Jost({ subsets: ['latin'] })

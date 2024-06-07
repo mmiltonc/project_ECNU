@@ -1,7 +1,6 @@
 "use client"
 import React, { useState } from 'react'
 import Container from './shared/container'
-import { getContactApiUrl } from '@/app/api/apiUtils'
 const Contact = () => {
 
     const [formData, setFormData] = useState({
@@ -13,27 +12,34 @@ const Contact = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        const contactApiUrl = getContactApiUrl()
 
         const data = {
             name: formData.nombre,
             email: formData.email,
             message: formData.mensaje
-
         }
-        const response = await fetch ('/api/sendEmail', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
 
-        if (response.ok) {
-            console.log('enviado correcto')
-        }
-        if (!response.ok) {
-            console.log('enviado fallido')
+        try {
+            const response = await fetch('/api/emails', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+    
+            if (response.status === 200) {
+                console.log('enviado correctamente');
+                setFormData({
+                    nombre: '',
+                    email: '',
+                    mensaje: ''
+                })
+            } else {
+                console.log('enviado fallido');
+            }
+        } catch (error) {
+            console.error('Error al enviar:', error);
         }
     }
 

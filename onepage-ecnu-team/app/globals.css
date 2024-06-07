@@ -73,3 +73,9 @@ body {
       transform: rotate(45deg) translate(20px, 20px);
   }
 }
+
+#demo-simple-select-helper {
+  background-color: white;
+  color: black;
+  border: none;
+}
