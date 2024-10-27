@@ -13,9 +13,7 @@ interface CardProps {
     price: number;
     dPrice?: number;
     image?: string | StaticImageData;
-    lugar: string;
-    profesor: string;
-    cantDias: number;
+    cantDias?: number;
 }
 
 const Card: FC<CardProps> = (
@@ -25,28 +23,19 @@ const Card: FC<CardProps> = (
      subtitle, 
      descripcion, 
      arrayDescripcion,
-     price, 
-     dPrice, 
-     image, 
-     lugar,
-     profesor,
+     price,
      cantDias,
     }) => {
     
-    const generateLink = (numero:string, cantDias:number, lugar:string): string => {
+    const generateLink = (numero:string, cantDias?:number): string => {
 
-        const linkWhatsApp: string = lugar !== '' ? (
-            `https://wa.me/${numero}?text=Hola ${profesor}! Me gustaría consultar sobre las clases en ${lugar} para ${cantDias} veces por semana. Saludos`
-        ) : (
-            `https://wa.me/${numero}?text=Hola ${profesor}! Me gustaría consultar sobre clases para ${cantDias} veces por semana. Saludos`
-        )
-
+        const linkWhatsApp: string = `https://wa.me/${numero}?text=Hola Lucas! Me gustaría consultar sobre las clases en parque Saavedra para ${cantDias} veces por semana. Saludos`
+       
         return linkWhatsApp
     }
     
     const onClick = () => {
-        const nroCelular:string = profesor === 'Lucas Pallota' ? '1167837231' : '1133009851'
-        const link: string = generateLink(nroCelular, cantDias, lugar)
+        const link: string = generateLink('1167837231', cantDias)
         const url = window.open(link, '_blank')
         url?.focus()
     }

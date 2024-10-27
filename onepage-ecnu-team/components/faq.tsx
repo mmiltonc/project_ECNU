@@ -20,7 +20,7 @@ const Faq = () => {
                     id='faq'>
                 <div className='lg:w-2/6 lg:min-h-[700px]'>
                     <div className='w-full lg:flex lg:justify-end'>
-                        <h1 className='flex justify-end pt-14 text-black text-3xl font-bold
+                        <h1 className='flex justify-center pt-14 text-black text-3xl font-bold
                                        lg:hidden'>
                         Preguntas Frecuentes</h1>
                     </div>

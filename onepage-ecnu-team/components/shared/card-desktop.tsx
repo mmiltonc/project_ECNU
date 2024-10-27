@@ -13,9 +13,7 @@ interface CardProps {
     price: number;
     dPrice?: number;
     image?: string | StaticImageData;
-    lugar: string;
-    profesor: string;
-    cantDias: number;
+    cantDias?: number;
 }
 
 const CardDesktop: FC<CardProps> = (
@@ -26,32 +24,20 @@ const CardDesktop: FC<CardProps> = (
      descripcion, 
      arrayDescripcion, 
      price, 
-     dPrice,
      image, 
-     lugar,
-     profesor,
      cantDias,
     }) => {
 
-    const generateLink = (numero:string, cantDias:number, lugar:string): string => {
-
-        const linkWhatsApp: string = lugar !== '' ? (
-            `https://wa.me/${numero}?text=Hola ${profesor}! Me gustaría consultar sobre las clases en ${lugar} para ${cantDias} veces por semana. Saludos`
-        ) : (
-            `https://wa.me/${numero}?text=Hola ${profesor}! Me gustaría consultar sobre clases para ${cantDias} veces por semana. Saludos`
-        )
-
+    const generateLink = (numero:string, cantDias?:number): string => {
+        const linkWhatsApp: string = `https://wa.me/${numero}?text=Hola Lucas! Me gustaría consultar sobre las clases en parque Saavedra para ${cantDias} veces por semana. Saludos`
         return linkWhatsApp
     }
     
     const onClick = () => {
-        const nroCelular:string = profesor === 'Lucas Pallota' ? '1167837231' : '1133009851'
-        const link: string = generateLink(nroCelular, cantDias, lugar)
+        const link: string = generateLink('1167837231', cantDias)
         const url = window.open(link, '_blank')
         url?.focus()
     }
-
-
 
     return (
         <div className={`${type === 'presencial' ? 'w-[380px]' : 'w-[400px]'} h-[500px] flex flex-col items-center rounded-3xl border-2 border-red-700 ${!image && 'bg-white bg-opacity-20'}`}>

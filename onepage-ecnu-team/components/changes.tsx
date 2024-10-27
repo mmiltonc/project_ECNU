@@ -40,8 +40,7 @@ const Changes = () => {
                             className='relative w-18 h-36 top-10'
                         /> 
                     </div>
-                    <h1 className={`text-black text-5xl font-bold relative top-16 left-10
-                                    lg:text-7xl`}
+                    <h1 className={`text-black text-5xl font-bold  mt-16 ml-14 lg:text-7xl`}
                     >CAMBIOS VISIBLES.</h1>
                 </div>
                 <div className='w-full h-[650px]

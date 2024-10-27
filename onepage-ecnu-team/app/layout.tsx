@@ -8,6 +8,7 @@ import Changes from '@/components/changes'
 import Nutrition from '@/components/nutrition'
 import About from '@/components/about'
 import Motivation from '@/components/motivation'
+import Products from '@/components/products'
 import Faq from '@/components/faq'
 import Contact from '../components/contact'
 import { Jost } from 'next/font/google'
@@ -36,6 +37,7 @@ export default function RootLayout({
         <Nutrition/>
         <About/>
         <Motivation/>
+        <Products/>
         <Faq/>
         <Contact/>
         {children}
