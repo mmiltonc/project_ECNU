@@ -1,6 +1,7 @@
 "use client"
 import Image from 'next/image'
-import { Tulpen_One, Nothing_You_Could_Do, Bebas_Neue, Domine } from 'next/font/google'
+import { Tulpen_One, Nothing_You_Could_Do, Bebas_Neue, Montserrat } from 'next/font/google'
+import { sendGTMEvent } from '@next/third-parties/google'
 
 const tulpenOne = Tulpen_One({
     subsets: ['latin'],
@@ -17,40 +18,44 @@ const bebasNeue = Bebas_Neue({
     weight: '400',
     display: 'swap',
 })
+const montserrat = Montserrat({
+    subsets: ['latin'], // Define los subconjuntos necesarios
+    weight: ['400', '700'], // Opcional: especifica los pesos que usarás (normal, bold, etc.)
+    variable: '--font-montserrat', // Variable CSS opcional para usar en tu CSS global
+  });
 
 const Home = () => {
     return (
         <section className='h-screen' id='home'>
-                <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className='video-background opacity-40 absolute'
-                    src={require("../public/videos/ecnuvideo.mp4")}
+            <Image
+                src='/images/lucas_banner.JPEG'
+                alt='ECNU Logo'
+                fill
+                className='video-background opacity-60 absolute'
+            />
+            <div className='flex flex-col justify-center items-center
+                lg:justify-start lg:items-start'
+            >
+                <Image
+                    src='/images/new-logo.png'
+                    alt='ECNU Logo'
+                    fill
+                    className='relative top-16 lg:w-52 lg:left-4 lg:-top-2'
+                />
+                <p className='mt-8 text-2xl lg:text-[80px] lg:relative lg:top-44 lg:font-bold lg:ml-20 lg:mt-0 text-red-700' style={{ fontFamily: montserrat.style.fontFamily}}>EL CAMBIO NACE EN UNO.</p>
+            </div>
+            <div className='mt-28 flex flex-col justify-center items-center
+                            lg:justify-start lg:items-start lg:relative lg:mt-52 lg:text-xl lg:ml-20'>
+                <span className='w-8/12 text-center text-2xl lg:text-left lg:text-4xl' style={{ fontFamily: montserrat.style.fontFamily}}>Comenza a transformar en <span className='font-bold'>90</span> días tu <span className='font-bold'>cuerpo</span> y tu <span className='font-bold'>mente</span> con mi sistema de entrenamiento online.</span>
+            </div>
+            <div className='mt-28 mb-24 lg:mt-28 flex flex-col justify-center items-center'>
+                <button 
+                    className='w-64 h-14 border-2 border-red-700 text-red-700 rounded-full hover:bg-red-700 hover:text-white'
+                    onClick={() => sendGTMEvent({ event: 'buttonClicked', value: 'xyz' })}
                 >
-                </video>
-                <div className='flex flex-col justify-center items-center 
-                    lg:justify-start lg:items-start'
-                >
-                    <Image
-                        src='/images/logo-white.png'
-                        alt='ECNU Logo'
-                        fill
-                        className='relative top-16 lg:w-72 lg:-left-10 lg:-top-2'
-                    />
-                    <p className='mt-8 lg:text-[150px] lg:relative lg:top-44 lg:font-bold lg:ml-20 lg:mt-0 text-red-700' style={{ fontFamily: bebasNeue.style.fontFamily}}>EL CAMBIO NACE EN UNO.</p>
-                </div>
-                <div className='mt-28 flex flex-col justify-center items-center
-                                lg:justify-start lg:items-start lg:relative lg:mt-52 lg:text-xl lg:ml-20'>
-                    <span className='w-60 mb-7 text-center text-2xl lg:text-left lg:w-full lg:text-4xl' style={{ fontFamily: nothingYouCouldDo.style.fontFamily}}>todo cambio conlleva una gran</span>
-                    <span className='w-8/12 mb-5 text-center font-bold text-3xl lg:text-left lg:text-5xl' style={{ fontFamily: tulpenOne.style.fontFamily}}>RESPONSABILIDAD, ACTITUD Y DISCIPLINA</span>
-                </div>
-                <div className='mt-28 mb-24 lg:mt-16 flex flex-col justify-center items-center'>
-                    <button className='w-44 h-14 border-2 border-red-700 text-red-700 rounded-full transition ease-out duration-500'>
-                        <a href='#clasesyretos' className='transition ease-in-out duration-350 lg:text-2xl' style={{ fontFamily: bebasNeue.style.fontFamily}}>UNIRTE AL CAMBIO</a>
-                    </button>
-                </div>
+                    <a href='#clasesyretos' className='transition ease-in-out duration-350 text-2xl lg:text-2xl' style={{ fontFamily: bebasNeue.style.fontFamily}}>Quiero mi transformación</a>
+                </button>
+            </div>
         </section>
     )
 }

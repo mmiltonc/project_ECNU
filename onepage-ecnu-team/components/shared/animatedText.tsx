@@ -1,6 +1,6 @@
 "use client"
 import {motion, useAnimation, useInView} from "framer-motion"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 type AnimatedTextProps = {
     text: string | string[];
@@ -34,23 +34,14 @@ const AnimatedText = ({
     const isInView = useInView(ref, {amount: 0.5});
     const textArray = Array.isArray(text) ? text : [text];
     const controls = useAnimation()
+    const [hasAnimated, setHasAnimated] = useState(false);
 
-    useEffect(() => {
-        let timeout: NodeJS.Timeout;
-        const show = () => {
+ useEffect(() => {
+        if (isInView && !hasAnimated) {
             controls.start("visible");
-            timeout = setTimeout(async() => {
-                await controls.start("hidden");
-                controls.start("visible");
-            }, 500);
-        };
-
-        if (isInView) {
-            controls.start("visible");
-        } else {
-            controls.start("hidden");
+            setHasAnimated(true); // Marca que la animación se ha ejecutado
         }
-    }, [isInView])
+    }, [isInView, hasAnimated, controls]);
 
     return (
       <Wrapper className={className}>
@@ -65,10 +56,10 @@ const AnimatedText = ({
             }}
             aria-hidden
         >
-            {textArray.map((line) => (
-                <span className="block">
-                    {line.split(" ").map((word) => (
-                        <span className="inline-block">
+            {textArray.map((line, index) => (
+                <span className="block" key={index}>
+                    {line.split(" ").map((word, i) => (
+                        <span className="inline-block" key={i}>
                             {word.split("").map((char, index) => (
                                 <motion.span 
                                     className="inline-block"

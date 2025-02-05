@@ -4,11 +4,13 @@ import Container from './shared/container'
 import Image from 'next/image'
 import Slider from './widgets/slider-item'
 import Arrows from './widgets/arrows'
-import FotoLuqui from '../public/images/bg_reto_grasa.jpg'
-import FotoLuqui2 from '../public/images/background.jpg'
+import adZequi from '../public/images/ad_zequi.jpg'
+import adLean from '../public/images/ad_lean.jpg'
+import adJuan from '../public/images/ad_juano.jpg'
+import adGerman from '../public/images/ad_german.jpg'
 const Changes = () => {
     const [itemActive, setItemActive] = useState<number>(1);
-    const countItems = 3;
+    const countItems = 4;
 
     const onPrev = () => {
         setItemActive(itemActive - 1)
@@ -49,22 +51,29 @@ const Changes = () => {
                         <Slider 
                             itemActive={itemActive}
                             id={1}
-                            imagen={FotoLuqui}
-                            title="Lucas Pallotta"
+                            imagen={adZequi}
+                            title="Ezequiel Blandini"
                             desc="“Lucas es un gran profesional y profe, siempre pendiente de las consultas. Vamos por mas ! “"
                         />
                         <Slider 
                             itemActive={itemActive}
                             id={2}
-                            imagen={FotoLuqui2}
-                            title="Milton Collard"
+                            imagen={adLean}
+                            title="Leandro Montemurro"
                             desc="“Lucas es un gran profesional y profe, siempre pendiente de las consultas. Vamos por mas ! “"
                         />
                         <Slider 
                             itemActive={itemActive}
                             id={3}
-                            imagen={FotoLuqui}
-                            title="Juan Perez"
+                            imagen={adJuan}
+                            title="Juan Olivera"
+                            desc="“Lucas es un gran profesional y profe, siempre pendiente de las consultas. Vamos por mas ! “"
+                        />
+                        <Slider 
+                            itemActive={itemActive}
+                            id={4}
+                            imagen={adGerman}
+                            title="Esteban Ferrari"
                             desc="“Lucas es un gran profesional y profe, siempre pendiente de las consultas. Vamos por mas ! “"
                         />
                     </ul>
@@ -73,7 +82,7 @@ const Changes = () => {
                 <div className='w-full px-4 flex justify-center items-center gap-3'>
                     <button onClick={() => selectedChange(1)}>
                         <Image
-                            src={FotoLuqui}
+                            src={adZequi}
                             alt='line'
                             fill
                             className='relative w-20 h-20 object-cover rounded border-2 border-gray-700'
@@ -81,7 +90,7 @@ const Changes = () => {
                     </button>
                     <button onClick={() => selectedChange(2)}>
                         <Image
-                            src={FotoLuqui2}
+                            src={adLean}
                             alt='line'
                             fill
                             className='relative w-20 h-20 object-cover rounded border-2 border-gray-700'
@@ -89,7 +98,15 @@ const Changes = () => {
                     </button>
                     <button onClick={() => selectedChange(3)}>
                         <Image
-                            src={FotoLuqui}
+                            src={adJuan}
+                            alt='line'
+                            fill
+                            className='relative w-20 h-20 object-cover rounded border-2 border-gray-700'
+                        />                      
+                    </button>
+                    <button onClick={() => selectedChange(4)}>
+                        <Image
+                            src={adGerman}
                             alt='line'
                             fill
                             className='relative w-20 h-20 object-cover rounded border-2 border-gray-700'
