@@ -37,7 +37,7 @@ const Home = () => {
                 lg:justify-start lg:items-start'
             >
                 <Image
-                    src='/images/new-logo.png'
+                    src='/images/new-logo.PNG'
                     alt='ECNU Logo'
                     fill
                     className='relative top-16 lg:w-52 lg:left-4 lg:-top-2'

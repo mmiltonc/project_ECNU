@@ -1,4 +1,5 @@
 import './globals.css'
+import { ModalProvider, useModal } from "./context/modalContext";
 import type { Metadata } from 'next'
 import Header from '@/components/shared/header'
 import Home from '@/components/home'
@@ -15,10 +16,10 @@ import { GoogleTagManager } from '@next/third-parties/google'
 import Script from 'next/script';
 const jost = Jost({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: 'ECNU Team',
-  description: 'El cambio nace en uno',
-}
+// export const metadata: Metadata = {
+//   title: 'ECNU Team',
+//   description: 'El cambio nace en uno',
+// }
 
 const PIXEL_ID = 'TU_PIXEL_ID'; // Reemplaza con tu Pixel ID
 
@@ -48,14 +49,6 @@ export default function RootLayout({
             `,
           }}
         />
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: 'none' }}
-            src={`https://www.facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1`}
-        />
-        </noscript>
         {/* <!-- Google Tag Manager --> */}
           <Script
             id="gtm-script"
@@ -81,18 +74,20 @@ export default function RootLayout({
       </head>
       <GoogleTagManager gtmId="GTM-KS5H2HMS" />
       <body className={jost.className}>
-        <Header/>
-        <Home/>
-        <Introduction/>
-        <Programs/>
-        <Products/>
-        <Changes/>
-        <About/>
-        <Motivation/>
-        <Faq/>
-        <Contact/>
-        {children}
-        </body>
+        <ModalProvider>
+          <Header/>
+          <Home/>
+          <Introduction/>
+          <Programs/>
+          <Products/>
+          <Changes/>
+          <About/>
+          <Motivation/>
+          <Faq/>
+          <Contact/>
+          {children}
+        </ModalProvider>
+      </body>
     </html>
   )
 }

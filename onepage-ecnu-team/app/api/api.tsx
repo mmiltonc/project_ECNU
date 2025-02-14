@@ -18,7 +18,7 @@ const api = {
           items: [
             {
               id: "message",
-              unit_price: 100,
+              unit_price: 10,
               quantity: 1,
               title: "Mensaje de producto",
             },
@@ -27,11 +27,12 @@ const api = {
             datos,
           },
           "back_urls": {
-            "success": "http://localhost:3000/#clasesyretos",
-            "pending": "http://localhost:3000/#clasesyretos",
-            "failure": "http://localhost:3000/#clasesyretos"
+            "success": "http://localhost:3000/?modal=1#clasesyretos",
+            "pending": "http://localhost:3000/?modal=1#clasesyretos",
+            "failure": "http://localhost:3000/?modal=1#clasesyretos"
           },
           "auto_return": "approved",
+          "binary_mode": true
         },
       });
 
