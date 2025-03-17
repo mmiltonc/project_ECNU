@@ -19,7 +19,7 @@ const bebasNeue = Bebas_Neue({
 
 const Introduction = () => {
     return (
-        <section className='w-auto h-[500px] bg-red-800 mx-auto
+        <section className='w-auto h-[500px] bg-radial-red-black mx-auto mt-14
                          lg:h-[800px] lg:flex lg:flex-col lg:justify-center lg:items-center'>
                 <div className='pt-2 mb-10 text-4xl font-bold lg:ml-8
                                 lg:flex lg:justify-center lg:items-center lg:text-6xl'>

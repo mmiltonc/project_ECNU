@@ -46,11 +46,11 @@ const Home = () => {
             </div>
             <div className='mt-28 flex flex-col justify-center items-center
                             lg:justify-start lg:items-start lg:relative lg:mt-52 lg:text-xl lg:ml-20'>
-                <span className='w-8/12 text-center text-2xl lg:text-left lg:text-4xl' style={{ fontFamily: montserrat.style.fontFamily}}>Comenza a transformar en <span className='font-bold'>90</span> días tu <span className='font-bold'>cuerpo</span> y tu <span className='font-bold'>mente</span> con mi sistema de entrenamiento online.</span>
+                <span className='w-8/12 text-center text-2xl lg:text-left lg:text-4xl' style={{ fontFamily: montserrat.style.fontFamily}}>Comenzá a transformar en <span className='font-bold'>90</span> días tu <span className='font-bold'>cuerpo</span> y tu <span className='font-bold'>mente</span> con mi sistema de entrenamiento online.</span>
             </div>
             <div className='mt-28 mb-24 lg:mt-28 flex flex-col justify-center items-center'>
                 <button 
-                    className='w-64 h-14 border-2 border-red-700 text-red-700 rounded-full hover:bg-red-700 hover:text-white'
+                    className='w-[300px] h-16 border-2 border-red-700 text-red-700 rounded-full bg-gradient-to-r from-black to-gray-800 transition-transform duration-300 hover:scale-110'
                     onClick={() => sendGTMEvent({ event: 'buttonClicked', value: 'xyz' })}
                 >
                     <a href='#clasesyretos' className='transition ease-in-out duration-350 text-2xl lg:text-2xl' style={{ fontFamily: bebasNeue.style.fontFamily}}>Quiero mi transformación</a>

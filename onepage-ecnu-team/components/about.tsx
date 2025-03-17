@@ -47,7 +47,7 @@ const About = () => {
                                     src='/images/antes_despues_luqui.jpeg'
                                     alt='line'
                                     fill
-                                    className='relative w-[750px] ml-8 h-[600px]'
+                                    className='relative ml-14 mt-10 h-[550px] rounded-lg'
                                 /> 
                             </div>
                             <div className='w-full flex flex-col justify-center items-center text-2xl'>

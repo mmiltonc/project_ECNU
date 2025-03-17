@@ -3,6 +3,8 @@ import { useEffect, useState, useRef } from 'react'
 import { useModal } from "../app/context/modalContext";
 import CardMobile from './shared/card-mobile'
 import CardDesktop from './shared/card-desktop'
+import { Steps } from './shared/steps';
+import {GymVirtual} from './shared/gymVirtual';
 import DescripcionRetoGrasa from '../public/data/reto-grasa.json'
 import AnimatedText from './shared/animatedText'
 import Box from '@mui/material/Box';
@@ -13,8 +15,6 @@ import mercadopagoLogo from '../public/images/mercado-pago-logo.png'
 import Image from 'next/image';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import InfoIcon from '@mui/icons-material/Info';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import LensIcon from '@mui/icons-material/Lens';
 import CampaignIcon from '@mui/icons-material/Campaign';
 export const dynamic = "force-static";
 
@@ -75,8 +75,13 @@ const Programs = () => {
     const [formData, setFormData] = useState({
         nombre: "",
         pais: "",
+        ciudad: "",
+        email: "",
         codigoArea: "",
         celular: "",
+        objetivos: "",
+        arPrice: 162270,
+        usdPrice: 132
     });
 
     const [modalPage, setModalPage] = useState(1);
@@ -124,8 +129,13 @@ const Programs = () => {
         setFormData({
             nombre: "",
             pais: "",
+            ciudad: "",
+            email: "",
             codigoArea: "",
             celular: "",
+            objetivos: "",
+            arPrice: 162270,
+            usdPrice: 132
         }); // Reinicia los valores de `formData`
         cerrarModal();
         setModalPage(1)
@@ -133,11 +143,14 @@ const Programs = () => {
 
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({
-          ...prev,
-          [name]: value,
-        }));
-    
+
+        if (name === "email") {
+            setFormData((prev) => ({
+                ...prev,
+                [name]: `${value}@gmail.com`,
+            }));
+        }
+
         if (name === "pais") {
           const paisSeleccionado = paisesHispanos.find((p) => p.nombre === value);
           if (paisSeleccionado) {
@@ -146,8 +159,13 @@ const Programs = () => {
               codigoArea: paisSeleccionado.codigo,
             }));
           }
-        }
-        console.log('formData: ', formData)
+        }        
+
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+
         if (formData.nombre && formData.pais) {
           setCamposVisibles(true);
         }
@@ -178,15 +196,17 @@ const Programs = () => {
                         <div className='flex flex-col justify-center items-center mt-14'>
                             <p className='w-[100%] text-center text-5xl'>GIMNASIO VIRTUAL</p>
                             <p  className='w-[100%] text-center text-3xl'>ROMPIENDO BARRERAS</p>
+                            <p  className='w-[100%] text-center font-bold text-3xl text-red-800'>ETAPA UNO</p>
                         </div>
-                        <div className='flex justify-center items-center mt-20 mb-14'>
+                        <div className='flex justify-center items-center mt-20 mb-14 '>
                             <p className='w-[55%] text-center text-2xl'>
-                                Un gimnasio virtual con tu propio peso creado para convertirte en esa persona que queres lograr 
-                                física y mentalmente! Sobrepasarás niveles con una dificultad en ascenso, incursionandote en la actividad física, 
-                                entrando de una manera y al superar cada desafío te convertirás en ese hombre/mujer que deseas ser.
+                            Un gimnasio virtual con tu propio peso corporal, creado para convertirte en esa persona que queres lograr física y mentalmente, 
+                            3 desafíos (Reto perder grasa, Pectorales de hierro, Abdomen de acero) sobrepasarás niveles en ascenso incursionandote en la actividad
+                            física, con 45 minutos por día conseguirás un cuerpo funcional y atlético.
                             </p>
                         </div>
-                        <div className='w-full flex flex-wrap justify-center gap-8 lg:pt-36'>
+                        <GymVirtual />
+                        <div className='w-full flex flex-wrap justify-center gap-8 lg:mt-30 bg-radial-red-black'>
                                 {arrayGymVirtual.map((item, index) => {
                                     return (
                                         <CardDesktop
@@ -205,6 +225,7 @@ const Programs = () => {
                         <div className='flex flex-col justify-center items-center mt-40'>
                             <p className='w-[100%] text-center text-5xl'>PLANIFICACIONES</p>
                             <p  className='w-[100%] text-center text-3xl'>PERSONALIZA TUS ENTRENAMIENTOS ONLINE</p>
+                            <p  className='w-[100%] text-center font-bold text-3xl text-red-800'>ETAPA DOS</p>
                         </div>
                         <div className='flex justify-center items-center mt-20 mb-32'>
                             <p className='w-[55%] text-center text-2xl'>
@@ -215,7 +236,7 @@ const Programs = () => {
                                     mensual para que sean desafiantes y logremos optimizar los mejores resultados posibles.
                             </p>
                         </div>
-                        <div className='w-full flex flex-wrap justify-center gap-8 lg:mt-20'>
+                        <div className='w-full flex flex-wrap justify-center gap-8 lg:mt-20 bg-radial-red-black'>
                             {isMobile ? (
                                 <>
                                     <CardMobile 
@@ -284,8 +305,9 @@ const Programs = () => {
                                         </video>
                                     )}
                                 </div>
+                                <Steps step={stepForm} modal={modalPage}/>
                                 <div className="max-w-4xl mx-auto bg-white  p-6 rounded-lg">
-                                    <form className="space-y-4 text-gray-800" action={add}>
+                                    <form className="space-y-4 text-gray-800" action={() => add(formData)}>
                                         {stepForm === 1 && (
                                             <>
                                                 <div className='w-[95%] mx-auto relative z-40 text-gray-800'>
@@ -312,14 +334,14 @@ const Programs = () => {
                                                         name="pais"
                                                         value={formData.pais}
                                                         onChange={handleInputChange}
-                                                        className="mt-1 block w-full px-3 py-2 border border-gray-300 text-gray-400 rounded-md shadow-sm focus:outline-none"
+                                                        className="mt-1 block w-full px-3 py-2 border border-gray-300 text-black rounded-md shadow-sm focus:outline-none"
                                                         required
                                                         >
                                                         <option value="" disabled>
                                                             Selecciona tu país
                                                         </option>
                                                         {paisesHispanos.map((pais) => (
-                                                            <option key={pais.codigo} value={pais.nombre} className='text-gray-600'>
+                                                            <option key={pais.codigo} value={pais.nombre} className='text-black'>
                                                             {pais.bandera} {pais.nombre}
                                                             </option>
                                                         ))}
@@ -336,6 +358,8 @@ const Programs = () => {
                                                             <input
                                                             type="text"
                                                             name="ciudad"
+                                                            value={formData.ciudad}
+                                                            onChange={handleInputChange}
                                                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                                             placeholder="Ingresá tu ciudad"
                                                             required
@@ -345,8 +369,9 @@ const Programs = () => {
                                                             <label className="block text-sm font-medium text-gray-700">Correo Electrónico</label>
                                                             <div className="mt-1 flex items-center">
                                                                 <input
-                                                                type="email"
-                                                                name="correo"
+                                                                name="email"
+                                                                value={formData.email}
+                                                                onChange={handleInputChange}
                                                                 className="block w-full px-3 py-2 border border-gray-300 rounded-l-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                                                 placeholder="Solo correos gmail"
                                                                 required
@@ -364,13 +389,15 @@ const Programs = () => {
                                                         </div>
                                                         <div>
                                                             <label className="block text-sm font-medium text-gray-700">Celular</label>
-                                                            <div className="flex items-center">
+                                                            <div className="mt-1 flex items-center">
                                                                 <span className="flex items-center px-3 py-2 border border-gray-300 rounded-l-md bg-gray-100">
                                                                     {formData.codigoArea}{" "}
                                                                 </span>
                                                                 <input
                                                                     type="text"
                                                                     name="celular"
+                                                                    value={formData.celular}
+                                                                    onChange={handleInputChange}
                                                                     className="block w-full px-3 py-2 border border-gray-300 rounded-r-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                                                     placeholder="123456789"
                                                                     required
@@ -384,6 +411,8 @@ const Programs = () => {
                                                             <label className="block text-sm font-medium text-gray-700">Objetivos</label>
                                                             <textarea
                                                             name="objetivos"
+                                                            value={formData.objetivos}
+                                                            onChange={handleInputChange}
                                                             className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 resize-none"
                                                             placeholder="Escribe tus objetivos aquí..."
                                                             required
@@ -427,14 +456,18 @@ const Programs = () => {
                                                         </span>
                                                     </div>
                                                     <div className="bg-white py-6 pr-6 rounded-lg">
-                                                        <button type='submit' className='border-2 border-gray-500 rounded-md'>
-                                                            <Image
-                                                                src={mercadopagoLogo}
-                                                                alt='mercado pago logo'
-                                                                className='w-36 h-24'
-                                                            >
-                                                            </Image>
-                                                        </button>
+                                                        {formData.pais === 'Argentina' ? (
+                                                            <button type='submit' className='border-2 border-gray-500 rounded-md'>
+                                                                <Image
+                                                                    src={mercadopagoLogo}
+                                                                    alt='mercado pago logo'
+                                                                    className='w-36 h-24'
+                                                                >
+                                                                </Image>
+                                                            </button>
+                                                        ) : (
+                                                            'paypal'
+                                                        )}
                                                         <div className='w-full flex justify-end items-center mt-4'>
                                                             <button 
                                                                 className='w-32 h-8 rounded-md flex justify-center items-center bg-red-800 text-white'
@@ -484,6 +517,7 @@ const Programs = () => {
                                     >
                                     </video>
                                 </div>
+                                <Steps step={stepForm} modal={modalPage}/>
                                 <div className='w-[83%] mx-auto mt-3 flex items-center'>
                                     <InfoIcon className='text-blue-800'/>
                                     <span className='flex justify-center w-full'>

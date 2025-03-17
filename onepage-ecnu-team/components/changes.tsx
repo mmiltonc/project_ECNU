@@ -1,16 +1,17 @@
 "use client"
 import { useState } from 'react'
-import Container from './shared/container'
 import Image from 'next/image'
 import Slider from './widgets/slider-item'
 import Arrows from './widgets/arrows'
 import adZequi from '../public/images/ad_zequi.jpg'
 import adLean from '../public/images/ad_lean.jpg'
 import adJuan from '../public/images/ad_juano.jpg'
-import adGerman from '../public/images/ad_german.jpg'
+import adGerman from '../public/images/ad_german.jpeg'
+import adEsteban from '@/public/images/ad_esteban.jpg'
+
 const Changes = () => {
     const [itemActive, setItemActive] = useState<number>(1);
-    const countItems = 4;
+    const countItems = 5;
 
     const onPrev = () => {
         setItemActive(itemActive - 1)
@@ -34,14 +35,6 @@ const Changes = () => {
                             lg:h-[1200px] lg:pt-40`} 
                 id='cambiosvisibles'>
                 <div className='flex w-18 ml-10'>
-                    <div>
-                        <Image
-                            src='/images/arrows_down.png'
-                            alt='line'
-                            fill
-                            className='relative w-18 h-36 top-10'
-                        /> 
-                    </div>
                     <h1 className={`text-black text-5xl font-bold  mt-16 ml-14 lg:text-7xl`}
                     >CAMBIOS VISIBLES.</h1>
                 </div>
@@ -53,28 +46,35 @@ const Changes = () => {
                             id={1}
                             imagen={adZequi}
                             title="Ezequiel Blandini"
-                            desc="“Lucas es un gran profesional y profe, siempre pendiente de las consultas. Vamos por mas ! “"
+                            desc="“Lucas me llevo por el camino de la autoconfianza, aprendí mucho a confiar en mi potencial y es una gran guía para continuar caminando hacia mis objetivos.“"
                         />
                         <Slider 
                             itemActive={itemActive}
                             id={2}
                             imagen={adLean}
                             title="Leandro Montemurro"
-                            desc="“Lucas es un gran profesional y profe, siempre pendiente de las consultas. Vamos por mas ! “"
+                            desc="“Apasionado por la calistenia, con años de experiencia, combina motivación, disciplina y conocimiento para llevar a sus alumnos a su mejor forma. Su enfoque no solo mejora el rendimiento físico, sino que también fortalece la mentalidad para superar cualquier desafío.“"
                         />
                         <Slider 
                             itemActive={itemActive}
                             id={3}
                             imagen={adJuan}
                             title="Juan Olivera"
-                            desc="“Lucas es un gran profesional y profe, siempre pendiente de las consultas. Vamos por mas ! “"
+                            desc="“Con Lucas encontré una persona que está pendiente de mis necesidades y es una gran ayuda, realmente encontré con el una actividad apasionante y un gran guía.“"
                         />
                         <Slider 
                             itemActive={itemActive}
                             id={4}
-                            imagen={adGerman}
+                            imagen={adEsteban}
                             title="Esteban Ferrari"
-                            desc="“Lucas es un gran profesional y profe, siempre pendiente de las consultas. Vamos por mas ! “"
+                            desc="“Está al pie para lo que necesites, eso me ayudó mucho a encaminarme con mis objetivos y también de qué manera plantearlos a largo plazo.“"
+                        />
+                        <Slider 
+                            itemActive={itemActive}
+                            id={5}
+                            imagen={adGerman}
+                            title="Germán Svariati"
+                            desc="“Llegar a mi estado fue gracias a vos por haberme enseñado a que lo que hay que fortalecer es la mente para poder lograr un objetivo físico. En nuestros encuentros virtuales nos enseñaste a entender eso y otras cosas que me hacen avanzar y empoderarme para alcanzar mi meta.“"
                         />
                     </ul>
                     <Arrows onClickPrev={()=> onPrev()} onClickNext={() => onNext()} />
@@ -106,21 +106,20 @@ const Changes = () => {
                     </button>
                     <button onClick={() => selectedChange(4)}>
                         <Image
+                            src={adEsteban}
+                            alt='line'
+                            fill
+                            className='relative w-20 h-20 object-cover rounded border-2 border-gray-700'
+                        />                      
+                    </button>
+                    <button onClick={() => selectedChange(5)}>
+                        <Image
                             src={adGerman}
                             alt='line'
                             fill
                             className='relative w-20 h-20 object-cover rounded border-2 border-gray-700'
                         />                      
                     </button>
-                </div>
-                <div>
-                    <Image
-                        src='/images/arrows_down.png'
-                        alt='line'
-                        fill
-                        className='relative w-14 h-36 top-[70px] left-56 rotate-[270deg]
-                                   lg:-top-2'
-                    /> 
                 </div>
         </section>
     )

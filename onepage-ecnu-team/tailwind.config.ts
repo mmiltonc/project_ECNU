@@ -28,6 +28,14 @@ module.exports = {
       animation: {
         'fade-in-left': 'fade-in-left 1s ease-out forwards',
       },
+      backgroundImage: {
+        'radial-red-black': 'radial-gradient(closest-side, #ef4444, #171717)',
+        'radial-gray-black': 'radial-gradient(closest-side, #5f5f5f, #171717)',
+        'radial-blue-yellow': 'linear-gradient(to right, #99df5b, #171717)',
+        'radial-black-gray': 'linear-gradient(to right, #171717, #5f5f5f)',
+        'radial-red-gray': 'linear-gradient(to right, #fa2525, #171717)',
+        'radial-red-white': 'radial-gradient(closest-side, #ef4444, #ffffff)'
+      },
     },
     screens: {
       '2sm': '300px',
