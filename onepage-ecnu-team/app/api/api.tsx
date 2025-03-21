@@ -37,16 +37,10 @@ const api = {
           metadata: {
             datos,
           },
-<<<<<<< HEAD
-          "back_urls": {
-            "success": "http://localhost:3000/?modal=1#clasesyretos",
-            "failure": "http://localhost:3000/?modal=3#clasesyretos"
-=======
           back_urls: {
             success: "http://localhost:3000/?modal=1#clasesyretos",
             pending: "http://localhost:3000/?modal=2#clasesyretos",
             failure: "http://localhost:3000/?modal=3#clasesyretos",
->>>>>>> 3bb8a9f (Mercadolibre webhook endpoint - send email if payment is successful)
           },
           auto_return: "approved",
           binary_mode: true,

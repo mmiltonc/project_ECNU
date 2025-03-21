@@ -23,7 +23,8 @@ interface MercadopagoWebhookInterface {
 
 interface PayerInterface {
   email: string;
-  first_name: string;
+  name: string;
+  plan: string;
 }
 
 const sendPaymentSuccessfulEmail = async (payer: PayerInterface) => {
@@ -31,7 +32,7 @@ const sendPaymentSuccessfulEmail = async (payer: PayerInterface) => {
     from: `E.C.N.U. <onboarding@resend.dev>`,
     to: payer.email,
     subject: "Consulta Web - Clases Calistenia",
-    react: PaymentSuccessfulTemplate({ name: payer.first_name }),
+    react: PaymentSuccessfulTemplate(payer),
   });
 };
 
@@ -48,22 +49,35 @@ const handlePaymentWebhook = async (paymentId: string) => {
     Authorization: `Bearer ${process.env.MERCADO_PAGO_ACCESS_TOKEN}`,
   };
 
-  // const response = await fetch(url, { headers });
+  const response = await fetch(url, { headers });
 
-  const response = {
-    json: async () => ({
-      payer: { first_name: "Facundo", email: "facundopereztomasek@gmail.com" },
-      status: "approved",
-    }),
+  // const response = {
+  //   json: async () => ({
+  //     payer: { first_name: "Facundo", email: "facundopereztomasek@gmail.com" },
+  //     status: "approved",
+  //   }),
+  // };
+
+  const jsonResponse = await response.json();
+
+  const {
+    payer,
+    status,
+    metadata: { datos },
+    description,
+  } = jsonResponse;
+
+  const payerData = {
+    name: datos.nombre || payer.first_name,
+    email: datos.email || payer.email,
+    plan: description,
   };
 
-  const { payer, status } = await response.json();
-
-  if (status === APPROVED) await sendPaymentSuccessfulEmail(payer);
-  if (status === REJECTED) await sendPaymentRejectedEmail(payer);
-  if (status === CANCELLED) await sendPaymentCanceledEmail(payer);
-  if (status === PENDING) await sendPaymentPendingEmail(payer);
-  if (status === IN_PROCESS) await sendPaymentInProcessEmail(payer);
+  if (status === APPROVED) await sendPaymentSuccessfulEmail(payerData);
+  if (status === REJECTED) await sendPaymentRejectedEmail(payerData);
+  if (status === CANCELLED) await sendPaymentCanceledEmail(payerData);
+  if (status === PENDING) await sendPaymentPendingEmail(payerData);
+  if (status === IN_PROCESS) await sendPaymentInProcessEmail(payerData);
 };
 
 export async function POST(request: Request) {

@@ -10,6 +10,7 @@ import {
 
 interface PaymentSuccessfulEmailType {
   name: string;
+  plan: string;
 }
 
 const styles = {
@@ -24,6 +25,7 @@ const styles = {
 };
 export const PaymentSuccessfulTemplate = ({
   name,
+  plan,
 }: Readonly<PaymentSuccessfulEmailType>) => {
   return (
     <Html>
@@ -34,6 +36,7 @@ export const PaymentSuccessfulTemplate = ({
         <Container style={styles.container}>
           <Text style={styles.text}>Hola {name}!</Text>
           <Text style={styles.text}>Tu pago ha sido aprobado!</Text>
+          <Text style={styles.text}>Has adquirido el plan {plan}</Text>
           <Text style={styles.footer}>
             —<br />
             Equipo de ECNU
@@ -46,6 +49,7 @@ export const PaymentSuccessfulTemplate = ({
 
 PaymentSuccessfulTemplate.PreviewProps = {
   name: "John Doe",
+  plan: "Plan Plus",
 } as PaymentSuccessfulEmailType;
 
 export default PaymentSuccessfulTemplate;
