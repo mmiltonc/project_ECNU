@@ -14,25 +14,10 @@ import { add } from "@/app/api/actions";
 import mercadopagoLogo from '../public/images/mercado-pago-logo.png'
 import Image from 'next/image';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import InfoIcon from '@mui/icons-material/Info';
 import CampaignIcon from '@mui/icons-material/Campaign';
 export const dynamic = "force-static";
-
-// const tulpenOne = Tulpen_One({
-//     subsets: ['latin'],
-//     weight: '400',
-//     display: 'swap',
-// })
-// const nothingYouCouldDo = Nothing_You_Could_Do({
-//     subsets: ['latin'],
-//     weight: '400',
-//     display: 'swap',
-// })
-// const bebasNeue = Bebas_Neue({
-//     subsets: ['latin'],
-//     weight: '400',
-//     display: 'swap',
-// })
 
 const arrayPlanificaciones = [
     {
@@ -118,13 +103,16 @@ const Programs = () => {
           const searchParams = new URLSearchParams(window.location.search);
           if (searchParams.get("modal") === "1") {
             setModalPage(2)
-            abrirModal(); // Llama a la función para abrir el modal
+            abrirModal(); 
+          }
+          if (searchParams.get("modal") === "3") {
+            setModalPage(3)
+            abrirModal(); 
           }
         }
     }, [abrirModal]);
 
     const handleClose = () => {
-         // Cierra el modal (o lo que estés manejando con `open`)
         setCamposVisibles(false);
         setFormData({
             nombre: "",
@@ -136,7 +124,7 @@ const Programs = () => {
             objetivos: "",
             arPrice: 162270,
             usdPrice: 132
-        }); // Reinicia los valores de `formData`
+        });
         cerrarModal();
         setModalPage(1)
     };
@@ -524,6 +512,29 @@ const Programs = () => {
                                         En las proximas 24hs me pondre en contacto contigo por WhatsApp al numero
                                         anunciado en el formulario.
                                     </span>
+                                </div>
+                            </>
+                        )}
+                        {modalPage === 3 && (
+                            <>
+                                <button 
+                                    className='w-full h-5 text-xl mr-3 rounded-md flex justify-end items-center text-gray-900'
+                                    onClick={handleClose}
+                                >
+                                    X
+                                </button>
+                                <div className='w-[80%] mx-auto flex justify-between items-center my-4 bg-red-100 rounded-md p-4'>
+                                    <div className=''>
+                                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                                            Ups!
+                                        </Typography>
+                                        <span className='flex justify-start w-full'>
+                                            vemos que no se pudo acreditar tu pago. Volve a intentar mas tarde!
+                                        </span>
+                                    </div>
+                                    <div className='flex flex-col items-center'>
+                                        <ErrorOutlineIcon className='w-20 h-20 text-red-400'/>
+                                    </div>
                                 </div>
                             </>
                         )}

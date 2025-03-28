@@ -31,7 +31,7 @@ const AnimatedText = ({
     className,
 }: AnimatedTextProps) => {
     const ref = useRef(null);
-    const isInView = useInView(ref, {amount: 0.5});
+    const isInView = useInView(ref, {amount: 0.5, once: true});
     const textArray = Array.isArray(text) ? text : [text];
     const controls = useAnimation()
     const [hasAnimated, setHasAnimated] = useState(false);
@@ -39,7 +39,7 @@ const AnimatedText = ({
  useEffect(() => {
         if (isInView && !hasAnimated) {
             controls.start("visible");
-            setHasAnimated(true); // Marca que la animación se ha ejecutado
+            setHasAnimated(true);
         }
     }, [isInView, hasAnimated, controls]);
 
@@ -48,8 +48,8 @@ const AnimatedText = ({
         <span className="sr-only">{text}</span>
         <motion.span 
             ref={ref}
-            initial="hiddenn" 
-            animate={isInView ? "visible" : "hidden"} 
+            initial="hidden" 
+            animate={controls} 
             variants={{
                 visible: {transition: { staggerChildren: 0.1}},
                 hidden: {}

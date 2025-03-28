@@ -34,7 +34,6 @@ const api = {
           },
           "back_urls": {
             "success": "http://localhost:3000/?modal=1#clasesyretos",
-            "pending": "http://localhost:3000/?modal=2#clasesyretos",
             "failure": "http://localhost:3000/?modal=3#clasesyretos"
           },
           "auto_return": "approved",
