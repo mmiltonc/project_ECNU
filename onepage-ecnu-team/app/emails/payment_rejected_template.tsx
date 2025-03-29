@@ -41,7 +41,7 @@ export const PaymentRejectedTemplate = ({
   return (
     <Html>
       <Head />
-      <Preview>Pago rechazado {plan}</Preview>{" "}
+      <Preview>Tu pago {plan} fue rechazado.</Preview>
       {/* Vista previa en clientes de correo */}
       <Body style={styles.body}>
         <Container style={styles.header}>
@@ -57,7 +57,7 @@ export const PaymentRejectedTemplate = ({
             nuevamente a la brevedad.
           </Text>
           <Hr />
-          <Text style={styles.firm}>Equipo de ECNU</Text>
+          <Text style={styles.firm}>Equipo de E.C.N.U.</Text>
         </Container>
         <Container style={styles.footer}>
           <Img

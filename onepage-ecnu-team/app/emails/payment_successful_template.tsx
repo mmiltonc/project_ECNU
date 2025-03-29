@@ -41,9 +41,7 @@ export const PaymentSuccessfulTemplate = ({
   return (
     <Html>
       <Head />
-      <Preview>
-        ¡Bienvenido {name} a tu {plan}!
-      </Preview>{" "}
+      <Preview>El pago de tu {plan} fue aprobado con éxito!</Preview>
       {/* Vista previa en clientes de correo */}
       <Body style={styles.body}>
         <Container style={styles.header}>
@@ -62,7 +60,7 @@ export const PaymentSuccessfulTemplate = ({
           </Text>
           <Text style={styles.text}>¡Muchas gracias!</Text>
           <Hr />
-          <Text style={styles.firm}>Equipo de ECNU</Text>
+          <Text style={styles.firm}>Equipo de E.C.N.U.</Text>
         </Container>
         <Container style={styles.footer}>
           <Img

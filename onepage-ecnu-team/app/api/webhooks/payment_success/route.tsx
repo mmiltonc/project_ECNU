@@ -31,14 +31,30 @@ const sendPaymentSuccessfulEmail = async (payer: PayerInterface) => {
   await resend.emails.send({
     from: `E.C.N.U. <onboarding@resend.dev>`,
     to: payer.email,
-    subject: "Consulta Web - Clases Calistenia",
+    subject: `¡Bienvenido ${payer.name} a tu ${payer.plan}!`,
     react: PaymentSuccessfulTemplate(payer),
   });
 };
 
-const sendPaymentRejectedEmail = async (payer: PayerInterface) => {};
+const sendPaymentPendingEmail = async (payer: PayerInterface) => {
+  await resend.emails.send({
+    from: "E.C.N.U. <onboarding@resend.dev>",
+    to: payer.email,
+    subject: "Pago pendiente de aprobación",
+    react: PaymentSuccessfulTemplate(payer),
+  });
+};
+
+const sendPaymentRejectedEmail = async (payer: PayerInterface) => {
+  await resend.emails.send({
+    from: "E.C.N.U. <onboarding@resend.dev>",
+    to: payer.email,
+    subject: "Pago rechazado",
+    react: PaymentSuccessfulTemplate(payer),
+  });
+};
 const sendPaymentCanceledEmail = async (payer: PayerInterface) => {};
-const sendPaymentPendingEmail = async (payer: PayerInterface) => {};
+
 const sendPaymentInProcessEmail = async (payer: PayerInterface) => {};
 
 const handlePaymentWebhook = async (paymentId: string) => {

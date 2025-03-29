@@ -41,7 +41,9 @@ export const PaymentPendingTemplate = ({
   return (
     <Html>
       <Head />
-      <Preview>Pago pendiente de aprobación {plan}</Preview>{" "}
+      <Preview>
+        ¡Tu pago {plan} se encuentra pendiente de aprobación!
+      </Preview>{" "}
       {/* Vista previa en clientes de correo */}
       <Body style={styles.body}>
         <Container style={styles.header}>
@@ -57,7 +59,7 @@ export const PaymentPendingTemplate = ({
             consulta con tu medio de pago el estado del mismo.
           </Text>
           <Hr />
-          <Text style={styles.firm}>Equipo de ECNU</Text>
+          <Text style={styles.firm}>Equipo de E.C.N.U.</Text>
         </Container>
         <Container style={styles.footer}>
           <Img
