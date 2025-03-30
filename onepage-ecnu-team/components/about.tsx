@@ -14,6 +14,7 @@ const About = () => {
 
     const x = 42;
 
+
     return (
         <>
             <section className='w-full h-auto bg-white pt-36' id='quiensoy'>
