@@ -27,7 +27,7 @@ const About = () => {
                 {isMobile ? (
                     <div className='flex flex-col'>
                         <div className='flex justify-center items-center w-[280px] ml-auto mr-auto'>
-                            <p className='my-8 text-center text-black text-xl'>Hola, soy Lucas Pallotta, atleta e instructor de calistenia de alto rendimiento. A lo largo de los años, he desarrollado herramientas para el control y la armonización de la mente y el cuerpo. Mi principal don es la disciplina , y me apasiona ayudar a quienes están dispuestos a permitirme influenciar en sus vidas. 
+                            <p className='my-8 text-center text-black text-xl'>Hola, soy Lucas Pallotta, atleta e instructor de calistenia de alto rendimiento. A lo largo de los años, he desarrollado herramientas para el control y la armonización de la mente y el cuerpo. Mi principal don es la disciplina , y me apasiona ayudar a quienes están dispuestos a permitirme influenciar en sus vidas.
                             La actividad física va mucho mas allá de simplemente alcanzar un cuerpo saludable o esbelto. Para mi, es un canalizador fundamental de energía, tanto positiva como negativa, que nos permite transformar nuestras emociones y pensamientos en acción. A través del ejercicio, no solo fortalecemos nuestros músculos; también cultivamos nuestro autoestima y desarrollamos la perseverancia necesaria para alcanzar nuestros sueños.</p>
                         </div>
                         <div>
@@ -36,7 +36,7 @@ const About = () => {
                                 alt='line'
                                 fill
                                 className='relative w-[350px] h-[350px] ml-auto mr-auto object-cover rounded-full'
-                            /> 
+                            />
                         </div>
                     </div>
                 ) : (
@@ -48,11 +48,11 @@ const About = () => {
                                     alt='line'
                                     fill
                                     className='relative ml-14 mt-10 h-[550px] rounded-lg'
-                                /> 
+                                />
                             </div>
                             <div className='w-full flex flex-col justify-center items-center text-2xl'>
                                 <div className='flex justify-center items-center w-3/4 ml-auto mr-auto'>
-                                    <p className='text-left text-black'>Hola, soy Lucas Pallotta, atleta e instructor de calistenia de alto rendimiento. A lo largo de los años, he desarrollado herramientas para el control y la armonización de la mente y el cuerpo. Mi principal don es la disciplina , y me apasiona ayudar a quienes están dispuestos a permitirme influenciar en sus vidas. 
+                                    <p className='text-left text-black'>Hola, soy Lucas Pallotta, atleta e instructor de calistenia de alto rendimiento. A lo largo de los años, he desarrollado herramientas para el control y la armonización de la mente y el cuerpo. Mi principal don es la disciplina , y me apasiona ayudar a quienes están dispuestos a permitirme influenciar en sus vidas.
                                     La actividad física va mucho mas allá de simplemente alcanzar un cuerpo saludable o esbelto. Para mi, es un canalizador fundamental de energía, tanto positiva como negativa, que nos permite transformar nuestras emociones y pensamientos en acción. A través del ejercicio, no solo fortalecemos nuestros músculos; también cultivamos nuestro autoestima y desarrollamos la perseverancia necesaria para alcanzar nuestros sueños.</p>
                                 </div>
                             </div>
