@@ -63,7 +63,7 @@ export const PaymentPendingTemplate = ({
         </Container>
         <Container style={styles.footer}>
           <Img
-            src="/images/emails/payment-successful/footer-image.jpg"
+            src="/images/emails/payment-pending-footer-image.jpg"
             alt="ECNU Logo"
             style={styles.footerImage}
           />

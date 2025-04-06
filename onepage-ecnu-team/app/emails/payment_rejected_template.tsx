@@ -61,7 +61,7 @@ export const PaymentRejectedTemplate = ({
         </Container>
         <Container style={styles.footer}>
           <Img
-            src="/images/emails/payment-successful/footer-image.jpg"
+            src="/images/emails/payment-rejected-footer-image.jpg"
             alt="ECNU Logo"
             style={styles.footerImage}
           />

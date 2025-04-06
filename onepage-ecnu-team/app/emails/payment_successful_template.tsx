@@ -64,7 +64,7 @@ export const PaymentSuccessfulTemplate = ({
         </Container>
         <Container style={styles.footer}>
           <Img
-            src="/images/emails/payment-successful/footer-image.jpg"
+            src="/images/emails/payment-successful-footer-image.jpg"
             alt="ECNU Logo"
             style={styles.footerImage}
           />
