@@ -18,8 +18,8 @@ interface CardProps {
 }
 
 const CardDesktop: FC<CardProps> = (
-    {main, 
-     index, 
+    {main,
+     index,
      image,
      type,
      typeVideo,
@@ -33,7 +33,7 @@ const CardDesktop: FC<CardProps> = (
         const linkWhatsApp: string = `https://wa.me/${numero}?text=Hola Lucas! Me gustaría consultar sobre las clases en parque Saavedra para ${cantDias} veces por semana. Saludos`
         return linkWhatsApp
     }
-    
+
     // const onClick = () => {
     //     const link: string = generateLink('1167837231', cantDias)
     //     const url = window.open(link, '_blank')
@@ -52,10 +52,10 @@ const CardDesktop: FC<CardProps> = (
           { x: -200, y: 0 },   // Izquierda
           { x: 200, y: 0 }     // Derecha
         ];
-    
+
         // Obtener la dirección basada en el índice
         const { x, y } = directions[index % directions.length];
-    
+
         // Animación con GSAP y ScrollTrigger
         gsap.fromTo(
           cardRef.current,
@@ -73,15 +73,15 @@ const CardDesktop: FC<CardProps> = (
           }
         );
       }, [index]);
-    
-    
-    
-    
-    
+
+
+
+
+
 
     return (
-        <div className={`w-[350px] min-h-[600px] max-h-[600px] flex flex-col items-center rounded-3xl border-2 border-red-700 
-            ${!image && 'bg-white'}`} 
+        <div className={`w-[350px] min-h-[600px] max-h-[600px] flex flex-col items-center rounded-3xl border-2 border-red-700
+            ${!image && 'bg-white'}`}
             style={{
                 backgroundImage: image ? `url(${image})` : undefined,
                 backgroundSize: 'cover',
@@ -91,8 +91,8 @@ const CardDesktop: FC<CardProps> = (
             {main && (<span className='relative h-10 px-8 bottom-[20px] -skew-x-12 rounded-xl flex justify-center items-center
              bg-red-700 font-bold'>RECOMENDADO</span>)}
             {type === 'plan' && (
-              <button 
-                className={`w-40 relative px-8 h-10 mt-8 rounded-xl bg-red-700 -skew-x-12 top-[91.5%]`} 
+              <button
+                className={`w-40 relative px-8 h-10 mt-8 rounded-xl bg-red-700 -skew-x-12 top-[91.5%]`}
                 onClick={handleOpen}
               >COMPRAR
               </ button>

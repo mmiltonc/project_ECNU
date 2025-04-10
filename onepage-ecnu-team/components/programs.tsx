@@ -57,7 +57,7 @@ const Programs = () => {
     const [camposVisibles, setCamposVisibles] = useState(false);
     const [typeSelected, setTypeSelected] = useState('');
     const [stepForm, setStepForm] = useState(1);
-    
+
     const [formData, setFormData] = useState({
         nombre: "",
         pais: "",
@@ -104,11 +104,11 @@ const Programs = () => {
           const searchParams = new URLSearchParams(window.location.search);
           if (searchParams.get("modal") === "1") {
             setModalPage(2)
-            abrirModal(); 
+            abrirModal();
           }
           if (searchParams.get("modal") === "3") {
             setModalPage(3)
-            abrirModal(); 
+            abrirModal();
           }
         }
     }, [abrirModal]);
@@ -148,7 +148,7 @@ const Programs = () => {
               codigoArea: paisSeleccionado.codigo,
             }));
           }
-        }        
+        }
 
         setFormData((prev) => ({
             ...prev,
@@ -179,7 +179,7 @@ const Programs = () => {
                     {/* <span className='text-white text-8xl font-bold'>CLASES, PLANIFICACIONES Y RETOS.</span> */}
                     <AnimatedText  text={["GYM VIRTUAL", "Y PLANIFICACIONES"]} className='text-white text-7xl font-bold'/>
                 </div>
-                <div className='w-full h-auto mt-4 
+                <div className='w-full h-auto mt-4
                                 lg:flex lg:flex-col lg:justify-center lg:items-center lg:mt-20 lg:mb-52'>
                     <>
                         <div className='flex flex-col justify-center items-center mt-14'>
@@ -189,7 +189,7 @@ const Programs = () => {
                         </div>
                         <div className='flex justify-center items-center mt-20 mb-14 '>
                             <p className='w-[55%] text-center text-2xl'>
-                            Un gimnasio virtual con tu propio peso corporal, creado para convertirte en esa persona que queres lograr física y mentalmente, 
+                            Un gimnasio virtual con tu propio peso corporal, creado para convertirte en esa persona que queres lograr física y mentalmente,
                             3 desafíos (Reto perder grasa, Pectorales de hierro, Abdomen de acero) sobrepasarás niveles en ascenso incursionandote en la actividad
                             física, con 45 minutos por día conseguirás un cuerpo funcional y atlético.
                             </p>
@@ -228,7 +228,7 @@ const Programs = () => {
                         <div className='w-full flex flex-wrap justify-center gap-8 lg:mt-20 bg-radial-red-black'>
                             {isMobile ? (
                                 <>
-                                    <CardMobile 
+                                    <CardMobile
                                         main={true}
                                         type='reto'
                                         title='Reto Perder Grasa'
@@ -241,7 +241,7 @@ const Programs = () => {
                                 <>
                                     {arrayPlanificaciones.map((item, index) => {
                                         return (
-                                            <CardDesktop 
+                                            <CardDesktop
                                                 main={item.main}
                                                 index={index}
                                                 key={index}
@@ -254,7 +254,7 @@ const Programs = () => {
                                         )
                                     })}
                                 </>
-                                
+
                             )}
                         </div>
                     </>
@@ -265,12 +265,12 @@ const Programs = () => {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <Box 
+                    <Box
                         className="w-[950px] max-h-[80vh] overflow-y-auto overflow-x-hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-100
                         shadow-xl p-4 text-gray-900 rounded-xl"
                     >
                         {modalPage === 1 && (
-                            <>  
+                            <>
                                 <div className="mt-6 mb-6 w-[80%] relative -z-10 mx-auto">
                                     {typeSelected === 'gym' ? (
                                         <video
@@ -373,7 +373,7 @@ const Programs = () => {
                                                                 <span className="flex items-center px-1.5 py-2 border border-gray-300 rounded-r-md bg-gray-100">
                                                                     @gmail.com
                                                                 </span>
-        
+
                                                             </div>
                                                         </div>
                                                         <div>
@@ -409,13 +409,13 @@ const Programs = () => {
                                                         </div>
                                                     </div>
                                                     <div className='flex justify-end pt-10'>
-                                                        <button 
+                                                        <button
                                                         className='w-24 h-8 mr-3 rounded-md flex justify-center items-center bg-gray-400 text-white'
                                                         onClick={handleClose}
                                                         >
                                                             Cancelar
                                                         </button>
-                                                        <button 
+                                                        <button
                                                         className='w-32 h-8 rounded-md flex justify-center items-center bg-red-800 text-white'
                                                         onClick={() => setStepForm(2)}
                                                         >
@@ -431,10 +431,10 @@ const Programs = () => {
                                                 <div className='mx-auto flex items-center mb-6'>
                                                     <CampaignIcon  className='w-10 h-10 text-red-800'/>
                                                     <span className='ml-4 font-bold'>{`
-                                                      Desarrollar tu mejor físico está a solo unos pasos más de distancia. 
-                                                      Un gran hombre dijo una vez: "No cuentes los días, haz que los días cuenten". 
-                                                      —Muhammad Alí. Recuerde que los resultados no se obtienen a menos que comiences, 
-                                                      ¡Así que comencemos HOY!  
+                                                      Desarrollar tu mejor físico está a solo unos pasos más de distancia.
+                                                      Un gran hombre dijo una vez: "No cuentes los días, haz que los días cuenten".
+                                                      —Muhammad Alí. Recuerde que los resultados no se obtienen a menos que comiences,
+                                                      ¡Así que comencemos HOY!
                                                     `}
                                                     </span>
                                                 </div>
@@ -458,7 +458,7 @@ const Programs = () => {
                                                             <PayPalComponent />
                                                         )}
                                                         <div className='w-full flex justify-end items-center mt-4'>
-                                                            <button 
+                                                            <button
                                                                 className='w-32 h-8 rounded-md flex justify-center items-center bg-red-800 text-white'
                                                                 onClick={() => setStepForm(1)}
                                                                 >
@@ -475,7 +475,7 @@ const Programs = () => {
                         )}
                         {modalPage === 2 && (
                             <>
-                                <button 
+                                <button
                                     className='w-full h-5 text-xl mr-3 rounded-md flex justify-end items-center text-gray-900'
                                     onClick={handleClose}
                                 >
@@ -518,7 +518,7 @@ const Programs = () => {
                         )}
                         {modalPage === 3 && (
                             <>
-                                <button 
+                                <button
                                     className='w-full h-5 text-xl mr-3 rounded-md flex justify-end items-center text-gray-900'
                                     onClick={handleClose}
                                 >
