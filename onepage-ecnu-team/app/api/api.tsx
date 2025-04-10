@@ -1,4 +1,4 @@
-import {MercadoPagoConfig, Preference} from "mercadopago";
+import { MercadoPagoConfig, Preference } from "mercadopago";
 
 interface DatosPersona {
   nombre: string;
@@ -12,19 +12,24 @@ interface DatosPersona {
   usdPrice: number;
 }
 
-export const mercadopago = new MercadoPagoConfig({accessToken: "APP_USR-8485273282562359-031521-63f03c79e839e2700d216c879df11e45-419436519"});
+const accessToken = process.env.MERCADO_PAGO_ACCESS_TOKEN;
+
+if (!accessToken) throw new Error("MERCADO_PAGO_ACCESS_TOKEN is not defined.");
+
+export const mercadopago = new MercadoPagoConfig({ accessToken });
 
 const api = {
   message: {
     async submit(datos: DatosPersona) {
-      console.log('datos: ', datos)
+      console.log("datos: ", datos);
       // Creamos la preferencia incluyendo el precio, titulo y metadata. La información de `items` es standard de Mercado Pago. La información que nosotros necesitamos para nuestra DB debería vivir en `metadata`.
       const preference = await new Preference(mercadopago).create({
         body: {
           items: [
             {
               id: "message",
-              unit_price: datos.pais === 'Argentina' ? datos.arPrice : datos.usdPrice,
+              unit_price:
+                datos.pais === "Argentina" ? datos.arPrice : datos.usdPrice,
               quantity: 1,
               title: "Plan Plus",
             },
@@ -32,22 +37,23 @@ const api = {
           metadata: {
             datos,
           },
-          "back_urls": {
-            "success": "http://localhost:3000/?modal=1#clasesyretos",
-            "failure": "http://localhost:3000/?modal=3#clasesyretos"
+          back_urls: {
+            success: "http://localhost:3000/?modal=1#clasesyretos",
+            pending: "http://localhost:3000/?modal=2#clasesyretos",
+            failure: "http://localhost:3000/?modal=3#clasesyretos",
           },
-          "auto_return": "approved",
-          "binary_mode": true,
+          auto_return: "approved",
+          binary_mode: true,
           payment_methods: {
             excluded_payment_types: [
               { id: "ticket" }, // Excluye pagos en efectivo
-              { id: "debit_card" } // Excluye tarjetas de débito
+              { id: "debit_card" }, // Excluye tarjetas de débito
             ],
             installments: 3, // Permite hasta 3 cuotas
             default_installments: 3, // Establece 3 cuotas como la opción por defecto
             excluded_payment_methods: [
               { id: "debit_card" }, // Excluye tarjetas de débito
-              { id: "atm" } // Excluye pagos por cajero
+              { id: "atm" }, // Excluye pagos por cajero
             ],
           },
         },
