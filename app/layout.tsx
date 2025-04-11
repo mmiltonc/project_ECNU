@@ -1,16 +1,4 @@
 import './globals.css'
-import { ModalProvider, useModal } from "./context/modalContext";
-import type { Metadata } from 'next'
-import Header from '@/components/shared/header'
-import Home from '@/components/home'
-import Introduction from '@/components/introduction'
-import Programs from '@/components/programs'
-import Changes from '@/components/changes'
-import About from '@/components/about'
-import Motivation from '@/components/motivation'
-import Products from '@/components/products'
-import Faq from '@/components/faq'
-import Contact from '../components/contact'
 import { Jost } from 'next/font/google'
 import { GoogleTagManager } from '@next/third-parties/google'
 import Script from 'next/script';
@@ -73,21 +61,7 @@ export default function RootLayout({
         </noscript>
       </head>
       <GoogleTagManager gtmId="GTM-KS5H2HMS" />
-      <body className={jost.className}>
-        <ModalProvider>
-          <Header/>
-          <Home/>
-          <Introduction/>
-          <Programs/>
-          <Products/>
-          <Changes/>
-          <About/>
-          <Motivation/>
-          <Faq/>
-          <Contact/>
-          {children}
-        </ModalProvider>
-      </body>
+      <body className={jost.className}>{children}</body>
     </html>
   )
 }
