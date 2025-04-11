@@ -17,6 +17,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import InfoIcon from '@mui/icons-material/Info';
 import CampaignIcon from '@mui/icons-material/Campaign';
+import PayPalComponent from '@/components/shared/paypal-component'
 export const dynamic = "force-static";
 
 const arrayPlanificaciones = [
@@ -454,7 +455,7 @@ const Programs = () => {
                                                                 </Image>
                                                             </button>
                                                         ) : (
-                                                            'paypal'
+                                                            <PayPalComponent />
                                                         )}
                                                         <div className='w-full flex justify-end items-center mt-4'>
                                                             <button
