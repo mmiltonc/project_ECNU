@@ -15,7 +15,6 @@
     "@motionone/utils": "^10.18.0",
     "@mui/icons-material": "^6.0.0",
     "@mui/material": "^6.4.3",
-    "@next/font": "^14.2.3",
     "@next/third-parties": "^15.1.0",
     "@paypal/paypal-server-sdk": "^0.6.1",
     "@paypal/react-paypal-js": "^8.8.3",

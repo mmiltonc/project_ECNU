@@ -1,6 +1,19 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
-module.exports = nextConfig;
+const withVideos = require("next-videos");
 
-const withVideos = require('next-videos')
-module.exports = withVideos();
+const isDevelopmentMode = process.env.NODE_ENV === "development";
+
+const nextConfig = {
+  async redirects() {
+    return isDevelopmentMode
+      ? [] // no redirections in development mode
+      : [
+          {
+            source: "/emails/preview",
+            destination: "/",
+            permanent: false,
+          },
+        ];
+  },
+};
+
+module.exports = withVideos(nextConfig);
