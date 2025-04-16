@@ -7,7 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "email": "email dev --dir app/emails"
+    "email": "email dev --dir app/emails",
+    "deploy:setup": "pm2 deploy production setup --force",
+    "deploy": "pm2 deploy production",
+    "deploy:list": "pm2 deploy production exec \"pm2 list\"",
+    "deploy:logs": "pm2 deploy production exec \"pm2 logs\"",
+    "deploy:restart": "pm2 deploy production exec \"pm2 restart onepage-ecnu-team\"",
+    "deploy:stop": "pm2 deploy production exec \"pm2 stop onepage-ecnu-team\"",
+    "certbot:setup": "pm2 deploy production exec \"bash /home/deployer/app/current/deploy-scripts/certbot-setup.sh\""
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
@@ -16,7 +23,7 @@
     "@mui/icons-material": "^6.0.0",
     "@mui/material": "^6.4.3",
     "@next/third-parties": "^15.1.0",
-    "@paypal/paypal-server-sdk": "^0.6.1",
+    "@paypal/paypal-server-sdk": "^1.0.0",
     "@paypal/react-paypal-js": "^8.8.3",
     "@react-email/components": "0.0.17",
     "framer-motion": "^11.3.24",
@@ -45,6 +52,7 @@
     "eslint-config-next": "14.0.3",
     "install": "^0.13.0",
     "npm": "^11.2.0",
+    "pm2": "^6.0.5",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
     "tailwindcss-bg-patterns": "^0.3.0",
