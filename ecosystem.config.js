@@ -20,24 +20,31 @@ module.exports = {
       path: "/home/deploy/app",
 
       'pre-setup': `
-        echo "📁 Copiando scripts al servidor..." &&
-        scp -P 2222 -i ../vps-sim/ssh_config/fake-hostinger -r ./deploy-scripts deploy@localhost:/home/deploy/app/ &&
-        echo "⚙️  Ejecutando setup-directories.sh..." &&
-        ssh -tt -i ../vps-sim/ssh_config/fake-hostinger -p 2222 deploy@localhost "bash /home/deploy/app/deploy-scripts/setup-directories.sh"
+        echo "hola" > ~/app/hola.txt &&
       `,
 
-
       'post-setup': `
-        bash /home/deploy/app/deploy-scripts/post-setup.sh
+        set -x &&
+        echo "Instalando PM2 y creando carpetas necesarias..." &&
+        if ! command -v pm2 > /dev/null; then
+          npm install -g pm2
+        fi &&
+        mkdir -p /home/deploy/app &&
+        pm2 install pm2-logrotate || true
       `,
 
       'pre-deploy-local': `
-        bash ./deploy-scripts/pre-deploy-local.sh
+        set -x &&
+        echo "Deploy local iniciado en $(date)"
       `,
 
       'post-deploy': `
-        bash /home/deploy/app/deploy-scripts/post-deploy.sh
-      `,
+        set -x &&
+        cd /home/deploy/app &&
+        npm install &&
+        pm2 reload ecosystem.config.js --env production &&
+        pm2 save
+      `
     },
   },
 };
