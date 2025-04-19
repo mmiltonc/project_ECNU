@@ -21,20 +21,20 @@ module.exports = {
       path: "/home/deploy/app",
 
       "pre-setup":
-        "echo \"Copiando clave pública y creando carpetas iniciales...\"",
+        "echo 'Copiando clave pública y creando carpetas iniciales...'",
 
       "post-setup":
-        "echo \"Instalando PM2 y creando carpetas necesarias...\" && " +
+        "echo 'Instalando PM2 y creando carpetas necesarias...' && " +
         "if ! command -v pm2 > /dev/null; then " +
         "sudo npm install -g pm2; " +
         "fi && " +
         "mkdir -p /home/deploy/app && " +
         "pm2 install pm2-logrotate || true",
 
-      "pre-deploy": 'echo "Deploy local iniciado en $(date)"',
+      "pre-deploy": "echo 'Deploy local iniciado'",
 
       "post-deploy":
-        'echo "DEPLOYED!" && ' +
+        "echo 'DEPLOYED!' && " +
         "cd /home/deploy/app && " +
         "npm install && " +
         "npm run build && " +
