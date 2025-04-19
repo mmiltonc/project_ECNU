@@ -2,7 +2,8 @@ module.exports = {
   apps: [
     {
       name: "onepage-ecnu-team",
-      script: "./index.js",
+      script: "npm",
+      args: "start",
       env_production: {
         NODE_ENV: "production",
       },
