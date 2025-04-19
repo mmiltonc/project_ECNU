@@ -1,3 +1,4 @@
+import Image from "next/image"
 
 
 export const ProductCard = ({producto}: {producto: any}) => {
@@ -6,7 +7,7 @@ export const ProductCard = ({producto}: {producto: any}) => {
         <div className="flex items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-10">
             <div className="flex flex-col h-[376px] w-[241px] rounded-[15px] overflow-visible">
                 <div className="bg-[#EF3749] h-[45%] relative rounded-t-[15px]">
-                    <img src={producto.imagen} className="absolute top-[-2.5rem] left-16 w-[220px] transform rotate-[-8deg] translate-x-[-50%] z-10" />
+                    <Image src={producto.imagen} alt={producto.nombre} className="absolute top-[-2.5rem] left-16 w-[220px] transform rotate-[-8deg] translate-x-[-50%] z-10" />
                     <span className="text-white text-2xl font-bold italic absolute bottom-1 right-3">{producto.precio}</span>
                 </div>
                 <div className="bg-white h-[55%] relative rounded-b-[15px] p-4 flex flex-col items-center">

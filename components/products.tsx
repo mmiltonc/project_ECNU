@@ -60,9 +60,9 @@ const Products = () => {
                     </span>
                     </div>
                 </div>
-                {/* <Swiper 
+                {/* <Swiper
                     navigation={false}
-                    modules={[Navigation]} 
+                    modules={[Navigation]}
                     slidesPerView={4} // Muestra 5 productos por slide
                     className="w-[95%] h-full text-black mySwiper"
                 >
