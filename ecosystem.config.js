@@ -23,7 +23,13 @@ module.exports = {
         "if ! command -v pm2 > /dev/null; then sudo npm install -g pm2; fi && " +
         "sudo cp /home/deploy/app/source/nginx/default /etc/nginx/sites-enabled/default && " +
         "sudo service nginx reload && " +
-        "pm2 install pm2-logrotate || true",
+        "pm2 install pm2-logrotate || true && " +
+        "echo '🔒 Instalando Certbot...' && " +
+        "sudo DEBIAN_FRONTEND=noninteractive apt update && " +
+        "sudo DEBIAN_FRONTEND=noninteractive apt install -y certbot python3-certbot-nginx tzdata && ",
+        // "sudo certbot --nginx --staging --non-interactive --agree-tos --email sysadmin@ecnu.dev -d ecnu.dev && " +
+        // "echo '📅 Configurando renovación automática con cron...' && " +
+        // "sudo bash /home/deploy/app/source/scripts/cron-certbot.sh",
 
       "pre-deploy-local":
         "echo '📁 Verificando si .env.production ya existe en el servidor...' && " +
@@ -37,7 +43,8 @@ module.exports = {
         "npm install && " +
         "npm run build && " +
         "pm2 reload ecosystem.config.js --env production && " +
-        "pm2 save",
+        "pm2 save &&" +
+        "sudo nginx -t && sudo systemctl reload nginx",
     },
   },
 };
