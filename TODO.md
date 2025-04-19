@@ -13,3 +13,10 @@
 - [x] Add .env.example
 - [x] Load resend key from env vars
 - [x] Email templates images should be absolute urls (should be in production to get the url)
+
+
+- [ ] Chequear nginx servidor
+- [ ] Chequear si viene concertificado
+- [ ] Chequear lo que instalo con apt para ver si el servidor tiene todo
+- [ ] Chequear que usuario se loguea a ubuntu
+
