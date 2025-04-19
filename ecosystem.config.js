@@ -35,7 +35,7 @@ module.exports = {
 
       "post-deploy":
         "echo 'DEPLOYED!' && " +
-        "cd /home/deploy/app && " +
+        "cd /home/deploy/app/current && " +
         "npm install && " +
         "npm run build && " +
         "pm2 reload ecosystem.config.js --env production && " +
