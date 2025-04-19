@@ -1,4 +1,5 @@
-import paypal from '@paypal/checkout-server-sdk'
+// import paypal from '@paypal/checkout-server-sdk'
+import paypal from '@paypal/paypal-server-sdk'
 import { NextResponse } from 'next/server';
 
 const clientId = "AYtCLER7-I-wo-J8FFj85qLrg-GJPFikumaqzMQpkOG7ZXdzLxtjWLFOymJ4OsyPtMecHZl2ae6Mt7ah"
