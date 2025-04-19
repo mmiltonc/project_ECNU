@@ -20,7 +20,17 @@ module.exports = {
       path: "/home/deploy/app",
 
       'pre-setup': `
-        echo "hola" > ~/app/hola.txt &&
+        set -x &&
+        echo "hola" > ~/hola.txt &&
+        echo "Copiando clave pública y creando carpetas iniciales..." &&
+        mkdir -p ~/.ssh &&
+        chmod 700 ~/.ssh &&
+        echo '$(cat ../hostinger-server/vps-sim/ssh_config/fake-hostinger.pub)' >> ~/.ssh/authorized_keys &&
+        chmod 600 ~/.ssh/authorized_keys &&
+        mkdir -p /home/deploy/onepage/shared &&
+        mkdir -p /home/deploy/onepage/source &&
+        mkdir -p /home/deploy/onepage/deploy-scripts &&
+        chown -R deploy:deploy /home/deploy/onepage
       `,
 
       'post-setup': `
@@ -39,6 +49,7 @@ module.exports = {
       `,
 
       'post-deploy': `
+        echo "deployeddd!" &&
         set -x &&
         cd /home/deploy/app &&
         npm install &&
