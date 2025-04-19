@@ -31,7 +31,7 @@ module.exports = {
         "mkdir -p /home/deploy/app && " +
         "pm2 install pm2-logrotate || true",
 
-      "pre-deploy-local": 'echo "Deploy local iniciado en $(date)"',
+      "pre-deploy": 'echo "Deploy local iniciado en $(date)"',
 
       "post-deploy":
         'echo "DEPLOYED!" && ' +
