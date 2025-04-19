@@ -15,7 +15,7 @@ module.exports = {
       host: "127.0.0.1",
       port: "2222",
       key: "../hostinger-server/vps-sim/ssh_config/fake-hostinger",
-      ref: "origin/develop",
+      ref: "origin/deploy-md",
       repo: "https://github.com/mmiltonc/project_ECNU.git",
       path: "/home/deploy/app",
 
@@ -23,7 +23,6 @@ module.exports = {
         "echo 'Copiando clave pública y creando carpetas iniciales...'",
 
       "post-setup":
-        "set -x && " +
         'echo "Instalando PM2 y creando carpetas necesarias..." && ' +
         "if ! command -v pm2 > /dev/null; then " +
         "sudo npm install -g pm2; " +
@@ -31,10 +30,10 @@ module.exports = {
         "mkdir -p /home/deploy/app && " +
         "pm2 install pm2-logrotate || true",
 
-      "pre-deploy-local": 'set -x && echo "Deploy local iniciado en $(date)"',
+      "pre-deploy-local": 'echo "Deploy local iniciado en $(date)"',
 
       "post-deploy":
-        'echo "deployeddd!" && ' +
+        'echo "DEPLOYED!" && ' +
         "cd /home/deploy/app && " +
         "npm install && " +
         "pm2 reload ecosystem.config.js --env production && " +
