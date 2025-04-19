@@ -19,7 +19,6 @@ module.exports = {
       path: "/home/deploy/app",
 
       "post-setup":
-        "set -x && " +
         "echo '📦 Instalando PM2 y configurando Nginx...' && " +
         "if ! command -v pm2 > /dev/null; then sudo npm install -g pm2; fi && " +
         "sudo cp /home/deploy/app/source/nginx/default /etc/nginx/sites-enabled/default && " +
@@ -32,15 +31,8 @@ module.exports = {
         "(echo '📁 Copiando .env.production al servidor...' && scp -F ~/.ssh/config .env.production hostinger-vps:/home/deploy/app/shared/.env.production)",
 
       "post-deploy":
-        "cd /home/deploy/app/current && " +
-        "npm install && " +
-        "npm run build && " +
-        "pm2 reload ecosystem.config.js --env production && " +
-        "pm2 save",
-
-      "post-deploy":
         "echo '🚀 Post-deploy iniciado...' && " +
-        "cd /home/deploy/app/source && " +
+        "cd /home/deploy/app/current && " +
         "ln -sf /home/deploy/app/shared/.env.production .env.production && " +
         "npm install && " +
         "npm run build && " +
