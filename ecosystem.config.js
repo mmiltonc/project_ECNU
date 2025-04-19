@@ -19,9 +19,11 @@ module.exports = {
       path: "/home/deploy/app",
 
       "post-setup":
-        "echo '📦 Instalando PM2 y creando carpetas necesarias...' && " +
+        "set -x && " +
+        "echo '📦 Instalando PM2 y configurando Nginx...' && " +
         "if ! command -v pm2 > /dev/null; then sudo npm install -g pm2; fi && " +
-        "mkdir -p /home/deploy/app/shared && " +
+        "sudo cp /home/deploy/app/source/nginx/default /etc/nginx/sites-enabled/default && " +
+        "sudo service nginx reload && " +
         "pm2 install pm2-logrotate || true",
 
       "pre-deploy-local":
