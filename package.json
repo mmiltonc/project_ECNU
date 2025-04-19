@@ -13,7 +13,8 @@
     "deploy:logs": "pm2 logs",
     "deploy:restart": "pm2 restart my-app",
     "deploy:stop": "pm2 stop my-app",
-    "deploy": "pm2 deploy production"
+    "deploy": "pm2 deploy production",
+    "certbot:setup": "pm2 deploy production exec \"bash /home/deploy/app/current/scripts/setup-ssl.sh\""
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",

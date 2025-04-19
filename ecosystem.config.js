@@ -44,7 +44,7 @@ module.exports = {
         "npm run build && " +
         "pm2 reload ecosystem.config.js --env production && " +
         "pm2 save &&" +
-        "sudo nginx -t && sudo systemctl reload nginx",
+        "sudo nginx -t && sudo service nginx reload",
     },
   },
 };
