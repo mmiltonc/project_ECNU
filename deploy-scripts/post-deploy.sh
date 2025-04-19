@@ -1,4 +1,6 @@
 #!/bin/bash
+set -x
+
 cd /home/deploy/app
 npm install
 pm2 reload ecosystem.config.js --env production
