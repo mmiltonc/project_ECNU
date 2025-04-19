@@ -8,12 +8,12 @@
     "start": "next start",
     "lint": "next lint",
     "email": "email dev --dir app/emails",
-    "deploy:setup": "DEBUG='custom:*' pm2 deploy production setup --force",
-    "deploy:list": "pm2 list",
-    "deploy:logs": "pm2 logs",
-    "deploy:restart": "pm2 restart my-app",
-    "deploy:stop": "pm2 stop my-app",
+    "deploy:setup": "pm2 deploy production setup --force",
     "deploy": "pm2 deploy production",
+    "deploy:list": "pm2 deploy production exec \"pm2 list\"",
+    "deploy:logs": "pm2 deploy production exec \"pm2 logs\"",
+    "deploy:restart": "pm2 deploy production exec \"pm2 restart onepage-ecnu-team\"",
+    "deploy:stop": "pm2 deploy production exec \"pm2 stop onepage-ecnu-team\"",
     "certbot:setup": "pm2 deploy production exec \"bash /home/deploy/app/current/deploy-scripts/certbot-setup.sh\""
   },
   "dependencies": {
