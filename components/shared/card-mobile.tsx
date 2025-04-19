@@ -17,29 +17,29 @@ interface CardProps {
 }
 
 const Card: FC<CardProps> = (
-    {main, 
-     type, 
-     title, 
-     subtitle, 
-     descripcion, 
+    {main,
+     type,
+     title,
+     subtitle,
+     descripcion,
      arrayDescripcion,
      price,
      cantDias,
     }) => {
-    
+
     const generateLink = (numero:string, cantDias?:number): string => {
 
         const linkWhatsApp: string = `https://wa.me/${numero}?text=Hola Lucas! Me gustaría consultar sobre las clases en parque Saavedra para ${cantDias} veces por semana. Saludos`
-       
+
         return linkWhatsApp
     }
-    
+
     const onClick = () => {
         const link: string = generateLink('1167837231', cantDias)
         const url = window.open(link, '_blank')
         url?.focus()
     }
-    
+
 
     return (
         <div className={`w-80 ${type === 'presencial' ? 'h-[500px]' : 'h-[640px]'} flex flex-col items-center rounded-3xl border-2 border-red-700 bg-zinc-700`}>
@@ -61,9 +61,9 @@ const Card: FC<CardProps> = (
             {type !== 'presencial' && (
                 <div className='mx-4 mt-10 flex flex-col justify-star items-star'>
 
-                    {arrayDescripcion?.map((item) => {
+                    {arrayDescripcion?.map((item, index) => {
                         return(
-                            <div className='mb-4 flex'>
+                            <div className='mb-4 flex'  key={index}>
                                 <CheckIcon className='text-green-500'/>
                                 <span className='w-full text-md text-start'>{item}</span>
                             </div>
@@ -79,8 +79,8 @@ const Card: FC<CardProps> = (
                     <span className='text-3xl font-bold'>{`$${price}`}</span>
                 </div>
             </div>
-            <button 
-                className='w-40 h-10 mt-8 rounded-xl bg-black bg-opacity-50' 
+            <button
+                className='w-40 h-10 mt-8 rounded-xl bg-black bg-opacity-50'
                 onClick={onClick}
             >
             INSCRIBIRME</ button>

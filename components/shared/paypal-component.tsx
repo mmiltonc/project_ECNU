@@ -4,8 +4,8 @@ export default function PayPalButton() {
 
   return (
     <div className="flex w-40">
-      <PayPalScriptProvider options={{ 'client-id': "AYtCLER7-I-wo-J8FFj85qLrg-GJPFikumaqzMQpkOG7ZXdzLxtjWLFOymJ4OsyPtMecHZl2ae6Mt7ah" }}>
-        <PayPalButtons 
+      <PayPalScriptProvider options={{ 'clientId': "AYtCLER7-I-wo-J8FFj85qLrg-GJPFikumaqzMQpkOG7ZXdzLxtjWLFOymJ4OsyPtMecHZl2ae6Mt7ah" }}>
+        <PayPalButtons
           style={{
             layout: 'horizontal'
           }}
@@ -17,9 +17,9 @@ export default function PayPalButton() {
             console.log('order: ', order)
             return order.id
           }}
-          onApprove={(data: any, actions: any) => {
+          onApprove={async (data: any, actions: any) => {
             console.log('aprovado: ', data)
-            actions.order.capture()
+            await actions.order.capture()
           }}
           onCancel={(data: any) => {
             console.log('cancelacion id: ', data)
@@ -29,6 +29,6 @@ export default function PayPalButton() {
     </div>
   );
 
-  // createOrder={createOrder} 
+  // createOrder={createOrder}
   // onApprove={onApprove}
 }
