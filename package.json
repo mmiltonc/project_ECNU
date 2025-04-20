@@ -14,7 +14,7 @@
     "deploy:logs": "pm2 deploy production exec \"pm2 logs\"",
     "deploy:restart": "pm2 deploy production exec \"pm2 restart onepage-ecnu-team\"",
     "deploy:stop": "pm2 deploy production exec \"pm2 stop onepage-ecnu-team\"",
-    "certbot:setup": "pm2 deploy production exec \"bash /home/deploy/app/current/deploy-scripts/certbot-setup.sh\""
+    "certbot:setup": "pm2 deploy production exec \"bash /home/deployer/app/current/deploy-scripts/certbot-setup.sh\""
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
