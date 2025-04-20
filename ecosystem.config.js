@@ -28,8 +28,8 @@ module.exports = {
 
       "pre-deploy-local":
         "echo '📁 Verificando si .env.production ya existe en el servidor...' && " +
-        "ssh -F ~/.ssh/config deployer@ecnuteam.com '[ -f /home/deployer/app/shared/.env.production ]' || " +
-        "(echo '📁 Copiando .env.production al servidor...' && scp -F ~/.ssh/config .env.production deployer@ecnuteam.com:/home/deployer/app/shared/.env.production)",
+        "ssh -F ~/.ssh/config ecnuteam-deployer '[ -f /home/deployer/app/shared/.env.production ]' || " +
+        "(echo '📁 Copiando .env.production al servidor...' && scp -F ~/.ssh/config .env.production ecnuteam-deployer:/home/deployer/app/shared/.env.production)",
 
       "post-deploy":
         "echo '🚀 Post-deploy iniciado...' && " +
