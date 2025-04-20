@@ -12,10 +12,10 @@ server {
     listen 443 ssl;
     server_name www.ecnuteam.com;
 
-    ssl_certificate /etc/letsencrypt/live/ecnuteam.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/ecnuteam.com/privkey.pem;
-    include /etc/letsencrypt/options-ssl-nginx.conf;
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    # ssl_certificate /etc/letsencrypt/live/ecnuteam.com/fullchain.pem;
+    # ssl_certificate_key /etc/letsencrypt/live/ecnuteam.com/privkey.pem;
+    # include /etc/letsencrypt/options-ssl-nginx.conf;
+    # ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
     return 301 https://ecnuteam.com$request_uri;
 }
@@ -25,10 +25,10 @@ server {
     listen 443 ssl;
     server_name ecnuteam.com;
 
-    ssl_certificate /etc/letsencrypt/live/ecnuteam.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/ecnuteam.com/privkey.pem;
-    include /etc/letsencrypt/options-ssl-nginx.conf;
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    # ssl_certificate /etc/letsencrypt/live/ecnuteam.com/fullchain.pem;
+    # ssl_certificate_key /etc/letsencrypt/live/ecnuteam.com/privkey.pem;
+    # include /etc/letsencrypt/options-ssl-nginx.conf;
+    # ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
     # Servir solo imágenes y videos desde /public
     location ~* ^/(.*\.(?:png|jpg|jpeg|gif|ico|svg|webp|mp4|webm))$ {
