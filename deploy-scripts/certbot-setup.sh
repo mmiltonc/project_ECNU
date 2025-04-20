@@ -27,8 +27,9 @@ echo "✅ Dominio OK. Procediendo con la emisión del certificado..."
 # Instalar Certbot si no está
 if ! command -v certbot >/dev/null 2>&1; then
   echo "🔧 Instalando Certbot..."
-  sudo DEBIAN_FRONTEND=noninteractive apt update
-  sudo DEBIAN_FRONTEND=noninteractive apt install -y certbot python3-certbot-nginx tzdata
+  export DEBIAN_FRONTEND=noninteractive
+  sudo apt update
+  sudo apt install -y certbot python3-certbot-nginx tzdata
 fi
 
 # Emitir certificado en modo staging
