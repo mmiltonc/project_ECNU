@@ -1,4 +1,4 @@
-# Redirección HTTP a HTTPS (con o sin www)
+# Redirección HTTP a HTTPS para ecnuteam.com y www.ecnuteam.com
 server {
     listen 80;
     listen [::]:80;
@@ -23,6 +23,7 @@ server {
 # Servidor principal HTTPS sin www (app en puerto 3000)
 server {
     listen 443 ssl;
+    listen [::]:443 ssl ipv6only=on;
     server_name ecnuteam.com;
 
     ssl_certificate /etc/letsencrypt/live/ecnuteam.com/fullchain.pem;
@@ -34,13 +35,12 @@ server {
     location ~* ^/(.*\.(?:png|jpg|jpeg|gif|ico|svg|webp|mp4|webm))$ {
         root /home/deployer/app/current/public;
         try_files /$1 =404;
-
         access_log off;
         expires 30d;
         add_header Cache-Control "public";
     }
 
-    # Todo lo demás se maneja vía backend
+    # Todo lo demás se maneja vía backend (Next.js)
     location / {
         proxy_pass http://localhost:3000;
         proxy_http_version 1.1;
@@ -50,7 +50,7 @@ server {
         proxy_cache_bypass $http_upgrade;
     }
 
-    # Activar GZIP para mejorar performance
+    # Activar GZIP
     gzip on;
     gzip_types text/plain text/css text/xml text/javascript application/javascript application/x-javascript application/json application/xml application/xml+rss application/atom+xml application/xhtml+xml application/manifest+json application/font-woff application/font-woff2 application/vnd.ms-fontobject font/ttf font/otf font/woff font/woff2 image/svg+xml image/x-icon image/vnd.microsoft.icon audio/mpeg video/mp4 video/webm;
     gzip_proxied any;
