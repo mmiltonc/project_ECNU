@@ -6,7 +6,7 @@ CRON_LINE="0 3 1,16 * * /usr/bin/certbot renew --quiet >> /var/log/certbot-renew
 
 echo "🌐 Verificando que el dominio $DOMAIN apunte a este servidor..."
 
-SERVER_IP=$(curl -s ifconfig.me)
+SERVER_IP=$(curl -4 -s ifconfig.me)
 DOMAIN_IP=$(dig +short "$DOMAIN" | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}' | head -n1)
 
 echo "📡 IP del servidor: $SERVER_IP"
