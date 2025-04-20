@@ -15,8 +15,22 @@
 - [x] Email templates images should be absolute urls (should be in production to get the url)
 
 
-- [ ] Chequear nginx servidor
-- [ ] Chequear si viene concertificado
-- [ ] Chequear lo que instalo con apt para ver si el servidor tiene todo
-- [ ] Chequear que usuario se loguea a ubuntu
+- [x] Chequear lo que instalo con apt para ver si el servidor tiene todo
+- [x] Chequear que usuario se loguea a ubuntu
+- [x] Ver apuntar el dominio
+- [x] Ver sacar kmv1 de hostinger
+- [x] Dominio ecnuteam.com
+- [x] Chequear si viene concertificado
 
+- [ ] Instalar NGINX
+- [ ] Ver pagina de prueba
+- [ ] Chequear redirecciones https y http con y sin www
+
+- [ ] Ver google tag manager
+- [ ] Dar de baja el hosting antiguo
+- [ ] Apuntar las imagenes del email al dominio de ecnu
+- [ ] Ver PayPal
+- [ ] Ver código viejo de MercadoPago y actualizarlo
+
+- [ ] Squash de todo el branch deploy-md
+- [ ] Sacar de public la carpeta data

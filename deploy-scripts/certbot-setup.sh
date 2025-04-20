@@ -1,8 +1,8 @@
 #!/bin/bash
 
-DOMAIN="ecnu.dev"
-EMAIL="sysadmin@ecnu.dev"
-CRON_LINE="0 19 * * * /usr/bin/certbot renew --dry-run >> /var/log/certbot-renew.log 2>&1"
+DOMAIN="ecnuteam.com"
+EMAIL="sysadmin@ecnuteam.com"
+CRON_LINE="0 3 1,16 * * /usr/bin/certbot renew --quiet >> /var/log/certbot-renew.log 2>&1"
 
 echo "🌐 Verificando que el dominio $DOMAIN apunte a este servidor..."
 
@@ -33,7 +33,7 @@ fi
 
 # Emitir certificado en modo staging
 echo "🔐 Solicitando certificado con Let's Encrypt (modo staging)..."
-sudo certbot --nginx --staging --redirect --non-interactive --agree-tos --email "$EMAIL" -d "$DOMAIN"
+sudo certbot --nginx --staging --non-interactive --agree-tos --email "$EMAIL" -d "$DOMAIN"
 
 # Agregar entrada a crontab
 echo "📅 Verificando cron..."

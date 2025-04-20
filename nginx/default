@@ -1,12 +1,46 @@
+# Redirección HTTP a HTTPS (con o sin www)
 server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
+    listen 80;
+    listen [::]:80;
+    server_name ecnuteam.com www.ecnuteam.com;
 
-    server_name ecnu.dev;
+    return 301 https://ecnuteam.com$request_uri;
+}
 
-    root /var/www/html;
-    index index.html index.htm;
+# Redirección HTTPS de www → sin www
+server {
+    listen 443 ssl;
+    server_name www.ecnuteam.com;
 
+    ssl_certificate /etc/letsencrypt/live/ecnuteam.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ecnuteam.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    return 301 https://ecnuteam.com$request_uri;
+}
+
+# Servidor principal HTTPS sin www (app en puerto 3000)
+server {
+    listen 443 ssl;
+    server_name ecnuteam.com;
+
+    ssl_certificate /etc/letsencrypt/live/ecnuteam.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ecnuteam.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    # Servir solo imágenes y videos desde /public
+    location ~* ^/(.*\.(?:png|jpg|jpeg|gif|ico|svg|webp|mp4|webm))$ {
+        root /home/deployer/app/current/public;
+        try_files /$1 =404;
+
+        access_log off;
+        expires 30d;
+        add_header Cache-Control "public";
+    }
+
+    # Todo lo demás se maneja vía backend
     location / {
         proxy_pass http://localhost:3000;
         proxy_http_version 1.1;
@@ -15,4 +49,12 @@ server {
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
     }
+
+    # Activar GZIP para mejorar performance
+    gzip on;
+    gzip_types text/plain text/css text/xml text/javascript application/javascript application/x-javascript application/json application/xml application/xml+rss application/atom+xml application/xhtml+xml application/manifest+json application/font-woff application/font-woff2 application/vnd.ms-fontobject font/ttf font/otf font/woff font/woff2 image/svg+xml image/x-icon image/vnd.microsoft.icon audio/mpeg video/mp4 video/webm;
+    gzip_proxied any;
+    gzip_vary on;
+    gzip_comp_level 6;
+    gzip_min_length 256;
 }
