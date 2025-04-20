@@ -22,7 +22,7 @@
 - [x] Dominio ecnuteam.com
 - [x] Chequear si viene concertificado
 
-- [ ] Instalar NGINX
+- [x] Instalar NGINX
 - [ ] Ver pagina de prueba
 - [ ] Chequear redirecciones https y http con y sin www
 
