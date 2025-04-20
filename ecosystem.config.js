@@ -12,8 +12,8 @@ module.exports = {
 
   deploy: {
     production: {
-      host: "ecnuteam.com", // ← Este es el alias definido en ~/.ssh/config
-      user: "deployer", // PM2 aún requiere que lo definas (aunque ya está en ~/.ssh/config)
+      host: "ecnuteam.com",
+      user: "deployer",
       key: "~/.ssh/deployer-ecnuteam",
       ref: "origin/deploy-md",
       repo: "https://github.com/mmiltonc/project_ECNU.git",
@@ -28,8 +28,8 @@ module.exports = {
 
       "pre-deploy-local":
         "echo '📁 Verificando si .env.production ya existe en el servidor...' && " +
-        "ssh -F ~/.ssh/config ecnuteam.com '[ -f /home/deployer/app/shared/.env.production ]' || " +
-        "(echo '📁 Copiando .env.production al servidor...' && scp -F ~/.ssh/config .env.production ecnuteam.com:/home/deployer/app/shared/.env.production)",
+        "ssh -F ~/.ssh/config deployer@ecnuteam.com '[ -f /home/deployer/app/shared/.env.production ]' || " +
+        "(echo '📁 Copiando .env.production al servidor...' && scp -F ~/.ssh/config .env.production deployer@ecnuteam.com:/home/deployer/app/shared/.env.production)",
 
       "post-deploy":
         "echo '🚀 Post-deploy iniciado...' && " +
