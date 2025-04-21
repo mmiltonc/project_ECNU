@@ -33,7 +33,7 @@ if ! command -v certbot >/dev/null 2>&1; then
 fi
 
 # Emitir certificado en modo staging
-echo "🔐 Solicitando certificado con Let's Encrypt (modo staging)..."
+echo "🔐 Solicitando certificado con Let's Encrypt..."
 sudo certbot --nginx --non-interactive --agree-tos --email "$EMAIL" -d "$DOMAIN"
 
 # Agregar entrada a crontab
