@@ -34,7 +34,7 @@ fi
 
 # Emitir certificado en modo staging
 echo "🔐 Solicitando certificado con Let's Encrypt..."
-sudo certbot --nginx --non-interactive --agree-tos --email "$EMAIL" -d "$DOMAIN"
+sudo certbot --nginx --non-interactive --agree-tos --email "$EMAIL" -d "$DOMAIN" -d www."$DOMAIN"
 
 # Agregar entrada a crontab
 echo "📅 Verificando cron..."
