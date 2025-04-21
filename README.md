@@ -78,7 +78,7 @@ El certificado SSL se genera usando Let's Encrypt y se instala automáticamente 
   ```bash
   npm run deploy
   ```
-- El servidor está configurado con Ubuntu 22.04 y Node.js.
+- El servidor está configurado con Ubuntu 22.04, Node.js y utiliza **NGINX** como servidor web para manejar las peticiones HTTP y redirigir al proceso de Node.js gestionado por PM2.
 - El dominio apunta al VPS y tiene SSL habilitado.
 - PM2 gestiona la aplicación en producción.
 
