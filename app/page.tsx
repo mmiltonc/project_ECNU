@@ -8,12 +8,10 @@ import About from "@/components/about";
 import Motivation from "@/components/motivation";
 import Faq from "@/components/faq";
 import Contact from "@/components/contact";
-import Home from "@/components/home";
 
-export default function Landing() {
+export default function Home() {
   return (
     <ModalProvider>
-      <Home />
       <Header />
       <Introduction />
       <Programs />
