@@ -1,34 +1,64 @@
-import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import { PayPalButtonStyle } from "@paypal/paypal-js";
+import {
+  PayPalScriptProvider,
+  PayPalButtons,
+  ReactPayPalScriptOptions,
+} from "@paypal/react-paypal-js";
 
-export default function PayPalButton() {
+export default function PayPalComponent(props) {
+  const options:ReactPayPalScriptOptions = {
+    clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "",
+    currency: "USD",
+    intent: "capture",
+  };
+
+  const style:PayPalButtonStyle = {
+    layout: "horizontal",
+    color: "blue",
+    shape: "rect",
+  };
+
+  const createOrder = async () => {
+    const response = await fetch("/api/paypal", {
+      method: "POST",
+      body: JSON.stringify({
+        plan: "plan-plus-gym-virtual",
+      }),
+    });
+    const order = await response.json();
+    console.log("order: ", order);
+    return order.id;
+  };
+
+  const onApprove = async (data: any, actions: any) => {
+    console.log("aprovado: ", data);
+    const order = await actions.order.capture();
+    console.log("order: ", order);
+    return order;
+  };
+
+  const onCancel = (data: any) => {
+    console.log("cancelacion id: ", data);
+  };
+
+  const onError = (data: any) => {
+    console.log("error: ", data);
+  };
 
   return (
     <div className="flex w-40">
-      <PayPalScriptProvider options={{ 'client-id': "AYtCLER7-I-wo-J8FFj85qLrg-GJPFikumaqzMQpkOG7ZXdzLxtjWLFOymJ4OsyPtMecHZl2ae6Mt7ah" }}>
-        <PayPalButtons 
-          style={{
-            layout: 'horizontal'
-          }}
-          createOrder={async () => {
-            const res = await fetch('/api/paypal', {
-              method: "POST"
-            })
-            const order = await res.json()
-            console.log('order: ', order)
-            return order.id
-          }}
-          onApprove={(data: any, actions: any) => {
-            console.log('aprovado: ', data)
-            actions.order.capture()
-          }}
-          onCancel={(data: any) => {
-            console.log('cancelacion id: ', data)
-          }}
+      <PayPalScriptProvider options={options}>
+        <PayPalButtons
+          style={style}
+          createOrder={createOrder}
+          onApprove={onApprove}
+          onCancel={onCancel}
+          onError={onError}
         />
       </PayPalScriptProvider>
     </div>
   );
 
-  // createOrder={createOrder} 
+  // createOrder={createOrder}
   // onApprove={onApprove}
 }

@@ -1,7 +1,7 @@
 import {Payment} from "mercadopago";
 import {revalidatePath} from "next/cache";
 
-import api, {mercadopago} from "@/app/api/api";
+import api, {mercadopago} from "@/app/api/mercadopago/route";
 
 export async function POST(request: Request) {
   // Obtenemos el cuerpo de la petición que incluye información sobre la notificación

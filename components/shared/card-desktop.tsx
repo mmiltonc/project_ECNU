@@ -4,6 +4,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { StaticImageData } from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { PlansTypes } from '@/app/types/formData';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,10 +12,10 @@ interface CardProps {
     main: boolean;
     index: number;
     type: string;
-    typeVideo: string;
     image?: string | StaticImageData;
-    setTypeSelected?: (value: string) => void;
-    setOpen?: (value: boolean) => void;
+    setPlan: (value: string) => void;
+    setOpen: (value: boolean) => void;
+    plan: PlansTypes | null;
 }
 
 const CardDesktop: FC<CardProps> = (
@@ -22,10 +23,11 @@ const CardDesktop: FC<CardProps> = (
      index,
      image,
      type,
-     typeVideo,
-     setTypeSelected,
-     setOpen
+     setPlan,
+     setOpen,
+     plan
     }) => {
+
 
     const cardRef = useRef(null);
 
@@ -41,11 +43,10 @@ const CardDesktop: FC<CardProps> = (
     // }
 
     const handleOpen = () => {
-        if (setOpen && setTypeSelected) {
-          setTypeSelected(typeVideo)
-          setOpen(true); // Llama a la función para actualizar el estado
-        }
+      setPlan(plan)
+      setOpen(true); // Llama a la función para actualizar el estado
     };
+
 
     useEffect(() => {
         const directions = [
