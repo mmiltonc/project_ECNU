@@ -1,6 +1,5 @@
 import React, { useEffect, useRef} from 'react';
 import {FC } from 'react'
-import CheckIcon from '@mui/icons-material/Check';
 import { StaticImageData } from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -29,21 +28,10 @@ const CardDesktop: FC<CardProps> = (
 
     const cardRef = useRef(null);
 
-    const generateLink = (numero:string, cantDias?:number): string => {
-        const linkWhatsApp: string = `https://wa.me/${numero}?text=Hola Lucas! Me gustaría consultar sobre las clases en parque Saavedra para ${cantDias} veces por semana. Saludos`
-        return linkWhatsApp
-    }
-
-    // const onClick = () => {
-    //     const link: string = generateLink('1167837231', cantDias)
-    //     const url = window.open(link, '_blank')
-    //     url?.focus()
-    // }
-
     const handleOpen = () => {
         if (setOpen && setTypeSelected) {
           setTypeSelected(typeVideo)
-          setOpen(true); // Llama a la función para actualizar el estado
+          setOpen(true); 
         }
     };
 
@@ -53,7 +41,6 @@ const CardDesktop: FC<CardProps> = (
           { x: 200, y: 0 }     // Derecha
         ];
 
-        // Obtener la dirección basada en el índice
         const { x, y } = directions[index % directions.length];
 
         // Animación con GSAP y ScrollTrigger
@@ -73,11 +60,6 @@ const CardDesktop: FC<CardProps> = (
           }
         );
       }, [index]);
-
-
-
-
-
 
     return (
         <div className={`w-[350px] min-h-[600px] max-h-[600px] flex flex-col items-center rounded-3xl border-2 border-red-700

@@ -1,11 +1,9 @@
 "use client"
 import { useEffect, useState, useRef } from 'react'
 import { useModal } from "../app/context/modalContext";
-import CardMobile from './shared/card-mobile'
 import CardDesktop from './shared/card-desktop'
 import { Steps } from './shared/steps';
 import {GymVirtual} from './shared/gymVirtual';
-import DescripcionRetoGrasa from '../public/data/reto-grasa.json'
 import AnimatedText from './shared/animatedText'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -34,7 +32,6 @@ const arrayPlanificaciones = [
         imagen: '/images/plan_plani_online.jpeg'
     }
 ]
-
 const arrayGymVirtual = [
     {
         main: true,
@@ -53,10 +50,10 @@ const arrayGymVirtual = [
 const Programs = () => {
     const sectionRef = useRef<HTMLElement | null>(null);
     const { isOpen, abrirModal, cerrarModal } = useModal();
-    const [isMobile, setIsMobile] = useState(false);
     const [camposVisibles, setCamposVisibles] = useState(false);
     const [typeSelected, setTypeSelected] = useState('');
     const [stepForm, setStepForm] = useState(1);
+    const [modalPage, setModalPage] = useState(1);
 
     const [formData, setFormData] = useState({
         nombre: "",
@@ -70,8 +67,6 @@ const Programs = () => {
         usdPrice: 132
     });
 
-    const [modalPage, setModalPage] = useState(1);
-
     const paisesHispanos = [
         { nombre: "Argentina", codigo: "+54", bandera: "🇦🇷" },
         { nombre: "España", codigo: "+34", bandera: "🇪🇸" },
@@ -83,13 +78,6 @@ const Programs = () => {
         { nombre: "Ecuador", codigo: "+593", bandera: "🇪🇨" },
         { nombre: "Venezuela", codigo: "+58", bandera: "🇻🇪" },
     ];
-
-    useEffect(() => {
-        // Esta lógica solo se ejecutará en el cliente
-        const userAgent = navigator.userAgent;
-        const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-        setIsMobile(mobileRegex.test(userAgent));
-    }, []);
 
     useEffect(() => {
         if (formData.nombre.trim() !== "" && formData.pais.trim() !== "") {
@@ -112,6 +100,15 @@ const Programs = () => {
           }
         }
     }, [abrirModal]);
+
+    useEffect(() => {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('modal');
+        window.history.replaceState({}, '', url.toString());
+        
+        const cleanHash = "#clasesyretos";
+        window.location.hash = cleanHash;
+    }, []);
 
     const handleClose = () => {
         setCamposVisibles(false);
@@ -160,16 +157,6 @@ const Programs = () => {
         }
     };
 
-    if (typeof window !== "undefined") {
-        const url = new URL(window.location.href);
-        // Elimina los parámetros que no deseas mostrar
-        url.searchParams.delete('modal');
-        // Actualiza la URL sin recargar la página
-        window.history.replaceState({}, '', url.toString());
-        const cleanHash = "#clasesyretos";
-        window.location.hash = cleanHash;
-    }
-
     return (
         <section ref={sectionRef} className='w-auto flex flex-col lg:mt-0' id='clasesyretos'>
                 <div className='flex flex-col pt-10 mb-10 ml-4 text-4xl font-bold lg:hidden'>
@@ -188,7 +175,8 @@ const Programs = () => {
                             <p  className='w-[100%] text-center font-bold text-3xl text-red-800'>ETAPA UNO</p>
                         </div>
                         <div className='flex justify-center items-center mt-20 mb-14 '>
-                            <p className='w-[55%] text-center text-2xl'>
+                            <p className='w-[80%] text-center text-2xl
+                                          lg:w-[55%]'>
                             Un gimnasio virtual con tu propio peso corporal, creado para convertirte en esa persona que queres lograr física y mentalmente,
                             3 desafíos (Reto perder grasa, Pectorales de hierro, Abdomen de acero) sobrepasarás niveles en ascenso incursionandote en la actividad
                             física, con 45 minutos por día conseguirás un cuerpo funcional y atlético.
@@ -217,7 +205,8 @@ const Programs = () => {
                             <p  className='w-[100%] text-center font-bold text-3xl text-red-800'>ETAPA DOS</p>
                         </div>
                         <div className='flex justify-center items-center mt-20 mb-32'>
-                            <p className='w-[55%] text-center text-2xl'>
+                            <p className='w-[80%] text-center text-2xl
+                                          lg:w-[55%]'>
                                 Mis planificaciones online de calistenia están diseñadas específicamente en base a tus preferencias
                                  y objetivos. Esta pensado para niveles intermedios y avanzados. Con esta modalidad podrás entrenar
                                   desde tu casa con materiales (Barra Dominadas). También se pueden utilizar barras en cualquier parque
@@ -226,36 +215,20 @@ const Programs = () => {
                             </p>
                         </div>
                         <div className='w-full flex flex-wrap justify-center gap-8 lg:mt-20 bg-radial-red-black'>
-                            {isMobile ? (
-                                <>
-                                    <CardMobile
-                                        main={true}
-                                        type='reto'
-                                        title='Reto Perder Grasa'
-                                        arrayDescripcion={DescripcionRetoGrasa}
-                                        price={16800}
-                                        dPrice={45}
+                            {arrayPlanificaciones.map((item, index) => {
+                                return (
+                                    <CardDesktop
+                                        main={item.main}
+                                        index={index}
+                                        key={index}
+                                        type={item.type}
+                                        typeVideo={item.typeVideo}
+                                        image={item.imagen}
+                                        setTypeSelected={setTypeSelected}
+                                        setOpen={abrirModal}
                                     />
-                                </>
-                            ) : (
-                                <>
-                                    {arrayPlanificaciones.map((item, index) => {
-                                        return (
-                                            <CardDesktop
-                                                main={item.main}
-                                                index={index}
-                                                key={index}
-                                                type={item.type}
-                                                typeVideo={item.typeVideo}
-                                                image={item.imagen}
-                                                setTypeSelected={setTypeSelected}
-                                                setOpen={abrirModal}
-                                            />
-                                        )
-                                    })}
-                                </>
-
-                            )}
+                                )
+                            })}
                         </div>
                     </>
                 </div>
@@ -266,12 +239,13 @@ const Programs = () => {
                     aria-describedby="modal-modal-description"
                 >
                     <Box
-                        className="w-[950px] max-h-[80vh] overflow-y-auto overflow-x-hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-100
-                        shadow-xl p-4 text-gray-900 rounded-xl"
+                        className="w-[90%] max-h-[80vh] overflow-y-auto overflow-x-hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-100
+                        shadow-xl p-4 text-gray-900 rounded-xl
+                        lg:w-[950px]"
                     >
                         {modalPage === 1 && (
                             <>
-                                <div className="mt-6 mb-6 w-[80%] relative -z-10 mx-auto">
+                                <div className="mt-6 mb-6 w-full lg:w-[80%] relative -z-10 mx-auto">
                                     {typeSelected === 'gym' ? (
                                         <video
                                         autoPlay
@@ -341,7 +315,7 @@ const Programs = () => {
                                                 {camposVisibles && (
                                                 <>
                                                     {/* Fila 2: Ciudad, Correo */}
-                                                    <div className="grid grid-cols-3 md:grid-cols-3 gap-4">
+                                                    <div className="grid lg:grid-cols-3 grid-cols-1 gap-4">
                                                         <div>
                                                             <label className="block text-sm font-medium text-gray-700">Ciudad</label>
                                                             <input
@@ -444,7 +418,7 @@ const Programs = () => {
                                                             Metodos de pago
                                                         </span>
                                                     </div>
-                                                    <div className="bg-white py-6 pr-6 rounded-lg">
+                                                    <div className="bg-white py-6 lg:pr-6 rounded-lg mx-auto">
                                                         {formData.pais === 'Argentina' ? (
                                                             <button type='submit' className='border-2 border-gray-500 rounded-md'>
                                                                 <Image

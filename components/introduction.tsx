@@ -19,8 +19,8 @@ const bebasNeue = Bebas_Neue({
 
 const Introduction = () => {
     return (
-        <section className='w-auto h-[500px] bg-radial-red-black mx-auto mt-14
-                         lg:h-[800px] lg:flex lg:flex-col lg:justify-center lg:items-center'>
+        <section className='w-auto h-[500px] bg-radial-red-black mx-auto mt-14 px-6
+                            lg:h-[800px] lg:flex lg:flex-col lg:justify-center lg:items-center lg:px-0'>
                 <div className='pt-2 mb-10 text-4xl font-bold lg:ml-8
                                 lg:flex lg:justify-center lg:items-center lg:text-6xl'>
                     <p className='lg:mt-14'>Por qué ECNU Online mejoraría mi vida</p>
