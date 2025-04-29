@@ -1,3 +1,5 @@
+import plansData from "@/app/data/plans.json";
+import { FormDataType } from "@/app/types/formData";
 import {
   ApiError,
   CheckoutPaymentIntent,
@@ -8,12 +10,10 @@ import {
   ItemCategory,
 } from "@paypal/paypal-server-sdk";
 import { NextResponse } from "next/server";
+import { PHONE_CODES } from "@/app/types/formData";
 
 const oAuthClientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "";
 const oAuthClientSecret = process.env.PAYPAL_CLIENT_SECRET || "";
-
-console.log("clientId: ", oAuthClientId);
-console.log("clientSecret: ", oAuthClientSecret);
 
 const client = new Client({
   clientCredentialsAuthCredentials: { oAuthClientId, oAuthClientSecret },
@@ -28,28 +28,55 @@ const client = new Client({
 
 const ordersController = new OrdersController(client);
 
-const createOrder = async (cart) => {
-  console.log("cart: ", cart);
-  const collect = {
+const createOrder = async (formData: FormDataType) => {
+  console.log("formData: ", formData);
+  const planInfo = plansData.plans.find(
+    (plan: any) => plan.sku === formData.plan
+  );
+
+  if (!planInfo) throw new Error("Plan not found.");
+  if (formData.pais === "ARG")
+    throw new Error("Payment method not allowed in Argentina.");
+
+  const { name, price, sku } = planInfo;
+
+  const currencyCode = "USD";
+  const description = name;
+  const quantity = "1";
+  const value = String(price.usd);
+  const givenName = formData.nombre?.split(" ").at(0);
+  const surname = formData.nombre?.split(" ").at(1) || "";
+  const countryCode = PHONE_CODES[formData.pais];
+  const nationalNumber = formData.celular;
+
+  const order = {
     body: {
       intent: CheckoutPaymentIntent.Capture,
+      payer: {
+        emailAddress: formData.emailLocalPart + "@gmail.com",
+        name: { givenName, surname },
+        phone: { phoneType: "MOBILE", phoneNumber: { nationalNumber, countryCode } },
+      },
       purchaseUnits: [
         {
           amount: {
-            currency_code: "USD",
-            value: "100.00",
+            currencyCode,
+            value,
+            breakdown: {
+              itemTotal: {
+                currencyCode,
+                value
+              }
+            }
           },
           items: [
             {
-              name: "Plan Plus - Gym Virtual",
-              description: "Plan Plus - Gym Virtual",
-              quantity: "1",
-              unit_amount: {
-                currency_code: "USD",
-                value: "100.00",
-              },
+              name,
+              description,
+              quantity,
+              unitAmount: { currencyCode, value },
               category: ItemCategory.DigitalGoods,
-              sku: "plan-plus-gym-virtual",
+              sku,
             },
           ],
         },
@@ -59,8 +86,8 @@ const createOrder = async (cart) => {
   };
 
   try {
-    const { body, ...httpResponse } = await ordersController.createOrder(
-      collect
+    const { body, ...httpResponse } = await ordersController.ordersCreate(
+      order
     );
     // Get more response info...
     // const { statusCode, headers } = httpResponse;
@@ -77,13 +104,14 @@ const createOrder = async (cart) => {
 };
 
 export async function POST(request: Request) {
-  const body = await request.json();
+  const formData = await request.json();
 
   try {
-    const { result, ...httpResponse } = await ordersController.createOrder(
-      collect
-    );
-    return NextResponse.json({ id: result.id });
+    console.log("--------PAGO DE PAYPAL");
+    console.log("formData: ", formData);
+    const result = await createOrder(formData);
+    console.log("result: ", result);
+    return NextResponse.json({ id: result?.jsonResponse.id });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

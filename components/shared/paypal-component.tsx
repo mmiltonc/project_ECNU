@@ -1,3 +1,4 @@
+import { FormDataType } from "@/app/types/formData";
 import { PayPalButtonStyle } from "@paypal/paypal-js";
 import {
   PayPalScriptProvider,
@@ -5,7 +6,13 @@ import {
   ReactPayPalScriptOptions,
 } from "@paypal/react-paypal-js";
 
-export default function PayPalComponent(props) {
+type Props = {
+  formData: FormDataType;
+};
+
+export default function PayPalComponent(props: Props) {
+  const { formData } = props;
+
   const options:ReactPayPalScriptOptions = {
     clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "",
     currency: "USD",
@@ -21,9 +28,7 @@ export default function PayPalComponent(props) {
   const createOrder = async () => {
     const response = await fetch("/api/paypal", {
       method: "POST",
-      body: JSON.stringify({
-        plan: "plan-plus-gym-virtual",
-      }),
+      body: JSON.stringify(formData),
     });
     const order = await response.json();
     console.log("order: ", order);
@@ -31,7 +36,7 @@ export default function PayPalComponent(props) {
   };
 
   const onApprove = async (data: any, actions: any) => {
-    console.log("aprovado: ", data);
+    console.log("aprobado: ", data);
     const order = await actions.order.capture();
     console.log("order: ", order);
     return order;

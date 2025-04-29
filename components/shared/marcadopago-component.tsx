@@ -4,15 +4,13 @@ import { FormDataType } from "@/app/types/formData";
 import mercadopagoLogo from "@/public/images/mercado-pago-logo.png";
 import Image from "next/image";
 
-type MercadopagoComponentProps = {
+type Props = {
   formData: FormDataType;
 };
 
-export default function MercadopagoComponent(
-  formData: MercadopagoComponentProps
-) {
-
-  /* TODO: Hacer ventana de loading */
+/* TODO: Hacer ventana de loading */
+export default function MercadopagoComponent( props: Props ) {
+  const {formData} = props
 
   const handleSubmit = async () => {
     const response = await fetch("/api/mercadopago", {

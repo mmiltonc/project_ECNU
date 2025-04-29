@@ -11,16 +11,17 @@ export const mercadopago = new MercadoPagoConfig({ accessToken });
 
 export async function POST(request: Request) {
   try {
+    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
     const { formData } = await request.json();
     const metadata = {
-      plan: formData.plan,
-      nombre: formData.nombre,
-      pais: formData.pais,
-      ciudad: formData.ciudad,
       celular: formData.celular,
-      objetivos: formData.objetivos,
-      email: formData.emailLocalPart + "@gmail.com",
+      ciudad: formData.ciudad,
       codigoArea: PHONE_CODES[formData.pais],
+      email: formData.emailLocalPart + "@gmail.com",
+      nombre: formData.nombre,
+      objetivos: formData.objetivos,
+      pais: formData.pais,
+      plan: formData.plan,
     };
 
     console.log("metadata: ", metadata);
@@ -28,24 +29,25 @@ export async function POST(request: Request) {
     const planInfo = plansData.plans.find((plan: any) => plan.sku === formData.plan);
 
     if (!planInfo) throw new Error("Plan not found.");
+    if (formData.pais !== "ARG") throw new Error("Payment method not allowed outside Argentina.");
 
-    if (!process.env.NEXT_PUBLIC_BASE_URL)
-      throw new Error("NEXT_PUBLIC_BASE_URL is not defined.");
+    const { name, price, sku } = planInfo;
 
-    const id = planInfo.sku;
-    const unit_price =
-      formData.pais === "ARG" ? planInfo.price.ars : planInfo.price.usd;
-    const title = planInfo.name;
+    if (!BASE_URL) throw new Error("NEXT_PUBLIC_BASE_URL is not defined.");
+
+    const id = sku;
     const quantity = 1;
+    const title = name;
+    const unit_price = price.ars
 
-    const success = `${process.env.NEXT_PUBLIC_BASE_URL}/?modal=1#clasesyretos`;
-    const pending = `${process.env.NEXT_PUBLIC_BASE_URL}/?modal=2#clasesyretos`;
-    const failure = `${process.env.NEXT_PUBLIC_BASE_URL}/?modal=3#clasesyretos`;
+    const failure = `${BASE_URL}/?modal=3#clasesyretos`;
+    const pending = `${BASE_URL}/?modal=2#clasesyretos`;
+    const success = `${BASE_URL}/?modal=1#clasesyretos`;
 
     const body = {
       items: [{ id, unit_price, quantity, title }],
       metadata,
-      back_urls: { success, pending, failure },
+      back_urls: { failure , pending, success },
       auto_return: "approved",
       binary_mode: true,
       payment_methods: {
