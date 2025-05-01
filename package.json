@@ -26,6 +26,8 @@
     "@paypal/paypal-server-sdk": "^1.0.0",
     "@paypal/react-paypal-js": "^8.8.3",
     "@react-email/components": "0.0.17",
+    "firebase": "^11.6.0",
+    "firebase-admin": "^13.3.0",
     "framer-motion": "^11.3.24",
     "gsap": "^3.12.5",
     "mercadopago": "^2.2.0",
@@ -39,7 +41,8 @@
     "react-select": "^5.9.0",
     "resend": "^3.2.0",
     "swiper": "^11.1.14",
-    "tailwindcss-animated": "^1.1.2"
+    "tailwindcss-animated": "^1.1.2",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/node": "^20",

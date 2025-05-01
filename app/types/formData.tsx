@@ -38,3 +38,13 @@ export interface FormDataType {
   celular: string;
   objetivos: string;
 }
+
+export type PlanType = {
+  sku: string;
+  name: string;
+  duration: number;
+  price: {
+    usd: number;
+    ars: number;
+  };
+};
