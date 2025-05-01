@@ -15,7 +15,7 @@ interface CardProps {
     image?: string | StaticImageData;
     setPlan: (value: string) => void;
     setOpen: (value: boolean) => void;
-    plan: PlansTypes | null;
+    plan: PlansTypes;
 }
 
 const CardDesktop: FC<CardProps> = (

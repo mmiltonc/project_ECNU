@@ -1,18 +1,28 @@
 import { MercadoPagoConfig, Preference } from "mercadopago";
 import { NextResponse } from "next/server";
 import plansData from "@/app/data/plans.json";
-import { PHONE_CODES } from "@/app/types/formData";
+import { FormDataType, PHONE_CODES } from "@/app/types/formData";
 
 const accessToken = process.env.MERCADO_PAGO_ACCESS_TOKEN;
 
 if (!accessToken) throw new Error("MERCADO_PAGO_ACCESS_TOKEN is not defined.");
 
-export const mercadopago = new MercadoPagoConfig({ accessToken });
+const mercadopago = new MercadoPagoConfig({ accessToken });
 
 export async function POST(request: Request) {
   try {
     const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
-    const { formData } = await request.json();
+    const { formData } = await request.json() as { formData: FormDataType };
+
+    /* TODO: Validate with JOI */
+    if (!formData.celular) throw new Error("Phone number is required.");
+    if (!formData.ciudad) throw new Error("City is required.");
+    if (!formData.emailLocalPart) throw new Error("Email is required.");
+    if (!formData.nombre) throw new Error("Name is required.");
+    if (!formData.objetivos) throw new Error("Goals are required.");
+    if (!formData.pais) throw new Error("Country is required.");
+    if (!formData.plan) throw new Error("Plan is required.");
+
     const metadata = {
       celular: formData.celular,
       ciudad: formData.ciudad,

@@ -30,11 +30,11 @@ export enum PlansTypes {
 }
 
 export interface FormDataType {
-  plan: PlansTypes | null;
-  pais: CountryCode | null;
-  nombre: string | null;
-  ciudad: string | null;
-  emailLocalPart: string | null;
-  celular: string | null;
-  objetivos: string | null;
+  plan: PlansTypes | string;
+  pais: CountryCode | "";
+  nombre: string;
+  ciudad: string;
+  emailLocalPart: string;
+  celular: string;
+  objetivos: string;
 }

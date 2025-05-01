@@ -68,20 +68,16 @@ const Programs = () => {
   const [stepForm, setStepForm] = useState(1);
 
   const [formData, setFormData] = useState<FormDataType>({
-    plan: null,
-    nombre: null,
-    pais: null,
-    ciudad: null,
-    emailLocalPart: null,
-    celular: null,
-    objetivos: null,
+    plan: "",
+    nombre: "",
+    pais: "",
+    ciudad: "",
+    emailLocalPart: "",
+    celular: "",
+    objetivos: "",
   });
 
   const [modalPage, setModalPage] = useState(1);
-
-  const handleSubmit = async (paymentMethod: string) => {
-    console.log("paymentMethod: ", paymentMethod);
-  }
 
   useEffect(() => {
     // Esta lógica solo se ejecutará en el cliente
@@ -116,13 +112,13 @@ const Programs = () => {
   const handleClose = () => {
     setCamposVisibles(false);
     setFormData({
-      plan: null,
-      nombre: null,
-      pais: null,
-      ciudad: null,
-      emailLocalPart: null,
-      celular: null,
-      objetivos: null,
+      plan: "",
+      nombre: "",
+      pais: "",
+      ciudad: "",
+      emailLocalPart: "",
+      celular: "",
+      objetivos: "",
     });
     cerrarModal();
     setModalPage(1);
@@ -337,7 +333,7 @@ const Programs = () => {
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 text-black rounded-md shadow-sm focus:outline-none"
                             required
                           >
-                            <option value={null} selected disabled>
+                            <option value={""} selected disabled>
                               Selecciona tu país
                             </option>
                             {COUNTRIES.map((country) => (
@@ -400,7 +396,7 @@ const Programs = () => {
                               </label>
                               <div className="mt-1 flex items-center">
                                 <span className="flex items-center px-3 py-2 border border-gray-300 rounded-l-md bg-gray-100">
-                                  {PHONE_CODES[formData.pais]}
+                                  {PHONE_CODES[formData.pais as keyof typeof PHONE_CODES]}
                                 </span>
                                 <input
                                   type="text"
