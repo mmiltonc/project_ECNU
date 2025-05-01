@@ -35,3 +35,4 @@
 - [ ] Squash de todo el branch deploy-md
 - [ ] Sacar de public la carpeta data
 - [ ] Agregar Firestore: https://firebase.google.com/docs/firestore?hl=es-419
+- [ ] Chequear que import serviceAccount from '../../firebase-adminsdk.json'; no quede cacheado en el build
