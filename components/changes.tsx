@@ -26,7 +26,8 @@ const Changes = () => {
         }
     }
 
-    const selectedChange = (id: number) => {
+    const selectedChange = (id: number, e: React.MouseEvent) => {
+        e.preventDefault();
         setItemActive(id)
     }
 
@@ -35,10 +36,10 @@ const Changes = () => {
                             lg:h-[1200px] lg:pt-40`} 
                 id='cambiosvisibles'>
                 <div className='flex w-18 ml-10'>
-                    <h1 className={`text-black text-5xl font-bold  mt-16 ml-14 lg:text-7xl`}
+                    <h1 className={`text-black text-3xl md:text-5xl font-bold  mt-16 ml-14 lg:text-7xl`}
                     >CAMBIOS VISIBLES.</h1>
                 </div>
-                <div className='w-full h-[650px]
+                <div className='w-full h-[530px]
                                 lg:h-[750px]'>
                     <ul className='w-full'>
                         <Slider 
@@ -80,7 +81,7 @@ const Changes = () => {
                     <Arrows onClickPrev={()=> onPrev()} onClickNext={() => onNext()} />
                 </div>
                 <div className='w-full px-4 flex justify-center items-center gap-3'>
-                    <button onClick={() => selectedChange(1)}>
+                    <button onClick={(e) => selectedChange(1,e)}>
                         <Image
                             src={adZequi}
                             alt='line'
@@ -88,7 +89,7 @@ const Changes = () => {
                             className='relative w-20 h-20 object-cover rounded border-2 border-gray-700'
                         /> 
                     </button>
-                    <button onClick={() => selectedChange(2)}>
+                    <button onClick={(e) => selectedChange(2, e)}>
                         <Image
                             src={adLean}
                             alt='line'
@@ -96,7 +97,7 @@ const Changes = () => {
                             className='relative w-20 h-20 object-cover rounded border-2 border-gray-700'
                         /> 
                     </button>
-                    <button onClick={() => selectedChange(3)}>
+                    <button onClick={(e) => selectedChange(3, e)}>
                         <Image
                             src={adJuan}
                             alt='line'
@@ -104,7 +105,7 @@ const Changes = () => {
                             className='relative w-20 h-20 object-cover rounded border-2 border-gray-700'
                         />                      
                     </button>
-                    <button onClick={() => selectedChange(4)}>
+                    <button onClick={(e) => selectedChange(4, e)}>
                         <Image
                             src={adEsteban}
                             alt='line'
@@ -112,7 +113,7 @@ const Changes = () => {
                             className='relative w-20 h-20 object-cover rounded border-2 border-gray-700'
                         />                      
                     </button>
-                    <button onClick={() => selectedChange(5)}>
+                    <button onClick={(e) => selectedChange(5, e)}>
                         <Image
                             src={adGerman}
                             alt='line'
