@@ -5,12 +5,14 @@ import {
   PayPalButtons,
   ReactPayPalScriptOptions,
 } from "@paypal/react-paypal-js";
+import { useRouter } from 'next/navigation'
 
 type Props = {
   formData: FormDataType;
 };
 
 export default function PayPalComponent(props: Props) {
+  const router = useRouter()
   const { formData } = props;
 
   const options:ReactPayPalScriptOptions = {
@@ -39,7 +41,7 @@ export default function PayPalComponent(props: Props) {
     console.log("aprobado: ", data);
     const order = await actions.order.capture();
     console.log("order: ", order);
-    return order;
+    router.push('/?modal=1#clasesyretos')
   };
 
   const onCancel = (data: any) => {
