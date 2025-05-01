@@ -1,5 +1,5 @@
 "use client"
-import ParallaxText from './shared/parallaxText'
+
 const Motivation = () => {
 
     return (
@@ -7,19 +7,6 @@ const Motivation = () => {
             <section className='flex flex-row w-full h-[950px] bg-red-800 pt-20 px-8
                                 lg:flex-col lg:pt-40 lg:text-xl lg:mt-0 lg:px-0' 
                     id='motivaccion'>
-                    {/* <div className='flex flex-col ml-2 mr-10 
-                                    lg:flex-row lg:w-full lg:justify-center lg:items-center lg:m-0'>
-                        <h1 className='w-[38px] text-center text-white text-5xl font-bold break-all tracking-widest my-4
-                                      lg:break-normal lg:tracking-normal lg:w-auto lg:text-7xl'>Motiv</h1>
-                        <h1 className='w-[38px] text-center text-5xl font-bold break-all text-gray-900 tracking-widest 
-                                      lg:break-normal lg:tracking-normal lg:w-auto lg:text-9xl'>A</h1>
-                        <h1 className='w-[38px] text-center text-white text-5xl font-bold break-all tracking-widest 
-                                      lg:break-normal lg:tracking-normal lg:w-auto lg:text-7xl'>cción</h1>
-                    </div> */}
-                    {/* <div className='w-full'>
-                        <ParallaxText baseVelocity={-2}>motivAccion</ParallaxText>
-                        <ParallaxText baseVelocity={2}>motivAccion</ParallaxText>
-                    </div> */}
                     <div className='w-[350px]
                                     lg:flex-row lg:w-4/6 lg:mx-auto lg:justify-center lg:items-center lg:my-20 lg:pb-10 lg:text-center mt-0 pt-0'>
                         <p className='mb-8'>Quiero que te lleves este mensaje, la mayoría de las personas esperan estar motivadas para comenzar a realizar actividad física, pero yo te quiero preguntar ...</p>

@@ -13,14 +13,15 @@ interface SliderItemProps{
 
 const SliderItem: FC<SliderItemProps> = ({itemActive, id, imagen, title, desc}) => {
     return (
-        <li className={`flex flex-col items-center justify-center w-full h-auto absolute left-0 mt-8 ${itemActive === id ? "opacity-100" : "opacity-0"} transition ease-linear duration-500`}>
+        <li className={`flex flex-col items-center justify-center w-[95%] mx-auto h-auto lg:absolute lg:left-0 mt-8 ${itemActive === id ? "opacity-100" : "opacity-0 hidden"} transition ease-linear duration-500
+                        lg:w-full`}>
             <span className="relative top-12 z-10 text-black font-bold text-3xl bg-white opacity-50 rounded-lg pl-4 pr-4">{title}</span>
-            <div className='w-full'>
+            <div className='w-full mx-auto'>
                 <Image
                 src={imagen}
                 alt='ECNU Logo'
                 fill
-                className={`relative object-cover mx-auto w-full h-[550px] rounded-md shadow-xl
+                className={`relative lg:object-cover mx-auto w-full h-[450px] rounded-md shadow-xl
                             lg:w-3/5 lg:h-[650px]`}
             />
             </div> 

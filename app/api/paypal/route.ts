@@ -95,7 +95,7 @@ const createOrder = async (formData: FormDataType) => {
   };
 
   try {
-    const result = (await ordersController.ordersCreate(order)) as OrderResponse;
+    const result = (await ordersController.createOrder(order)) as OrderResponse;
     const body = result?.body;
     const httpStatusCode = result?.statusCode;
 
