@@ -14,10 +14,11 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-/* 
-* {  
+
+/* * {  
   border: 1px blue solid;
-} */
+}  */
+
 body {
   color: rgb(var(--foreground-rgb));
   background: #171717;
@@ -121,4 +122,47 @@ body {
   .animate-slide {
     animation: slide 20s linear infinite;
   }
+}
+
+/* Estilos para los gradientes radiales */
+.bg-radial-blue-yellow {
+  background: radial-gradient(circle, #1e40af 0%, #eab308 100%);
+}
+
+.bg-radial-black-gray {
+  background: radial-gradient(circle, #111827 0%, #4b5563 100%);
+}
+
+.bg-radial-red-gray {
+  background: radial-gradient(circle, #b91c1c 0%, #4b5563 100%);
+}
+
+.bg-radial-gray-black {
+  background: radial-gradient(circle, #4b5563 0%, #111827 100%);
+}
+
+/* Estilos personalizados para Swiper */
+.gym-swiper {
+  padding: 20px 0 40px 0;
+}
+
+.gym-swiper .swiper-pagination-bullet {
+  background: #b91c1c;
+  opacity: 0.5;
+}
+
+.gym-swiper .swiper-pagination-bullet-active {
+  background: #b91c1c;
+  opacity: 1;
+}
+
+.gym-swiper .swiper-button-next,
+.gym-swiper .swiper-button-prev {
+  color: #b91c1c;
+}
+
+/* Ajustes para centrar el contenido en el slider */
+.gym-swiper .swiper-slide {
+  display: flex;
+  justify-content: center;
 }

@@ -22,7 +22,7 @@ const AccordionItem = ({idx, question, answer, turn, setTurn}:Props) => {
     }
 
     return (
-        <div className='flex items-center flex-col w-full text-black'>
+        <div className='flex items-center flex-col w-full text-black mb-4'>
             <button onClick={toggleAccordion}
             className={`rounded-xl bg-grey-400 shadow cursor-pointer w-full h-full ${turn![idx]} transition-all ease-in-out duration-700`}>
                 <div>

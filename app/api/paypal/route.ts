@@ -1,6 +1,6 @@
+import { FormDataType, PlanType } from "@/app/types/formData";
 import { v4 as uuidv4 } from "uuid";
 import plansData from "@/app/data/plans.json";
-import { FormDataType, PlanType } from "@/app/types/formData";
 import {
   ApiError,
   CheckoutPaymentIntent,
@@ -99,8 +99,7 @@ const createOrder = async (formData: FormDataType, planInfo: PlanType) => {
     const body = result?.body;
     const httpStatusCode = result?.statusCode;
 
-    if (httpStatusCode !== 201)
-      throw new Error(`Error creating order (HTTP code ${httpStatusCode})`);
+    if (httpStatusCode !== 201) throw new Error(`Error creating order (HTTP code ${httpStatusCode})`);
 
     const id = JSON.parse(body)?.id;
 
@@ -114,7 +113,6 @@ const createOrder = async (formData: FormDataType, planInfo: PlanType) => {
 
 export async function POST(request: Request) {
   const formData = (await request.json()) as FormDataType;
-
 
   try {
     /* TODO: Validate with JOI */

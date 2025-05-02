@@ -1,6 +1,5 @@
 "use client"
 import { useState } from 'react'
-import Container from './shared/container'
 import AccordionItem from './shared/accordion-item'
 import Questions from '../public/data/faq.json'
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';

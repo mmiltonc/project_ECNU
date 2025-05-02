@@ -14,7 +14,7 @@ export default function Layout() {
   return (
     <ModalProvider>
       <Home />
-      <Header />
+      {/* <Header /> */}
       <Introduction />
       <Programs />
       <Products />

@@ -28,6 +28,7 @@ export default function PayPalComponent(props: Props) {
   };
 
   const createOrder = async () => {
+    console.log("formData: ", formData);
     const response = await fetch("/api/paypal", {
       method: "POST",
       body: JSON.stringify(formData),
@@ -65,7 +66,4 @@ export default function PayPalComponent(props: Props) {
       </PayPalScriptProvider>
     </div>
   );
-
-  // createOrder={createOrder}
-  // onApprove={onApprove}
 }

@@ -1,27 +1,25 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import { useModal } from "../app/context/modalContext";
-import CardMobile from "./shared/card-mobile";
-import CardDesktop from "./shared/card-desktop";
-import { Steps } from "./shared/steps";
-import { GymVirtual } from "./shared/gymVirtual";
-import DescripcionRetoGrasa from "../public/data/reto-grasa.json";
-import AnimatedText from "./shared/animatedText";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import InfoIcon from "@mui/icons-material/Info";
-import CampaignIcon from "@mui/icons-material/Campaign";
-import PayPalComponent from "@/components/shared/paypal-component";
 import {
   COUNTRIES,
   FormDataType,
   PHONE_CODES,
   PlansTypes,
 } from "@/app/types/formData";
+import { GymVirtual } from "./shared/gymVirtual";
+import { Steps } from "./shared/steps";
+import AnimatedText from "./shared/animatedText";
+import Box from "@mui/material/Box";
+import CampaignIcon from "@mui/icons-material/Campaign";
+import CardDesktop from "./shared/card-desktop";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import InfoIcon from "@mui/icons-material/Info";
 import MercadopagoComponent from "./shared/marcadopago-component";
+import Modal from "@mui/material/Modal";
+import PayPalComponent from "@/components/shared/paypal-component";
+import Typography from "@mui/material/Typography";
 export const dynamic = "force-static";
 
 const planificationCards = [
@@ -63,9 +61,9 @@ const virtualGymCards = [
 const Programs = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
   const { isOpen, abrirModal, cerrarModal } = useModal();
-  const [isMobile, setIsMobile] = useState(false);
   const [camposVisibles, setCamposVisibles] = useState(false);
   const [stepForm, setStepForm] = useState(1);
+  const [modalPage, setModalPage] = useState(1);
 
   const [formData, setFormData] = useState<FormDataType>({
     plan: "",
@@ -77,15 +75,31 @@ const Programs = () => {
     objetivos: "",
   });
 
-  const [modalPage, setModalPage] = useState(1);
+  const handleClose = () => {
+    setCamposVisibles(false);
+    setFormData({
+      plan: "",
+      nombre: "",
+      pais: "",
+      ciudad: "",
+      emailLocalPart: "",
+      celular: "",
+      objetivos: "",
+    });
+    cerrarModal();
+    setModalPage(1);
+    setStepForm(1);
+    console.log("cerrar modal");
+  };
 
-  useEffect(() => {
-    // Esta lógica solo se ejecutará en el cliente
-    const userAgent = navigator.userAgent;
-    const mobileRegex =
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-    setIsMobile(mobileRegex.test(userAgent));
-  }, []);
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    console.log(name, value)
+    setFormData(() => ({
+      ...formData,
+      [name]: value,
+    }));
+  };
 
   useEffect(() => {
     if (formData.nombre?.trim() && formData.pais?.trim()) {
@@ -109,41 +123,14 @@ const Programs = () => {
     }
   }, [abrirModal]);
 
-  const handleClose = () => {
-    setCamposVisibles(false);
-    setFormData({
-      plan: "",
-      nombre: "",
-      pais: "",
-      ciudad: "",
-      emailLocalPart: "",
-      celular: "",
-      objetivos: "",
-    });
-    cerrarModal();
-    setModalPage(1);
-    setStepForm(1);
-    console.log("cerrar modal");
-  };
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("modal");
+    window.history.replaceState({}, "", url.toString());
 
-  const handleInputChange = (e: any) => {
-    const { name, value } = e.target;
-
-    setFormData(() => ({
-      ...formData,
-      [name]: value,
-    }));
-  };
-
-  //   if (typeof window !== "undefined") {
-  //     const url = new URL(window.location.href);
-  //     // Elimina los parámetros que no deseas mostrar
-  //     url.searchParams.delete("modal");
-  //     // Actualiza la URL sin recargar la página
-  //     window.history.replaceState({}, "", url.toString());
-  //     const cleanHash = "#clasesyretos";
-  //     window.location.hash = cleanHash;
-  //   }
+    const cleanHash = "#clasesyretos";
+    window.location.hash = cleanHash;
+  }, []);
 
   return (
     <section
@@ -166,7 +153,7 @@ const Programs = () => {
       </div>
       <div
         className="w-full h-auto mt-4
-                                lg:flex lg:flex-col lg:justify-center lg:items-center lg:mt-20 lg:mb-52"
+                    lg:flex lg:flex-col lg:justify-center lg:items-center lg:mt-20 lg:mb-52"
       >
         <>
           <div className="flex flex-col justify-center items-center mt-14">
@@ -177,7 +164,10 @@ const Programs = () => {
             </p>
           </div>
           <div className="flex justify-center items-center mt-20 mb-14 ">
-            <p className="w-[55%] text-center text-2xl">
+            <p
+              className="w-[80%] text-center text-2xl
+                              lg:w-[55%]"
+            >
               Un gimnasio virtual con tu propio peso corporal, creado para
               convertirte en esa persona que queres lograr física y mentalmente,
               3 desafíos (Reto perder grasa, Pectorales de hierro, Abdomen de
@@ -213,7 +203,10 @@ const Programs = () => {
             </p>
           </div>
           <div className="flex justify-center items-center mt-20 mb-32">
-            <p className="w-[55%] text-center text-2xl">
+            <p
+              className="w-[80%] text-center text-2xl
+                              lg:w-[55%]"
+            >
               Mis planificaciones online de calistenia están diseñadas
               específicamente en base a tus preferencias y objetivos. Esta
               pensado para niveles intermedios y avanzados. Con esta modalidad
@@ -225,37 +218,20 @@ const Programs = () => {
             </p>
           </div>
           <div className="w-full flex flex-wrap justify-center gap-8 lg:mt-20 bg-radial-red-black">
-            {isMobile ? (
-              <>
-                <CardMobile
-                  main={true}
-                  type="reto"
-                  title="Reto Perder Grasa"
-                  arrayDescripcion={DescripcionRetoGrasa}
-                  price={16800}
-                  dPrice={45}
+            {planificationCards.map((item, index) => {
+              return (
+                <CardDesktop
+                  main={item.main}
+                  index={index}
+                  key={index}
+                  type={item.type}
+                  image={item.imagen}
+                  setPlan={() => setFormData({ ...formData, plan: item.plan })}
+                  setOpen={abrirModal}
+                  plan={item.plan}
                 />
-              </>
-            ) : (
-              <>
-                {planificationCards.map((item, index) => {
-                  return (
-                    <CardDesktop
-                      main={item.main}
-                      index={index}
-                      key={index}
-                      type={item.type}
-                      image={item.imagen}
-                      setPlan={() =>
-                        setFormData({ ...formData, plan: item.plan })
-                      }
-                      setOpen={abrirModal}
-                      plan={item.plan}
-                    />
-                  );
-                })}
-              </>
-            )}
+              );
+            })}
           </div>
         </>
       </div>
@@ -266,12 +242,13 @@ const Programs = () => {
         aria-describedby="modal-modal-description"
       >
         <Box
-          className="w-[950px] max-h-[80vh] overflow-y-auto overflow-x-hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-100
-                        shadow-xl p-4 text-gray-900 rounded-xl"
+          className="w-[90%] max-h-[80vh] overflow-y-auto overflow-x-hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-100
+            shadow-xl p-4 text-gray-900 rounded-xl
+            lg:w-[950px]"
         >
           {modalPage === 1 && (
             <>
-              <div className="mt-6 mb-6 w-[80%] relative -z-10 mx-auto">
+              <div className="mt-6 mb-6 w-full lg:w-[80%] relative -z-10 mx-auto">
                 {formData.plan === PlansTypes.VirtualGym && (
                   <video
                     autoPlay
@@ -352,7 +329,7 @@ const Programs = () => {
                       {camposVisibles && (
                         <>
                           {/* Fila 2: Ciudad, Correo */}
-                          <div className="grid grid-cols-3 md:grid-cols-3 gap-4">
+                          <div className="grid lg:grid-cols-3 grid-cols-1 gap-4">
                             <div>
                               <label className="block text-sm font-medium text-gray-700">
                                 Ciudad
@@ -379,11 +356,7 @@ const Programs = () => {
                                   className="block w-full px-3 py-2 border border-gray-300 rounded-l-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                   placeholder="Solo correos gmail"
                                   required
-                                  onKeyPress={(e) => {
-                                    if (e.key === "@") {
-                                      e.preventDefault(); // Bloquear el ingreso del símbolo "@"
-                                    }
-                                  }}
+
                                 />
                                 <span className="flex items-center px-1.5 py-2 border border-gray-300 rounded-r-md bg-gray-100">
                                   @gmail.com
@@ -396,7 +369,11 @@ const Programs = () => {
                               </label>
                               <div className="mt-1 flex items-center">
                                 <span className="flex items-center px-3 py-2 border border-gray-300 rounded-l-md bg-gray-100">
-                                  {PHONE_CODES[formData.pais as keyof typeof PHONE_CODES]}
+                                  {
+                                    PHONE_CODES[
+                                      formData.pais as keyof typeof PHONE_CODES
+                                    ]
+                                  }
                                 </span>
                                 <input
                                   type="text"
@@ -463,9 +440,13 @@ const Programs = () => {
                             Metodos de pago
                           </span>
                         </div>
-                        <div className="bg-white py-6 pr-6 rounded-lg">
-                          {formData.pais === "ARG" && <MercadopagoComponent formData={formData} />}
-                          {formData.pais !== "ARG" && <PayPalComponent formData={formData} />}
+                        <div className="bg-white py-6 lg:pr-6 rounded-lg mx-auto">
+                          {formData.pais === "ARG" && (
+                            <MercadopagoComponent formData={formData} />
+                          )}
+                          {formData.pais !== "ARG" && (
+                            <PayPalComponent formData={formData} />
+                          )}
                           <div className="w-full flex justify-end items-center mt-4">
                             <button
                               className="w-32 h-8 rounded-md flex justify-center items-center bg-red-800 text-white"

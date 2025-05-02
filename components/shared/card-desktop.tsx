@@ -1,8 +1,8 @@
 import React, { useEffect, useRef} from 'react';
 import {FC } from 'react'
-import CheckIcon from '@mui/icons-material/Check';
 import { StaticImageData } from 'next/image';
 import gsap from 'gsap';
+import { useMediaQuery } from "@/hooks/use-media-query"
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { PlansTypes } from '@/app/types/formData';
 
@@ -30,17 +30,7 @@ const CardDesktop: FC<CardProps> = (
 
 
     const cardRef = useRef(null);
-
-    const generateLink = (numero:string, cantDias?:number): string => {
-        const linkWhatsApp: string = `https://wa.me/${numero}?text=Hola Lucas! Me gustaría consultar sobre las clases en parque Saavedra para ${cantDias} veces por semana. Saludos`
-        return linkWhatsApp
-    }
-
-    // const onClick = () => {
-    //     const link: string = generateLink('1167837231', cantDias)
-    //     const url = window.open(link, '_blank')
-    //     url?.focus()
-    // }
+    const isMobile = useMediaQuery("(max-width: 800px)")
 
     const handleOpen = () => {
       setPlan(plan)
@@ -49,12 +39,14 @@ const CardDesktop: FC<CardProps> = (
 
 
     useEffect(() => {
+
+
+      if (!isMobile) {
         const directions = [
           { x: -200, y: 0 },   // Izquierda
           { x: 200, y: 0 }     // Derecha
         ];
 
-        // Obtener la dirección basada en el índice
         const { x, y } = directions[index % directions.length];
 
         // Animación con GSAP y ScrollTrigger
@@ -68,21 +60,18 @@ const CardDesktop: FC<CardProps> = (
             duration: 1,
             scrollTrigger: {
               trigger: cardRef.current,
-              start: 'top 150%',
+              start: 'top 200%',
               scrub: true
             }
           }
         );
-      }, [index]);
+      }
 
-
-
-
-
+    }, [index, isMobile]);
 
     return (
-        <div className={`w-[350px] min-h-[600px] max-h-[600px] flex flex-col items-center rounded-3xl border-2 border-red-700
-            ${!image && 'bg-white'}`}
+        <div className={`w-[330px] min-h-[570px] max-h-[570px] flex flex-col items-center rounded-3xl border-2 border-red-700
+            ${!image && 'bg-white'} lg:w-[350px] lg:min-h-[600px] lg:max-h-[600px]`}
             style={{
                 backgroundImage: image ? `url(${image})` : undefined,
                 backgroundSize: 'cover',
