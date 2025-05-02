@@ -1,0 +1,20 @@
+{
+    "plans": [
+        {
+            "sku": "plan-plus-gym-virtual",
+            "name": "Plan Plus Gym Virtual",
+            "price": {
+                "usd": 1,
+                "ars": 1
+            }
+        },
+        {
+            "sku": "planificacion-virtual",
+            "name": "Planificación Virtual",
+            "price": {
+                "usd": 1,
+                "ars": 1
+            }
+        }
+    ]
+}

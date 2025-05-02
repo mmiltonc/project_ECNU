@@ -34,3 +34,4 @@
 
 - [ ] Squash de todo el branch deploy-md
 - [ ] Sacar de public la carpeta data
+- [ ] Agregar Firestore: https://firebase.google.com/docs/firestore?hl=es-419

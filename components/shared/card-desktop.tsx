@@ -4,6 +4,7 @@ import { StaticImageData } from 'next/image';
 import gsap from 'gsap';
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { PlansTypes } from '@/app/types/formData';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,10 +12,10 @@ interface CardProps {
     main: boolean;
     index: number;
     type: string;
-    typeVideo: string;
     image?: string | StaticImageData;
-    setTypeSelected?: (value: string) => void;
-    setOpen?: (value: boolean) => void;
+    setPlan: (value: string) => void;
+    setOpen: (value: boolean) => void;
+    plan: PlansTypes;
 }
 
 const CardDesktop: FC<CardProps> = (
@@ -22,20 +23,20 @@ const CardDesktop: FC<CardProps> = (
      index,
      image,
      type,
-     typeVideo,
-     setTypeSelected,
-     setOpen
+     setPlan,
+     setOpen,
+     plan
     }) => {
+
 
     const cardRef = useRef(null);
     const isMobile = useMediaQuery("(max-width: 800px)")
 
     const handleOpen = () => {
-        if (setOpen && setTypeSelected) {
-          setTypeSelected(typeVideo)
-          setOpen(true); 
-        }
+      setPlan(plan)
+      setOpen(true); // Llama a la función para actualizar el estado
     };
+
 
     useEffect(() => {
 
@@ -45,9 +46,9 @@ const CardDesktop: FC<CardProps> = (
           { x: -200, y: 0 },   // Izquierda
           { x: 200, y: 0 }     // Derecha
         ];
-  
+
         const { x, y } = directions[index % directions.length];
-        
+
         // Animación con GSAP y ScrollTrigger
         gsap.fromTo(
           cardRef.current,
