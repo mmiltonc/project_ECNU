@@ -10,11 +10,16 @@ import Faq from "@/components/faq";
 import Contact from "@/components/contact";
 import Home from "@/components/home";
 
+export const metadata = {
+  title: "ECNU Team",
+  description: "ECNU Team - El cambio nace en uno",
+};
+
 export default function Layout() {
   return (
     <ModalProvider>
       <Home />
-      {/* <Header /> */}
+      <Header />
       <Introduction />
       <Programs />
       <Products />

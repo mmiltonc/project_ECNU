@@ -28,7 +28,7 @@ const Home = () => {
     return (
         <section className='h-screen' id='home'>
             <Image
-                src='/images/lucas_banner.JPEG'
+                src='/images/bgbw.jpeg'
                 alt='ECNU Logo'
                 fill
                 className='video-background opacity-60 absolute'
@@ -37,7 +37,7 @@ const Home = () => {
                 lg:justify-start lg:items-start'
             >
                 <Image
-                    src='/images/new-logo.PNG'
+                    src='/images/hormiga.png'
                     alt='ECNU Logo'
                     fill
                     className='relative top-16 lg:w-52 lg:left-4 lg:-top-2'
@@ -49,7 +49,7 @@ const Home = () => {
                 <span className='w-8/12 text-center text-2xl lg:text-left lg:text-4xl' style={{ fontFamily: montserrat.style.fontFamily}}>Comenzá a transformar en <span className='font-bold'>90</span> días tu <span className='font-bold'>cuerpo</span> y tu <span className='font-bold'>mente</span> con mi sistema de entrenamiento online.</span>
             </div>
             <div className='mt-28 mb-24 lg:mt-28 flex flex-col justify-center items-center'>
-                <button 
+                <button
                     className='w-[300px] h-16 border-2 border-red-700 text-red-700 rounded-full bg-gradient-to-r from-black to-gray-800 transition-transform duration-300 hover:scale-110'
                     onClick={() => sendGTMEvent({ event: 'buttonClicked', value: 'xyz' })}
                 >
