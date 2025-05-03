@@ -1,4 +1,4 @@
-import { FormDataType, PlanType } from "@/app/types/formData";
+import { COUNTRIES, FormDataType, PlanType } from "@/app/types/formData";
 import { v4 as uuidv4 } from "uuid";
 import plansData from "@/app/data/plans.json";
 import {
@@ -131,13 +131,14 @@ export async function POST(request: Request) {
     if (!planInfo) throw new Error("Plan not found.");
 
     const orderDate = new Date().toLocaleString("es-AR", dateConfig);
-
     const documentId = uuidv4();
-    const document = db.collection("users").doc(documentId);
+    const country = COUNTRIES.find(({code}) => code === formData.pais)?.name;
 
+    /* TODO: Mandar todo esto a una función */
     const user = {
       city: formData.ciudad,
-      country: formData.pais,
+      country,
+      countryCode: formData.pais,
       email: formData.emailLocalPart + "@gmail.com",
       gatewayId: "paypal",
       goals: formData.objetivos,
@@ -154,8 +155,16 @@ export async function POST(request: Request) {
       planSKU: planInfo.sku,
     };
 
-    /* Be aware of race conditions */
-    document.set(user);
+    const document = db.collection("users").doc(documentId);
+
+    try {
+      /* Be aware of race conditions */
+      console.log("-------------- Creating user at db")
+      document.set(user);
+    } catch (error) {
+      /* Here we can send an email with the user data */
+      console.error("Error creating user document: ", error);
+    }
 
     const result = await createOrder(formData, planInfo);
 
@@ -170,12 +179,17 @@ export async function POST(request: Request) {
       );
 
 
-    document.update({
-      paymentStatus: 'CREATED',
-      paymentDate: paymentDate.toLocaleString("es-AR", dateConfig),
-      paymentExpirationDate: paymentExpirationDate.toLocaleString("es-AR", dateConfig),
-      paymentId: result.id,
-    });
+      try {
+        console.log("-------------- Updating user at db")
+        document.update({
+          paymentStatus: 'CREATED',
+          paymentDate: paymentDate.toLocaleString("es-AR", dateConfig),
+          paymentExpirationDate: paymentExpirationDate.toLocaleString("es-AR", dateConfig),
+          paymentId: result.id,
+        });
+      } catch (error) {
+        console.error("Error updating user document: ", error);
+      }
 
     /* TODO: Remember to update payment status on paypal webhooks */
 
