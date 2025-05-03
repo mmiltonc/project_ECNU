@@ -1,5 +1,5 @@
 import { COUNTRIES, FormDataType, PlanType } from "@/app/types/formData";
-import { v4 as uuidv4 } from "uuid";
+import { UUIDTypes, v4 as uuidv4 } from "uuid";
 import plansData from "@/app/data/plans.json";
 import {
   ApiError,
@@ -38,12 +38,7 @@ const client = new Client({
 
 const ordersController = new OrdersController(client);
 
-const createOrder = async (formData: FormDataType, planInfo: PlanType) => {
-  console.log("formData: ", formData);
-
-  if (formData.pais === "ARG")
-    throw new Error("Payment method not allowed in Argentina.");
-
+const createOrder = async (formData: FormDataType, planInfo: PlanType, userId: UUIDTypes) => {
   const { name, price, sku } = planInfo;
 
   const currencyCode = "USD";
@@ -68,6 +63,7 @@ const createOrder = async (formData: FormDataType, planInfo: PlanType) => {
       },
       purchaseUnits: [
         {
+          customId: userId,
           amount: {
             currencyCode,
             value,
@@ -124,6 +120,8 @@ export async function POST(request: Request) {
     if (!formData.pais) throw new Error("Country is required.");
     if (!formData.plan) throw new Error("Plan is required.");
 
+    if (formData.pais === "ARG") throw new Error("Payment method not allowed in Argentina.");
+
     const planInfo = plansData.plans.find(
       (plan: any) => plan.sku === formData.plan
     ) as PlanType;
@@ -131,11 +129,12 @@ export async function POST(request: Request) {
     if (!planInfo) throw new Error("Plan not found.");
 
     const orderDate = new Date().toLocaleString("es-AR", dateConfig);
-    const documentId = uuidv4();
+    const userId = uuidv4();
     const country = COUNTRIES.find(({code}) => code === formData.pais)?.name;
 
     /* TODO: Mandar todo esto a una función */
     const user = {
+      id: userId,
       city: formData.ciudad,
       country,
       countryCode: formData.pais,
@@ -155,7 +154,7 @@ export async function POST(request: Request) {
       planSKU: planInfo.sku,
     };
 
-    const document = db.collection("users").doc(documentId);
+    const document = db.collection("users").doc(userId);
 
     try {
       /* Be aware of race conditions */
@@ -166,7 +165,7 @@ export async function POST(request: Request) {
       console.error("Error creating user document: ", error);
     }
 
-    const result = await createOrder(formData, planInfo);
+    const result = await createOrder(formData, planInfo, userId);
 
     const paymentDate = new Date()
 
@@ -177,7 +176,6 @@ export async function POST(request: Request) {
       throw new Error(
         "Error creating order (no result found from createOrder)"
       );
-
 
       try {
         console.log("-------------- Updating user at db")

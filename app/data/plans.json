@@ -10,8 +10,8 @@
             }
         },
         {
-            "sku": "planificacion-virtual",
-            "name": "Planificación Virtual",
+            "sku": "plan-plus-planificacion-online",
+            "name": "Planificación Online",
             "duration": 95,
             "price": {
                 "usd": 1,
