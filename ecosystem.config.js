@@ -15,7 +15,7 @@ module.exports = {
       host: "ecnuteam.com",
       user: "deployer",
       key: "~/.ssh/deployer-ecnuteam",
-      ref: "origin/deploy-md",
+      ref: "origin/develop",
       repo: "https://github.com/mmiltonc/project_ECNU.git",
       path: "/home/deployer/app",
 
