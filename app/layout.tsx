@@ -1,67 +1,76 @@
-import './globals.css'
-import { Jost } from 'next/font/google'
-import { GoogleTagManager } from '@next/third-parties/google'
-import Script from 'next/script';
-const jost = Jost({ subsets: ['latin'] })
+import "./globals.css";
+import { Jost } from "next/font/google";
+import { GoogleTagManager } from "@next/third-parties/google";
+import Script from "next/script";
+import type { Viewport } from "next";
+const jost = Jost({ subsets: ["latin"] });
 
-// export const metadata: Metadata = {
-//   title: 'ECNU Team',
-//   description: 'El cambio nace en uno',
-// }
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
 
-const PIXEL_ID = 'TU_PIXEL_ID'; // Reemplaza con tu Pixel ID
+export const metadata = {
+  metadataBase: new URL("https://ecnuteam.com"),
+  title: "Entrenamiento funcional en casa para bienestar | ECNU Team",
+  description:
+    "Entrenamiento en casa con peso corporal diseñado para mejorar el rendimiento físico y mental, y fomentar hábitos sostenibles que promueven bienestar y longevidad.",
+  alternates: {
+    canonical: "/",
+    languages: {
+      "es-AR": "/",
+      "es-ES": "/",
+    },
+  },
+  // openGraph: {
+  // authors: ['Seb', 'Josh'],
+  // description: 'The React Framework for the Web',
+  // images: [ { url: 'https://nextjs.org/og.png', width: 800, height: 600, } ],
+  // locale: 'en_US',
+  // siteName: 'Next.js',
+  // title: 'Next.js',
+  // type: 'website',
+  // url: 'https://nextjs.org',
+  // },
+  robots: {
+    index: false,
+    follow: false,
+    nocache: false,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: false,
+      "max-video-preview": 0,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+    // icons: {
+    //   icon: '/icon.png',
+    //   shortcut: '/shortcut-icon.png',
+    //   apple: '/apple-icon.png',
+    //   other: {
+    //     rel: 'apple-touch-icon-precomposed',
+    //     url: '/apple-touch-icon-precomposed.png',
+    //   },
+    // },
+  },
+};
+
+const PIXEL_ID = "TU_PIXEL_ID"; // Reemplaza con tu Pixel ID
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-
   return (
-    <html lang="en" className='scroll-smooth'>
-      <head>
-        {/* Script del Pixel */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '${PIXEL_ID}');
-              fbq('track', 'PageView');
-            `,
-          }}
-        />
-        {/* <!-- Google Tag Manager --> */}
-          <Script
-            id="gtm-script"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `
-                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                })(window,document,'script','dataLayer','GTM-XXXXXX');
-              `,
-            }}
-          />
-          <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX"
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          />
-        </noscript>
-      </head>
-      <GoogleTagManager gtmId="GTM-KS5H2HMS" />
-      <body className={jost.className}>{children}</body>
+    <html lang="en" className="scroll-smooth">
+      <body className={jost.className}>
+        {children}
+        <GoogleTagManager gtmId="GTM-KS5H2HMS" />
+      </body>
     </html>
-  )
+  );
 }
