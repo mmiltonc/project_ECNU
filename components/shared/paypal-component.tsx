@@ -66,7 +66,4 @@ export default function PayPalComponent(props: Props) {
       </PayPalScriptProvider>
     </div>
   );
-
-  // createOrder={createOrder}
-  // onApprove={onApprove}
 }

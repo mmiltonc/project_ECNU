@@ -1,18 +1,36 @@
+import plansData from "@/app/data/plans.json";
 import { PaymentSuccessfulTemplate } from "@/app/emails/payment_successful_template";
+import { db } from "@/app/lib/firebaseAdmin";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-
-const APPROVED = "approved";
-const REJECTED = "rejected";
-const CANCELLED = "cancelled";
-const PENDING = "pending";
-const IN_PROCESS = "in_process";
+import { getStatus, PaymentStatus } from "../helpers";
 
 const apiKey = process.env.RESEND_API_KEY;
 
 if (!apiKey) throw new Error("RESEND_API_KEY is not defined.");
 
 const resend = new Resend(apiKey);
+
+const dateConfig = { timeZone: "America/Argentina/Buenos_Aires" };
+
+interface FirestoreUser {
+  name: string;
+  email: string;
+  phone: string;
+  city: string;
+  country: string;
+  goals: string;
+  orderDate: string;
+  paymentDate: string;
+  paymentExpirationDate: string;
+  paymentId: string;
+  paymentStatus: string;
+  paymentCurrency: string;
+  paymentValue: number;
+  gatewayId: string;
+  plan: string;
+  planSKU: string;
+}
 
 interface MercadopagoWebhookInterface {
   type: string;
@@ -53,9 +71,6 @@ const sendPaymentRejectedEmail = async (payer: PayerInterface) => {
     react: PaymentSuccessfulTemplate(payer),
   });
 };
-const sendPaymentCanceledEmail = async (payer: PayerInterface) => {};
-
-const sendPaymentInProcessEmail = async (payer: PayerInterface) => {};
 
 const handlePaymentWebhook = async (paymentId: string) => {
   if (!paymentId) throw new Error("Invalid request.");
@@ -67,33 +82,61 @@ const handlePaymentWebhook = async (paymentId: string) => {
 
   const response = await fetch(url, { headers });
 
-  // const response = {
-  //   json: async () => ({
-  //     payer: { first_name: "Facundo", email: "facundopereztomasek@gmail.com" },
-  //     status: "approved",
-  //   }),
-  // };
-
   const jsonResponse = await response.json();
 
   const {
     payer,
-    status,
-    metadata: { datos },
+    metadata,
     description,
+    order,
+    external_reference: userId,
   } = jsonResponse;
 
+  const status = getStatus(jsonResponse.status, "mercadopago");
+
+  const document = db.collection("users").doc(userId);
+  const documentRef = await document.get();
+  const user = documentRef.data() as FirestoreUser | undefined;
+
   const payerData = {
-    name: datos.nombre || payer.first_name,
-    email: datos.email || payer.email,
+    name: user?.name || metadata.name || payer.first_name,
+    email: user?.email || metadata.email || payer.email,
     plan: description,
   };
 
-  if (status === APPROVED) await sendPaymentSuccessfulEmail(payerData);
-  if (status === REJECTED) await sendPaymentRejectedEmail(payerData);
-  if (status === CANCELLED) await sendPaymentCanceledEmail(payerData);
-  if (status === PENDING) await sendPaymentPendingEmail(payerData);
-  if (status === IN_PROCESS) await sendPaymentInProcessEmail(payerData);
+  if (status === PaymentStatus.APPROVED)
+    await sendPaymentSuccessfulEmail(payerData);
+  if (status === PaymentStatus.REJECTED)
+    await sendPaymentRejectedEmail(payerData);
+  if (status === PaymentStatus.PENDING)
+    await sendPaymentPendingEmail(payerData);
+
+  try {
+    const planInfo = plansData.plans.find(
+      (plan: any) => plan.sku === metadata.plan
+    );
+
+    if (!planInfo) throw new Error("Plan not found.");
+
+    const paymentDate = new Date();
+    const paymentExpirationDate = new Date(paymentDate);
+    paymentExpirationDate.setDate(paymentDate.getDate() + planInfo.duration);
+
+    document.update({
+      paymentStatus: status,
+      paymentDate:
+        status === PaymentStatus.APPROVED
+          ? paymentDate.toLocaleString("es-AR", dateConfig)
+          : null,
+      paymentExpirationDate:
+        status === PaymentStatus.APPROVED
+          ? paymentExpirationDate.toLocaleString("es-AR", dateConfig)
+          : null,
+      orderId: order.id,
+    });
+  } catch (error) {
+    console.error("Error updating user document: ", error);
+  }
 };
 
 export async function POST(request: Request) {
@@ -101,6 +144,12 @@ export async function POST(request: Request) {
     const body: MercadopagoWebhookInterface = await request.json();
 
     if (body.type == "payment") await handlePaymentWebhook(body.data?.id);
+
+    console.log("==============> body");
+    console.log(body.data?.id);
+    console.log(body.data);
+    console.log(body);
+    console.log("==============");
 
     return new Response(null, { status: 204 });
   } catch (error) {

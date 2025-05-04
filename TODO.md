@@ -35,3 +35,6 @@
 - [ ] Squash de todo el branch deploy-md
 - [ ] Sacar de public la carpeta data
 - [ ] Agregar Firestore: https://firebase.google.com/docs/firestore?hl=es-419
+- [ ] Chequear que import serviceAccount from '../../firebase-adminsdk.json'; no quede cacheado en el build
+- [ ] Agregar links a redes sociales (ig/whatsapp/tiktok)
+- [ ] Rojo del fondo: radial-gradient(closest-side, #6f1f1f, #171717) !important

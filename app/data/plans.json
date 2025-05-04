@@ -3,14 +3,16 @@
         {
             "sku": "plan-plus-gym-virtual",
             "name": "Plan Plus Gym Virtual",
+            "duration": 95,
             "price": {
                 "usd": 1,
                 "ars": 1
             }
         },
         {
-            "sku": "planificacion-virtual",
-            "name": "Planificación Virtual",
+            "sku": "plan-plus-planificacion-online",
+            "name": "Planificación Online",
+            "duration": 95,
             "price": {
                 "usd": 1,
                 "ars": 1

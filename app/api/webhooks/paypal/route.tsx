@@ -1,18 +1,36 @@
+import plansData from "@/app/data/plans.json";
 import { PaymentSuccessfulTemplate } from "@/app/emails/payment_successful_template";
+import { db } from "@/app/lib/firebaseAdmin";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-
-const APPROVED = "approved";
-const REJECTED = "rejected";
-const CANCELLED = "cancelled";
-const PENDING = "pending";
-const IN_PROCESS = "in_process";
+import { getStatus, PaymentStatus } from "../helpers";
 
 const apiKey = process.env.RESEND_API_KEY;
 
 if (!apiKey) throw new Error("RESEND_API_KEY is not defined.");
 
 const resend = new Resend(apiKey);
+
+const dateConfig = { timeZone: "America/Argentina/Buenos_Aires" };
+
+interface FirestoreUser {
+  name: string;
+  email: string;
+  phone: string;
+  city: string;
+  country: string;
+  goals: string;
+  orderDate: string;
+  paymentDate: string;
+  paymentExpirationDate: string;
+  paymentId: string;
+  paymentStatus: string;
+  paymentCurrency: string;
+  paymentValue: number;
+  gatewayId: string;
+  plan: string;
+  planSKU: string;
+}
 
 interface MercadopagoWebhookInterface {
   type: string;
@@ -53,56 +71,81 @@ const sendPaymentRejectedEmail = async (payer: PayerInterface) => {
     react: PaymentSuccessfulTemplate(payer),
   });
 };
-const sendPaymentCanceledEmail = async (payer: PayerInterface) => {};
 
-const sendPaymentInProcessEmail = async (payer: PayerInterface) => {};
+const handlePaymentWebhook = async (body: any) => {
+  try {
+    const paymentId = body.resource.id;
+    if (!paymentId) throw new Error("Invalid request.");
 
-const handlePaymentWebhook = async (paymentId: string) => {
-  if (!paymentId) throw new Error("Invalid request.");
+    const userId = body.resource.custom_id;
+    const status = getStatus(body.resource.status, "paypal");
 
-  const url = `https://api.mercadopago.com/v1/payments/${paymentId}`;
-  const headers = {
-    Authorization: `Bearer ${process.env.MERCADO_PAGO_ACCESS_TOKEN}`,
-  };
+    const document = db.collection("users").doc(userId);
+    const documentRef = await document.get();
+    const user = documentRef.data() as FirestoreUser | undefined;
 
-  const response = await fetch(url, { headers });
+    if (!user) throw new Error("User not found in DB");
 
-  // const response = {
-  //   json: async () => ({
-  //     payer: { first_name: "Facundo", email: "facundopereztomasek@gmail.com" },
-  //     status: "approved",
-  //   }),
-  // };
+    const payerData: PayerInterface = {
+      name: user.name,
+      email: user.email,
+      plan: user.plan,
+    };
 
-  const jsonResponse = await response.json();
+    if (status === PaymentStatus.APPROVED)
+      await sendPaymentSuccessfulEmail(payerData);
+    if (status === PaymentStatus.REJECTED)
+      await sendPaymentRejectedEmail(payerData);
+    if (status === PaymentStatus.PENDING)
+      await sendPaymentPendingEmail(payerData);
 
-  const {
-    payer,
-    status,
-    metadata: { datos },
-    description,
-  } = jsonResponse;
+    try {
+      const planInfo = plansData.plans.find(
+        (plan: any) => plan.sku === user.planSKU
+      );
 
-  const payerData = {
-    name: datos.nombre || payer.first_name,
-    email: datos.email || payer.email,
-    plan: description,
-  };
+      if (!planInfo) throw new Error("Plan not found.");
 
-  if (status === APPROVED) await sendPaymentSuccessfulEmail(payerData);
-  if (status === REJECTED) await sendPaymentRejectedEmail(payerData);
-  if (status === CANCELLED) await sendPaymentCanceledEmail(payerData);
-  if (status === PENDING) await sendPaymentPendingEmail(payerData);
-  if (status === IN_PROCESS) await sendPaymentInProcessEmail(payerData);
+      const paymentDate = new Date();
+      const paymentExpirationDate = new Date(paymentDate);
+      paymentExpirationDate.setDate(paymentDate.getDate() + planInfo.duration);
+
+      document.update({
+        paymentStatus: status,
+        paymentDate:
+          status === PaymentStatus.APPROVED
+            ? paymentDate.toLocaleString("es-AR", dateConfig)
+            : null,
+        paymentExpirationDate:
+          status === PaymentStatus.APPROVED
+            ? paymentExpirationDate.toLocaleString("es-AR", dateConfig)
+            : null,
+      });
+    } catch (error) {
+      console.error("Error updating user document: ", error);
+    }
+  } catch (error) {
+    console.error("Error updating getting user document: ", error);
+  }
 };
 
 export async function POST(request: Request) {
   try {
-    console.log("Paypal webhook request");
-    console.log(request);
+    console.log("===========PAYPAL WEBHOOK============");
+    const body = await request.json();
+    console.log("Body", body);
+    if (body.event_type.includes("PAYMENT.CAPTURE"))
+      await handlePaymentWebhook(body);
+
     // const body: MercadopagoWebhookInterface = await request.json();
 
     // if (body.type == "payment") await handlePaymentWebhook(body.data?.id);
+
+    // console.log("==============> body");
+    // console.log(body.data?.id);
+    // console.log(body.data);
+    // console.log(body);
+    // console.log("==============");
 
     return new Response(null, { status: 204 });
   } catch (error) {
