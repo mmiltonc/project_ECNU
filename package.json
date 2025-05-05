@@ -17,8 +17,8 @@
     "certbot:setup": "pm2 deploy production exec \"bash /home/deployer/app/current/deploy-scripts/certbot-setup.sh\""
   },
   "dependencies": {
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@motionone/utils": "^10.18.0",
     "@mui/icons-material": "^6.0.0",
     "@mui/material": "^6.4.3",
@@ -26,6 +26,7 @@
     "@paypal/paypal-server-sdk": "^1.0.0",
     "@paypal/react-paypal-js": "^8.8.3",
     "@react-email/components": "0.0.17",
+    "classnames": "^2.5.1",
     "firebase-admin": "^13.3.0",
     "framer-motion": "^11.3.24",
     "gsap": "^3.12.5",

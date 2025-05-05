@@ -1,4 +1,6 @@
 "use client";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 import { useEffect, useState, useRef } from "react";
 import { useModal } from "../app/context/modalContext";
 import {
@@ -21,6 +23,98 @@ import Modal from "@mui/material/Modal";
 import PayPalComponent from "@/components/shared/paypal-component";
 import Typography from "@mui/material/Typography";
 export const dynamic = "force-static";
+
+const styles = css`
+  padding: 140px 80px 0;
+
+  strong {
+    font-weight: 600;
+  }
+
+  i {
+    color: #87a7cb;
+    font-style: normal;
+  }
+
+  .header {
+    margin-bottom: 64px;
+    .title {
+      font-family: var(--font-jost);
+      font-weight: 900;
+      font-size: 80px;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      font-family: var(--font-jost);
+      font-weight: 900;
+      color: #fd5f44;
+      font-size: 80px;
+      line-height: 1;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+  }
+
+  .container {
+    padding: 0 80px 10px 200px;
+    margin-bottom: 132px;
+    position: relative;
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: 82px;
+      top: -30px;
+      height: calc(100% - 30px);
+      width: 17px;
+      transform: rotate(180deg);
+      background-image: url(images/pasos-hormiga.png);
+      background-repeat: repeat-y;
+      background-size: contain;
+      mix-blend-mode: soft-light;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      left: 50px;
+      bottom: -10px;
+      height: 80px;
+      width: 80px;
+      transform: rotate(180deg);
+      background-image: url(images/hormiga-arriba.png);
+      background-repeat: no-repeat;
+      background-size: contain;
+      mix-blend-mode: soft-light;
+    }
+
+    .text-section {
+      margin-bottom: 32px;
+
+      .heading {
+        font-family: var(--font-jost);
+        font-size: 26px;
+        line-height: 1.2;
+        font-weight: 600;
+        margin-bottom: 16px;
+      }
+      .text {
+        font-family: var(--font-jost);
+        font-size: 24px;
+        line-height: 1.2;
+      }
+
+      .list {
+        font-family: var(--font-jost);
+        font-size: 24px;
+        line-height: 1.2;
+        list-style: inside decimal;
+      }
+    }
+  }
+`;
 
 const planificationCards = [
   {
@@ -94,7 +188,7 @@ const Programs = () => {
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
-    console.log(name, value)
+    console.log(name, value);
     setFormData(() => ({
       ...formData,
       [name]: value,
@@ -134,107 +228,141 @@ const Programs = () => {
 
   return (
     <section
+      css={styles}
       ref={sectionRef}
-      className="w-auto flex flex-col lg:mt-0"
+      className="programs-section"
       id="clasesyretos"
     >
-      <div className="flex flex-col pt-10 mb-10 ml-4 text-4xl font-bold lg:hidden">
-        <AnimatedText
-          text={["GYM VIRTUAL", "Y PLANIFICACIONES"]}
-          className="text-white text-4xl font-bold"
-        />
-      </div>
-      <div className="lg:block md:hidden sm:hidden 2sm:hidden lg:mt-[100px] lg:ml-8">
-        {/* <span className='text-white text-8xl font-bold'>CLASES, PLANIFICACIONES Y RETOS.</span> */}
-        <AnimatedText
-          text={["GYM VIRTUAL", "Y PLANIFICACIONES"]}
-          className="text-white text-7xl font-bold"
-        />
-      </div>
-      <div
-        className="w-full h-auto mt-4
-                    lg:flex lg:flex-col lg:justify-center lg:items-center lg:mt-20 lg:mb-52"
-      >
-        <>
-          <div className="flex flex-col justify-center items-center mt-14">
-            <p className="w-[100%] text-center text-5xl">GIMNASIO VIRTUAL</p>
-            <p className="w-[100%] text-center text-3xl">ROMPIENDO BARRERAS</p>
-            <p className="w-[100%] text-center font-bold text-3xl text-red-800">
-              ETAPA UNO
+      <header className="header">
+        <div className="block lg:hidden">
+          <AnimatedText
+            el="h2"
+            text={"Gym Virtual"}
+            className="title text-4xl font-bold"
+          />
+          <AnimatedText
+            text={"Etapa Uno"}
+            className="subtitle text-4xl font-bold"
+          />
+        </div>
+        <div className="hidden lg:block">
+          <AnimatedText
+            el="h2"
+            text={"Gym Virtual"}
+            className="title text-7xl font-bold"
+          />
+          <AnimatedText
+            text={"Etapa Uno"}
+            className="subtitle text-4xl font-bold"
+          />
+        </div>
+      </header>
+      <>
+        <div className="container">
+          <section className="text-section">
+            <h3 className="heading">
+              Un gimnasio virtual <i>pensado para vos</i>.
+            </h3>
+            <p className="text">
+              Entrenás con tu propio peso corporal, desde casa, sin equipos.
             </p>
-          </div>
-          <div className="flex justify-center items-center mt-20 mb-14 ">
-            <p
-              className="w-[80%] text-center text-2xl
+            <p className="text">
+              El objetivo es simple: convertirte en esa versión física y mental
+              que querés lograr.
+            </p>
+          </section>
+
+          <section className="text-section">
+            <h3 className="heading">
+              Vas a tener <i>3 desafíos</i> progresivos:
+            </h3>
+            <ol className="list">
+              <li>
+                <strong>Reto Perder Grasa</strong>
+              </li>
+              <li>
+                <strong>Pectorales de Hierro</strong>
+              </li>
+              <li>
+                <strong>Abdomen de Acero</strong>
+              </li>
+            </ol>
+          </section>
+          <section className="text-section">
+            <p className="text">
+              Con solo 45 minutos al día, vas a ir superando niveles, creando el
+              hábito, y construyendo un cuerpo funcional, fuerte y atlético.
+            </p>
+          </section>
+          <section className="text-section">
+            <p className="text">
+              No necesitás estar motivado,{" "}
+              <i>
+                <strong>solo dar el primer paso</strong>
+              </i>
+              .
+            </p>
+          </section>
+        </div>
+
+        <GymVirtual />
+        <div className="w-full flex flex-wrap justify-center gap-8 lg:mt-30 bg-radial-red-black">
+          {virtualGymCards.map((item, index) => {
+            return (
+              <CardDesktop
+                main={item.main}
+                index={index}
+                key={index}
+                type={item.type}
+                image={item.imagen}
+                setPlan={() => setFormData({ ...formData, plan: item.plan })}
+                setOpen={abrirModal}
+                plan={item.plan}
+              />
+            );
+          })}
+        </div>
+        <div className="flex flex-col justify-center items-center mt-40">
+          <p className="w-[100%] text-center text-5xl">PLANIFICACIONES</p>
+          <p className="w-[100%] text-center text-3xl">
+            PERSONALIZA TUS ENTRENAMIENTOS ONLINE
+          </p>
+          <p className="w-[100%] text-center font-bold text-3xl text-red-800">
+            ETAPA DOS
+          </p>
+        </div>
+        <div className="flex justify-center items-center mt-20 mb-32">
+          <p
+            className="w-[80%] text-center text-2xl
                               lg:w-[55%]"
-            >
-              Un gimnasio virtual con tu propio peso corporal, creado para
-              convertirte en esa persona que queres lograr física y mentalmente,
-              3 desafíos (Reto perder grasa, Pectorales de hierro, Abdomen de
-              acero) sobrepasarás niveles en ascenso incursionandote en la
-              actividad física, con 45 minutos por día conseguirás un cuerpo
-              funcional y atlético.
-            </p>
-          </div>
-          <GymVirtual />
-          <div className="w-full flex flex-wrap justify-center gap-8 lg:mt-30 bg-radial-red-black">
-            {virtualGymCards.map((item, index) => {
-              return (
-                <CardDesktop
-                  main={item.main}
-                  index={index}
-                  key={index}
-                  type={item.type}
-                  image={item.imagen}
-                  setPlan={() => setFormData({ ...formData, plan: item.plan })}
-                  setOpen={abrirModal}
-                  plan={item.plan}
-                />
-              );
-            })}
-          </div>
-          <div className="flex flex-col justify-center items-center mt-40">
-            <p className="w-[100%] text-center text-5xl">PLANIFICACIONES</p>
-            <p className="w-[100%] text-center text-3xl">
-              PERSONALIZA TUS ENTRENAMIENTOS ONLINE
-            </p>
-            <p className="w-[100%] text-center font-bold text-3xl text-red-800">
-              ETAPA DOS
-            </p>
-          </div>
-          <div className="flex justify-center items-center mt-20 mb-32">
-            <p
-              className="w-[80%] text-center text-2xl
-                              lg:w-[55%]"
-            >
-              Mis planificaciones online de calistenia están diseñadas
-              específicamente en base a tus preferencias y objetivos. Esta
-              pensado para niveles intermedios y avanzados. Con esta modalidad
-              podrás entrenar desde tu casa con materiales (Barra Dominadas).
-              También se pueden utilizar barras en cualquier parque cercano a tu
-              domicilio. Obtendrás dos planificaciones online por mes y se irán
-              modificando de manera mensual para que sean desafiantes y logremos
-              optimizar los mejores resultados posibles.
-            </p>
-          </div>
-          <div className="w-full flex flex-wrap justify-center gap-8 lg:mt-20 bg-radial-red-black">
-            {planificationCards.map((item, index) => {
-              return (
-                <CardDesktop
-                  main={item.main}
-                  index={index}
-                  key={index}
-                  type={item.type}
-                  image={item.imagen}
-                  setPlan={() => setFormData({ ...formData, plan: item.plan })}
-                  setOpen={abrirModal}
-                  plan={item.plan}
-                />
-              );
-            })}
-          </div>
-        </>
-      </div>
+          >
+            Mis planificaciones online de calistenia están diseñadas
+            específicamente en base a tus preferencias y objetivos. Esta pensado
+            para niveles intermedios y avanzados. Con esta modalidad podrás
+            entrenar desde tu casa con materiales (Barra Dominadas). También se
+            pueden utilizar barras en cualquier parque cercano a tu domicilio.
+            Obtendrás dos planificaciones online por mes y se irán modificando
+            de manera mensual para que sean desafiantes y logremos optimizar los
+            mejores resultados posibles.
+          </p>
+        </div>
+        <div className="w-full flex flex-wrap justify-center gap-8 lg:mt-20 bg-radial-red-black">
+          {planificationCards.map((item, index) => {
+            return (
+              <CardDesktop
+                main={item.main}
+                index={index}
+                key={index}
+                type={item.type}
+                image={item.imagen}
+                setPlan={() => setFormData({ ...formData, plan: item.plan })}
+                setOpen={abrirModal}
+                plan={item.plan}
+              />
+            );
+          })}
+        </div>
+      </>
       <Modal
         open={isOpen}
         onClose={handleClose}
@@ -356,7 +484,6 @@ const Programs = () => {
                                   className="block w-full px-3 py-2 border border-gray-300 rounded-l-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                   placeholder="Solo correos gmail"
                                   required
-
                                 />
                                 <span className="flex items-center px-1.5 py-2 border border-gray-300 rounded-r-md bg-gray-100">
                                   @gmail.com

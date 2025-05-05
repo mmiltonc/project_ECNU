@@ -1,5 +1,5 @@
 import Header from "@/components/shared/header";
-import { ModalProvider } from "./context/modalContext";
+import { ModalProvider } from "@/app/context/modalContext";
 import Introduction from "@/components/introduction";
 import Programs from "@/components/programs";
 import Products from "@/components/products";
@@ -9,17 +9,14 @@ import Motivation from "@/components/motivation";
 import Faq from "@/components/faq";
 import Contact from "@/components/contact";
 import Home from "@/components/home";
-
-export const metadata = {
-  title: "ECNU Team",
-  description: "ECNU Team - El cambio nace en uno",
-};
+import TopBar from "@/components/topBar";
 
 export default function Layout() {
   return (
     <ModalProvider>
+      <TopBar />
       <Home />
-      <Header />
+      {/* <Header /> */}
       <Introduction />
       <Programs />
       <Products />

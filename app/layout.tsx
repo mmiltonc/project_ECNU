@@ -1,9 +1,25 @@
 import "./globals.css";
-import { Jost } from "next/font/google";
+import classNames from "classnames";
+import { Jost, Oswald, Nunito_Sans } from "next/font/google";
 import { GoogleTagManager } from "@next/third-parties/google";
-import Script from "next/script";
 import type { Viewport } from "next";
-const jost = Jost({ subsets: ["latin"] });
+const jost = Jost({
+  subsets: ["latin"],
+  variable: "--font-jost",
+});
+
+const oswald = Oswald({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-oswald",
+});
+
+const nunitoSans = Nunito_Sans({
+  subsets: ["latin"], // Define los subconjuntos necesarios
+  weight: ["400", "700", "900"], // Opcional: especifica los pesos que usarás (normal, bold, etc.)
+  variable: "--font-nunito-sans", // Variable CSS opcional para usar en tu CSS global
+});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -58,16 +74,21 @@ export const metadata = {
   },
 };
 
-const PIXEL_ID = "TU_PIXEL_ID"; // Reemplaza con tu Pixel ID
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={jost.className}>
+    <html lang="es" className="">
+      <body
+        className={classNames([
+          "scroll-smooth",
+          jost.variable,
+          oswald.variable,
+          nunitoSans.variable,
+        ])}
+      >
         {children}
         <GoogleTagManager gtmId="GTM-KS5H2HMS" />
       </body>

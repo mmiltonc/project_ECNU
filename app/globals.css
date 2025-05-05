@@ -15,13 +15,14 @@
   }
 }
 
-/* * {  
+/* * {
   border: 1px blue solid;
 }  */
 
 body {
+  font-weight: 300;
   color: rgb(var(--foreground-rgb));
-  background: #171717;
+  background: #051422;
 }
 
 .video-background {
