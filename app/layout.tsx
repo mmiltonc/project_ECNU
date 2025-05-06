@@ -80,10 +80,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className="">
+    <html lang="es" className="scroll-smooth">
       <body
         className={classNames([
-          "scroll-smooth",
           jost.variable,
           oswald.variable,
           nunitoSans.variable,

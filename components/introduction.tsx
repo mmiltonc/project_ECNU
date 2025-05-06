@@ -6,6 +6,12 @@ const styles = css`
   padding: 80px 80px 0;
   background-image: radial-gradient(closest-side, #fd5f44, #051422) !important;
   position: relative;
+  margin-top: 100px;
+
+  .anchor {
+    position: absolute;
+    top: -160px;
+  }
 
   &:before {
     content: "";
@@ -45,14 +51,10 @@ const styles = css`
 
 const Introduction = () => {
   return (
-    <section
-      css={styles}
-      className="introduction-section"
-    >
+    <section css={styles} className="introduction-section">
+      <div className="anchor" id="cambia-tu-vida" />
       <div className="container">
-        <h2 className="title">
-          ¿Por qué ECNU Online mejoraría mi vida?
-        </h2>
+        <h2 className="title">¿Por qué ECNU Online mejoraría mi vida?</h2>
 
         <p className="text">
           La falta de tiempo para trasladarte de tu casa a un gimnasio, ya sea

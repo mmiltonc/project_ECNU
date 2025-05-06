@@ -9,7 +9,6 @@ import {
   PHONE_CODES,
   PlansTypes,
 } from "@/app/types/formData";
-import { GymVirtual } from "./shared/gymVirtual";
 import { Steps } from "./shared/steps";
 import AnimatedText from "./shared/animatedText";
 import Box from "@mui/material/Box";
@@ -25,7 +24,7 @@ import Typography from "@mui/material/Typography";
 export const dynamic = "force-static";
 
 const styles = css`
-  padding: 140px 80px 0;
+  padding: 0 80px 0;
 
   strong {
     font-weight: 600;
@@ -36,82 +35,94 @@ const styles = css`
     font-style: normal;
   }
 
-  .header {
-    margin-bottom: 64px;
-    .title {
-      font-family: var(--font-jost);
-      font-weight: 900;
-      font-size: 80px;
-      line-height: 1;
-      text-transform: uppercase;
-    }
+  .article-program {
+    padding-top: 160px;
 
-    .subtitle {
-      font-family: var(--font-jost);
-      font-weight: 900;
-      color: #fd5f44;
-      font-size: 80px;
-      line-height: 1;
-      margin-bottom: 24px;
-      text-transform: uppercase;
-    }
-  }
-
-  .container {
-    padding: 0 80px 10px 200px;
-    margin-bottom: 132px;
-    position: relative;
-
-    &:before {
-      content: "";
-      position: absolute;
-      left: 82px;
-      top: -30px;
-      height: calc(100% - 30px);
-      width: 17px;
-      transform: rotate(180deg);
-      background-image: url(images/pasos-hormiga.png);
-      background-repeat: repeat-y;
-      background-size: contain;
-      mix-blend-mode: soft-light;
-    }
-
-    &:after {
-      content: "";
-      position: absolute;
-      left: 50px;
-      bottom: -10px;
-      height: 80px;
-      width: 80px;
-      transform: rotate(180deg);
-      background-image: url(images/hormiga-arriba.png);
-      background-repeat: no-repeat;
-      background-size: contain;
-      mix-blend-mode: soft-light;
-    }
-
-    .text-section {
-      margin-bottom: 32px;
-
-      .heading {
+    .header {
+      margin-bottom: 64px;
+      .title {
         font-family: var(--font-jost);
-        font-size: 26px;
-        line-height: 1.2;
-        font-weight: 600;
-        margin-bottom: 16px;
-      }
-      .text {
-        font-family: var(--font-jost);
-        font-size: 24px;
-        line-height: 1.2;
+        font-weight: 900;
+        font-size: 80px;
+        line-height: 1;
+        text-transform: uppercase;
       }
 
-      .list {
+      .subtitle {
         font-family: var(--font-jost);
-        font-size: 24px;
-        line-height: 1.2;
-        list-style: inside decimal;
+        font-weight: 900;
+        color: #fd5f44;
+        font-size: 80px;
+        line-height: 1;
+        margin-bottom: 24px;
+        text-transform: uppercase;
       }
+    }
+
+    .container {
+      padding: 0 80px 10px 200px;
+      margin-bottom: 132px;
+      position: relative;
+
+      &:before {
+        content: "";
+        position: absolute;
+        left: 82px;
+        top: -30px;
+        height: calc(100% - 32px);
+        width: 17px;
+        transform: rotate(180deg);
+        background-image: url(images/pasos-hormiga.png);
+        background-repeat: repeat-y;
+        background-size: contain;
+        mix-blend-mode: soft-light;
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        left: 50px;
+        bottom: -10px;
+        height: 80px;
+        width: 80px;
+        transform: rotate(180deg);
+        background-image: url(images/hormiga-arriba.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        mix-blend-mode: soft-light;
+      }
+
+      .text-section {
+        margin-bottom: 32px;
+
+        .heading {
+          font-family: var(--font-jost);
+          font-size: 26px;
+          line-height: 1.2;
+          font-weight: 600;
+          margin-bottom: 16px;
+        }
+        .text {
+          font-family: var(--font-jost);
+          font-size: 24px;
+          line-height: 1.2;
+        }
+
+        .list {
+          font-family: var(--font-jost);
+          font-size: 24px;
+          line-height: 1.2;
+          list-style: inside decimal;
+        }
+      }
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px;
+      background-image: radial-gradient(closest-side, #fd5f44, #051422) !important;
     }
   }
 `;
@@ -217,47 +228,48 @@ const Programs = () => {
     }
   }, [abrirModal]);
 
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    url.searchParams.delete("modal");
-    window.history.replaceState({}, "", url.toString());
+  // useEffect(() => {
+  //   const url = new URL(window.location.href);
+  //   url.searchParams.delete("modal");
+  //   window.history.replaceState({}, "", url.toString());
 
-    const cleanHash = "#clasesyretos";
-    window.location.hash = cleanHash;
-  }, []);
+  //   const cleanHash = "#gym-virtual";
+  //   window.location.hash = cleanHash;
+  // }, []);
 
   return (
     <section
       css={styles}
       ref={sectionRef}
       className="programs-section"
-      id="clasesyretos"
     >
-      <header className="header">
-        <div className="block lg:hidden">
-          <AnimatedText
-            el="h2"
-            text={"Gym Virtual"}
-            className="title text-4xl font-bold"
-          />
-          <AnimatedText
-            text={"Etapa Uno"}
-            className="subtitle text-4xl font-bold"
-          />
-        </div>
-        <div className="hidden lg:block">
-          <AnimatedText
-            el="h2"
-            text={"Gym Virtual"}
-            className="title text-7xl font-bold"
-          />
-          <AnimatedText
-            text={"Etapa Uno"}
-            className="subtitle text-4xl font-bold"
-          />
-        </div>
-      </header>
-      <>
+      <article className="article-program" id="gym-virtual">
+        <header className="header">
+          <div className="block lg:hidden">
+            <AnimatedText
+              el="h2"
+              text={"Gym Virtual"}
+              className="title text-4xl font-bold"
+            />
+            <AnimatedText
+            delay={.7}
+              text={"Etapa Uno"}
+              className="subtitle text-4xl font-bold"
+            />
+          </div>
+          <div className="hidden lg:block">
+            <AnimatedText
+              el="h2"
+              text={"Gym Virtual"}
+              className="title text-7xl font-bold"
+            />
+            <AnimatedText
+            delay={.7}
+              text={"Etapa Uno"}
+              className="subtitle text-4xl font-bold"
+            />
+          </div>
+        </header>
         <div className="container">
           <section className="text-section">
             <h3 className="heading">
@@ -296,7 +308,7 @@ const Programs = () => {
           </section>
           <section className="text-section">
             <p className="text">
-              No necesitás estar motivado,{" "}
+              No necesitás estar motivado, {" "}
               <i>
                 <strong>solo dar el primer paso</strong>
               </i>
@@ -305,8 +317,7 @@ const Programs = () => {
           </section>
         </div>
 
-        <GymVirtual />
-        <div className="w-full flex flex-wrap justify-center gap-8 lg:mt-30 bg-radial-red-black">
+        <div className="cards">
           {virtualGymCards.map((item, index) => {
             return (
               <CardDesktop
@@ -322,31 +333,59 @@ const Programs = () => {
             );
           })}
         </div>
-        <div className="flex flex-col justify-center items-center mt-40">
-          <p className="w-[100%] text-center text-5xl">PLANIFICACIONES</p>
-          <p className="w-[100%] text-center text-3xl">
-            PERSONALIZA TUS ENTRENAMIENTOS ONLINE
-          </p>
-          <p className="w-[100%] text-center font-bold text-3xl text-red-800">
-            ETAPA DOS
-          </p>
+      </article>
+      <article className="article-program" id="calistenia-online">
+        <header className="header">
+          <div className="block lg:hidden">
+            <AnimatedText
+              el="h2"
+              text={"Calistenia Online"}
+              className="title text-4xl font-bold"
+              />
+            <AnimatedText
+              delay={1}
+              text={"Etapa Dos"}
+              className="subtitle text-4xl font-bold"
+            />
+          </div>
+          <div className="hidden lg:block">
+            <AnimatedText
+              el="h2"
+              text={"Calistenia Online"}
+              className="title text-7xl font-bold"
+              />
+            <AnimatedText
+              text={"Etapa Dos"}
+              delay={1}
+              className="subtitle text-4xl font-bold"
+            />
+          </div>
+        </header>
+        <div className="container">
+          <section className="text-section">
+            <h3 className="heading">
+              Entrenamientos diseñados según <i><strong>tus objetivos y preferencias</strong></i>
+              .
+            </h3>
+            <p className="text">
+              Pensado para niveles intermedios y avanzados, podés entrenar desde
+              casa con una barra de dominadas o usar las del parque más cercano.
+            </p>
+          </section>
+          <section className="text-section">
+            <p className="text">
+              Recibís <i><strong>dos planificaciones nuevas cada mes</strong></i>, adaptadas y
+              ajustadas para que sigan siendo desafiantes y nos permitan
+              optimizar los mejores resultados posibles.
+            </p>
+          </section>
+          <section className="text-section">
+          <p className="text">
+              Lo que se construye con constancia, <i><strong>transforma</strong></i>.
+            </p>
+          </section>
         </div>
-        <div className="flex justify-center items-center mt-20 mb-32">
-          <p
-            className="w-[80%] text-center text-2xl
-                              lg:w-[55%]"
-          >
-            Mis planificaciones online de calistenia están diseñadas
-            específicamente en base a tus preferencias y objetivos. Esta pensado
-            para niveles intermedios y avanzados. Con esta modalidad podrás
-            entrenar desde tu casa con materiales (Barra Dominadas). También se
-            pueden utilizar barras en cualquier parque cercano a tu domicilio.
-            Obtendrás dos planificaciones online por mes y se irán modificando
-            de manera mensual para que sean desafiantes y logremos optimizar los
-            mejores resultados posibles.
-          </p>
-        </div>
-        <div className="w-full flex flex-wrap justify-center gap-8 lg:mt-20 bg-radial-red-black">
+        <div className="cards">
           {planificationCards.map((item, index) => {
             return (
               <CardDesktop
@@ -362,7 +401,7 @@ const Programs = () => {
             );
           })}
         </div>
-      </>
+      </article>
       <Modal
         open={isOpen}
         onClose={handleClose}

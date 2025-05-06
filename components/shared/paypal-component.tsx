@@ -42,7 +42,7 @@ export default function PayPalComponent(props: Props) {
     console.log("aprobado: ", data);
     const order = await actions.order.capture();
     console.log("order: ", order);
-    router.push('/?modal=1#clasesyretos')
+    router.push('/?modal=1')
   };
 
   const onCancel = (data: any) => {

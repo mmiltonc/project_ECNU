@@ -9,11 +9,10 @@ const styles = css`
   background-image: url(images/bgbw.jpeg);
   background-position: top -100px center;
   background-size: cover;
-  height: 800px;
+  height: 775px;
   position: relative;
   background-blend-mode: soft-light;
   background-color: #1e729822;
-  margin-bottom: 100px;
 
   .tint {
     backdrop-filter: brightness(60%);
@@ -54,10 +53,14 @@ const styles = css`
       }
     }
     .subtitle {
-      font-weight: 600;
+      font-weight: 400;
       font-family: var(--font-nunito-sans);
       font-size: 30px;
       line-height: 1.2;
+
+      strong {
+        font-weight: 800;
+      }
     }
     .cta-button {
       font-family: var(--font-oswald);
@@ -91,7 +94,7 @@ const Home = () => {
           onClick={() => sendGTMEvent({ event: "buttonClicked", value: "xyz" })}
         >
           <a
-            href="#clasesyretos"
+            href="#gym-virtual"
             className="transition ease-in-out duration-350"
           >
             Quiero mi transformación
