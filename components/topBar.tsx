@@ -11,7 +11,7 @@ const styles = css`
     position: fixed;
     width: 100%;
     top: 0;
-    z-index: 1000;
+    z-index: 2000;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,7 +49,7 @@ const styles = css`
     .logo {
         height: 100%;
         object-fit: contain;
-        transform: translateX(-40px);
+        transform: translateX(-44px);
     }
 `;
 

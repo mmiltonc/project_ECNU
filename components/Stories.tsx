@@ -9,6 +9,8 @@ const styles = css`
   width: 300px;
   height: 450px;
   position: relative;
+  border-radius: 4px;
+  overflow: hidden;
 
   .frame {
     font-family: var(--font-jost);

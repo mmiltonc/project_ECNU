@@ -2,12 +2,11 @@
 import Stories, { PersonType, StoryProps } from "@/components/Stories";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import classNames from "classnames";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const styles = css`
-  padding: 160px 80px 400px;
+  padding: 160px 80px 0;
 
   .title {
     font-family: var(--font-jost);
