@@ -70,6 +70,12 @@ const TopBar = () => {
           <li className="link-item">
             <a href="#calistenia-online" className="link">Calistenia Online</a>
           </li>
+          <li className="link-item">
+            <a href="#cambios-visibles" className="link">Testimonios</a>
+          </li>
+          <li className="link-item">
+            <a href="#quien-soy" className="link">¿Quién soy?</a>
+          </li>
         </ul>
       </div>
     </nav>

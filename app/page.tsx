@@ -1,14 +1,13 @@
 import Header from "@/components/shared/header";
 import { ModalProvider } from "@/app/context/modalContext";
-import Introduction from "@/components/introduction";
-import Programs from "@/components/programs";
-import Products from "@/components/products";
-import Changes from "@/components/changes";
-import About from "@/components/about";
-import Motivation from "@/components/motivation";
-import Faq from "@/components/faq";
-import Contact from "@/components/contact";
-import Home from "@/components/home";
+import Introduction from "@/partials/introduction";
+import Programs from "@/partials/programs";
+import Changes from "@/partials/changes";
+import About from "@/partials/about";
+import Motivation from "@/partials/motivation";
+import Faq from "@/partials/faq";
+import Contact from "@/partials/contact";
+import Home from "@/partials/home";
 import TopBar from "@/components/topBar";
 
 export default function Layout() {
@@ -16,10 +15,8 @@ export default function Layout() {
     <ModalProvider>
       <TopBar />
       <Home />
-      {/* <Header /> */}
       <Introduction />
       <Programs />
-      <Products />
       <Changes />
       <About />
       <Motivation />
