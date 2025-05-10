@@ -5,11 +5,14 @@ import { css } from "@emotion/react";
 import Image from "next/image";
 
 const styles = css`
-  /* padding: 160px 0 0; */
   position: relative;
   overflow: hidden;
   margin-top: 160px;
-  margin-bottom: 400px;
+
+  .anchor {
+    position: absolute;
+    top: -130px;
+  }
 
   @keyframes ant-1 {
     from {
@@ -124,7 +127,6 @@ const styles = css`
 
       .about-bio {
         flex: 1;
-        overflow: auto;
         display: flex;
         gap: 20px;
         flex-direction: column;
@@ -144,7 +146,8 @@ const styles = css`
 const About = () => {
   return (
     <>
-      <section css={styles} className="section-about" id="quien-soy">
+      <section css={styles} className="section-about">
+      <div className="anchor" id="quien-soy" />
         <div className="about-card">
           <h2 className="title">
             De la energía <i>al propósito</i>

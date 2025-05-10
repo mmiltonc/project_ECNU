@@ -1,24 +1,748 @@
-"use client"
+"use client";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef } from "react";
+import { ReactLenis } from "lenis/react";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const styles = css`
+  height: 2000vh;
+  top: 0;
+  /* https://css-irl.info/css-halftone-patterns/ */
+  background-image: radial-gradient(
+      circle at center,
+      black 0.25rem,
+      transparent 0
+    ),
+    radial-gradient(circle at center, black 0.25rem, transparent 0);
+  background-size: 1.3rem 1.3rem;
+  background-position: 0 0, 0.65rem 0.65rem;
+  filter: blur(0.5px);
+
+  i {
+    font-style: normal;
+    color: #87a7cb;
+  }
+
+  strong {
+    color: #fd5f44;
+    font-weight: 600;
+  }
+
+  .slide {
+    height: 100vh;
+    position: sticky;
+    padding: 160px 80px;
+    top: 0;
+    width: 100%;
+
+    .content {
+      overflow: hidden;
+      left: 0;
+      top: 0;
+      position: absolute;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-jost);
+      font-weight: 600;
+      font-size: 100px;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+  }
+
+  .slide-1 {
+
+    .question {
+      opacity: 1;
+      filter: blur(0px);
+      transform: scale(1);
+      font-weight: 800;
+    }
+
+    .question-text {
+      opacity: 0;
+    }
+
+    .question-mark-1 {
+      opacity: 0;
+      transform: translateX(-20px);
+      color: #fd5f44;
+      display: inline-block;
+    }
+
+    .question-mark-2 {
+      opacity: 0;
+      transform: translateX(20px);
+      color: #fd5f44;
+      display: inline-block;
+    }
+  }
+
+  .speech {
+    height: 100%;
+    width: 100%;
+
+
+    .centered-text {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .sliding-text {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100vh;
+    }
+
+    p {
+      font-family: var(--font-jost);
+      font-weight: 600;
+      font-size: 60px;
+      line-height: 1.2;
+      opacity: 0;
+    }
+
+    .text-1,
+    .text-3,
+    .text-4,
+    .text-5,
+    .text-6,
+    .text-7 {
+      text-align: center;
+      width: calc(100% - 160px);
+    }
+
+    .slider {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translate(100%, -50%);
+      opacity: 1;
+      width: 100%;
+    }
+
+    .text-2 {
+      position: relative;
+      white-space: nowrap;
+      width: min-content;
+      display: inline-block;
+    }
+
+    .text-8,
+    .text-9,
+    .text-10 {
+      opacity: 1;
+      text-align: center;
+
+      .from-left,
+      .from-right,
+      .zoom-out {
+        display: inline-block;
+      }
+
+      .from-top,
+      .from-bottom
+      {
+        display: block;
+      }
+
+    }
+
+    .text-10 {
+      font-size: 90px;
+    }
+  }
+`;
+
+const questionText = (el) => {
+  gsap.fromTo(
+    el,
+    {},
+    {
+
+      opacity: 1,
+      scrollTrigger: {
+        trigger: el,
+        start: "top bottom",
+        end: "top",
+        scrub: true,
+      },
+    }
+  );
+};
+
+const questionMark1 = (el) => {
+  gsap.fromTo(
+    el,
+    { opacity: 0, x: -20 },
+    {
+
+      opacity: 1,
+      x: 0,
+      scrollTrigger: {
+        trigger: '.question-text',
+        start: 'bottom+=500px bottom',
+        end: 'bottom+=800px bottom',
+        scrub: true,
+      },
+    }
+  );
+};
+
+const questionMark2 = (el) => {
+  gsap.fromTo(
+    el,
+    { opacity: 0, x: 20 },
+    {
+
+      opacity: 1,
+      x: 0,
+      scrollTrigger: {
+        trigger: '.question-text',
+        start: 'bottom+=500px bottom',
+        end: 'bottom+=800px bottom',
+        scrub: true,
+      },
+    }
+  );
+};
+
+const question = (el) => {
+  gsap.fromTo(
+    el,
+    {},
+    {
+      filter: "blur(10px)",
+      opacity: 0,
+      transform: "scale(3)",
+      scrollTrigger: {
+        trigger: '.question-text',
+        start: 'bottom+=1500px bottom',
+        end: 'bottom+=1900px bottom',
+        scrub: true,
+      },
+    }
+  );
+};
+
+const text1 = (el) => {
+  gsap.fromTo(
+    el,
+    { opacity: 0, y: 20, filter: "blur(4px)" },
+    {
+
+      opacity: 1,
+      filter: "blur(0px)",
+      y: 0,
+      scrollTrigger: {
+        trigger: '.question-text',
+        start: 'bottom+=1700px bottom',
+        end: 'bottom+=2100px bottom',
+        scrub: true,
+      },
+    }
+  );
+
+  gsap.fromTo(
+    el,
+    {},
+    {
+
+      opacity: 0,
+      scale: 0.5,
+      scrollTrigger: {
+        trigger: '.question-text',
+        start: 'bottom+=2700px bottom',
+        end: 'bottom+=3600px bottom',
+        scrub: true,
+      },
+    }
+  );
+};
+
+const text2 = (el) => {
+  gsap.fromTo(
+    el,
+    {},
+    {
+
+      opacity: 1,
+      filter: "blur(0px)",
+      x: "-100%",
+      left: "-100%",
+      scrollTrigger: {
+        trigger: '.text-1',
+        start: 'bottom+=1700px bottom',
+        end: 'bottom+=8900px bottom',
+        ease: 'none',
+        scrub: true,
+      },
+    }
+  );
+};
+
+const text3 = (el) => {
+  gsap.fromTo(
+    el,
+    { opacity: 0, y: 20, filter: "blur(4px)" },
+    {
+
+      opacity: 1,
+      filter: "blur(0px)",
+      y: 0,
+      scrollTrigger: {
+        trigger: '.text-2',
+        start: 'bottom+=6900px bottom',
+        end: 'bottom+=7300px bottom',
+        scrub: true,
+      },
+    }
+  );
+
+  gsap.fromTo(
+    el,
+    {},
+    {
+
+      opacity: 0,
+      scale: 0.5,
+      scrollTrigger: {
+        trigger: '.text-2',
+        start: 'bottom+=7900px bottom',
+        end: 'bottom+=8800px bottom',
+        scrub: true,
+      },
+    }
+  );
+};
+
+const text4 = (el) => {
+  gsap.fromTo(
+    el,
+    { opacity: 0, y: 20, filter: "blur(4px)" },
+    {
+
+      opacity: 1,
+      filter: "blur(0px)",
+      y: 0,
+      scrollTrigger: {
+        trigger: '.text-3',
+        start: 'bottom+=7900px bottom',
+        end: 'bottom+=8300px bottom',
+        scrub: true,
+      },
+    }
+  );
+
+  gsap.fromTo(
+    el,
+    {},
+    {
+
+      opacity: 0,
+      scale: 0.5,
+      scrollTrigger: {
+        trigger: '.text-3',
+        start: 'bottom+=8900px bottom',
+        end: 'bottom+=9800px bottom',
+        scrub: true,
+      },
+    }
+  );
+};
+
+const text5 = (el) => {
+  gsap.fromTo(
+    el,
+    { opacity: 0, y: 20, filter: "blur(4px)" },
+    {
+
+      opacity: 1,
+      filter: "blur(0px)",
+      y: 0,
+      scrollTrigger: {
+        trigger: '.text-4',
+        start: 'bottom+=8900px bottom',
+        end: 'bottom+=9300px bottom',
+        scrub: true,
+      },
+    }
+  );
+
+  gsap.fromTo(
+    el,
+    {},
+    {
+
+      opacity: 0,
+      scale: 0.5,
+      scrollTrigger: {
+        trigger: '.text-4',
+        start: 'bottom+=9900px bottom',
+        end: 'bottom+=10800px bottom',
+        scrub: true,
+      },
+    }
+  );
+};
+
+const text6 = (el) => {
+  gsap.fromTo(
+    el,
+    { opacity: 0, y: 20, filter: "blur(4px)" },
+    {
+
+      opacity: 1,
+      filter: "blur(0px)",
+      y: 0,
+      scrollTrigger: {
+        trigger: '.text-5',
+        start: 'bottom+=9900px bottom',
+        end: 'bottom+=10300px bottom',
+        scrub: true,
+      },
+    }
+  );
+
+  gsap.fromTo(
+    el,
+    {},
+    {
+
+      opacity: 0,
+      scale: 0.5,
+      scrollTrigger: {
+        trigger: '.text-5',
+        start: 'bottom+=10900px bottom',
+        end: 'bottom+=11800px bottom',
+        scrub: true,
+      },
+    }
+  );
+};
+
+const text7 = (el) => {
+  gsap.fromTo(
+    el,
+    { opacity: 0, y: 20, filter: "blur(4px)" },
+    {
+
+      opacity: 1,
+      filter: "blur(0px)",
+      y: 0,
+      scrollTrigger: {
+        trigger: '.text-6',
+        start: 'bottom+=10900px bottom',
+        end: 'bottom+=11300px bottom',
+        scrub: true,
+      },
+    }
+  );
+
+  gsap.fromTo(
+    el,
+    {},
+    {
+
+      opacity: 0,
+      scale: 0.5,
+      scrollTrigger: {
+        trigger: '.text-6',
+        start: 'bottom+=11900px bottom',
+        end: 'bottom+=12800px bottom',
+        scrub: true,
+      },
+    }
+  );
+};
+
+const text8FromTop = (el) => {
+  gsap.fromTo(
+    el,
+    { opacity: 0, y: -100, filter: "blur(4px)" },
+    {
+
+      opacity: 1,
+      filter: "blur(0px)",
+      y: 0,
+      scrollTrigger: {
+        trigger: '.text-7',
+        start: 'bottom+=11900px bottom',
+        end: 'bottom+=12300px bottom',
+        scrub: true,
+      },
+    }
+  );
+};
+
+const text8FromBottom = (el) => {
+  gsap.fromTo(
+    el,
+    { opacity: 0, y: 100, filter: "blur(4px)" },
+    {
+
+      opacity: 1,
+      filter: "blur(0px)",
+      y: 0,
+      scrollTrigger: {
+        trigger: '.text-7',
+        start: 'bottom+=11900px bottom',
+        end: 'bottom+=12300px bottom',
+        scrub: true,
+      },
+    }
+  );
+};
+
+const text8 = (el) => {
+  gsap.fromTo(
+    el,
+    {},
+    {
+
+      opacity: 0,
+      scale: 0.5,
+      scrollTrigger: {
+        trigger: '.text-7',
+        start: 'bottom+=12900px bottom',
+        end: 'bottom+=13800px bottom',
+        scrub: true,
+      },
+    }
+  );
+};
+
+const text9FromLeft = (el) => {
+  gsap.fromTo(
+    el,
+    { opacity: 0, x: "-100%", filter: "blur(4px)" },
+    {
+
+      opacity: 1,
+      filter: "blur(0px)",
+      x: 0,
+      scrollTrigger: {
+        trigger: '.text-8',
+        start: 'bottom+=12900px bottom',
+        end: 'bottom+=13900px bottom',
+        scrub: true,
+      },
+    }
+  );
+};
+
+const text9FromRight = (el) => {
+  gsap.fromTo(
+    el,
+    { opacity: 0, x: "100%", filter: "blur(4px)" },
+    {
+
+      opacity: 1,
+      filter: "blur(0px)",
+      x: 0,
+      scrollTrigger: {
+        trigger: '.text-8',
+        start: 'bottom+=12900px bottom',
+        end: 'bottom+=13900px bottom',
+        scrub: true,
+      },
+    }
+  );
+};
+
+const text9 = (el) => {
+  gsap.fromTo(
+    el,
+    {},
+    {
+
+      opacity: 0,
+      scale: 5,
+      x: 0,
+      scrollTrigger: {
+        trigger: '.text-8',
+        start: 'bottom+=14900px bottom',
+        end: 'bottom+=15500px bottom',
+        scrub: true,
+      },
+    }
+  );
+};
+
+const text10ZoomOut = (el) => {
+  gsap.fromTo(
+    el,
+    {scale: 5, opacity: 0},
+    {
+
+      opacity: 1,
+      scale: 1,
+      scrollTrigger: {
+        trigger: '.text-9',
+        start: 'bottom+=14900px bottom',
+        end: 'bottom+=15500px bottom',
+        scrub: true,
+      },
+    }
+  );
+
+  gsap.fromTo(
+    el,
+    {},
+    {
+      opacity: 0,
+      scrollTrigger: {
+        trigger: '.text-9',
+        start: 'bottom+=16500px bottom',
+        end: 'bottom+=18000px bottom',
+        scrub: true,
+        ease: 'power2.out',
+      },
+    }
+  );
+};
 
 const Motivation = () => {
+  const lenisRef = useRef();
+  const slide1Ref = useRef(null);
 
-    return (
-        <>
-            <section className='flex flex-row w-full h-[950px] bg-red-800 pt-20 px-8
-                                lg:flex-col lg:pt-40 lg:text-xl lg:mt-0 lg:px-0' 
-                    id='motivaccion'>
-                    <div className='w-[350px]
-                                    lg:flex-row lg:w-4/6 lg:mx-auto lg:justify-center lg:items-center lg:my-20 lg:pb-10 lg:text-center mt-0 pt-0'>
-                        <p className='mb-8'>Quiero que te lleves este mensaje, la mayoría de las personas esperan estar motivadas para comenzar a realizar actividad física, pero yo te quiero preguntar ...</p>
-                        <p className='mb-8'>¿Qué sucede si esa motivación no aparece? </p>
-                        <p className='mb-8'>Resulta que la única manera que la motivación regrese a tu vida, es a través de la Acción, cuánto más te muevas mas endorfinas el cuerpo expulsara, comenzaras a ver las cosas con una perspectiva más postiva y al cabo de un corto plazo esa motivación volverá á resurgir. </p>
-                        <p className='mb-8'>Pero no puedes pretender guiarte por la motivación, ya que las ganas fluctúan constantemente y es muy cortoplacista la duración. </p>
-                        <p className='mb-8'>¡Una mente entrenada logrará entender que la disciplina y la determinación hacia un objetivo es la CLAVE para lograr esos resultados que tantos estás deseando! </p>
-                        <p className='mb-8'>¡Y yo tengo esas herramientas para brindarte!</p>
-                    </div>
-            </section>
-        </>
-    )
-}
+  useEffect(() => {
+    function update(time) {
+      lenisRef.current?.lenis?.raf(time * 1000);
+    }
+
+    gsap.ticker.add(update);
+
+    gsap.utils.toArray(".question-text").forEach(questionText);
+    gsap.utils.toArray(".question-mark-1").forEach(questionMark1);
+    gsap.utils.toArray(".question-mark-2").forEach(questionMark2);
+    gsap.utils.toArray(".question").forEach(question);
+    gsap.utils.toArray(".text-1").forEach(text1);
+    gsap.utils.toArray(".text-2").forEach(text2);
+    gsap.utils.toArray(".text-3").forEach(text3);
+    gsap.utils.toArray(".text-4").forEach(text4);
+    gsap.utils.toArray(".text-5").forEach(text5);
+    gsap.utils.toArray(".text-6").forEach(text6);
+    gsap.utils.toArray(".text-7").forEach(text7);
+    gsap.utils.toArray(".text-8 .from-top").forEach(text8FromTop);
+    gsap.utils.toArray(".text-8 .from-bottom").forEach(text8FromBottom);
+    gsap.utils.toArray(".text-8").forEach(text8);
+    gsap.utils.toArray(".text-9 .from-left").forEach(text9FromLeft);
+    gsap.utils.toArray(".text-9 .from-right").forEach(text9FromRight);
+    gsap.utils.toArray(".text-9").forEach(text9);
+    gsap.utils.toArray(".text-10 .zoom-out").forEach(text10ZoomOut);
+
+    return () => {
+      gsap.ticker.remove(update);
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
+  }, []);
+
+  return (
+    <ReactLenis options={{ autoRaf: false }} ref={lenisRef} root>
+      <section
+        css={styles}
+        className="section-about"
+        id="motivacion"
+        ref={slide1Ref}
+      >
+        <article className="slide slide-1">
+          <div className="content">
+            <p className="question">
+              <span className="question-mark-1">¿</span>
+              <span className="question-text">Tenés motivación</span>
+              <span className="question-mark-2">?</span>
+            </p>
+          </div>
+        </article>
+        <article className="slide slide-2">
+          <div className="content">
+            <div className="speech">
+              <div className="centered-text">
+                <p className="text-1">Quiero darte este mensaje</p>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article className="slide slide-3">
+          <div className="content">
+            <div className="speech">
+              <div className="sliding-text">
+                <p className="slider">
+                  <span className="text-2">
+                  La mayoría de las personas <i>esperan estar motivadas</i> para
+                  comenzar a realizar <strong>actividad física</strong>, pero...
+                  </span>
+                </p>
+              </div>
+              <div className="centered-text">
+                <p className="text-3">
+                  ¿Qué sucede si esa motivación no aparece?
+                </p>
+              </div>
+              <div className="centered-text">
+                <p className="text-4">
+                  La única manera de que la motivación vuelva a tu
+                  vida, es a <strong>través de la Acción</strong>
+                </p>
+              </div>
+              <div className="centered-text">
+                <p className="text-5">
+                  Cuanto más te <strong>muevas</strong> más <i>endorfinas</i>
+                </p>
+              </div>
+              <div className="centered-text">
+                <p className="text-6">
+                  Tendrás una perspectiva más postiva
+                </p>
+              </div>
+              <div className="centered-text">
+                <p className="text-7">
+                  Y cuando <i>menos lo esperes</i>, esa motivación <strong>resurgirá</strong>
+                </p>
+              </div>
+              <div className="centered-text">
+                <p className="text-8">
+                  <span className="from-top">Pero no puedes pretender<br/> guiarte por la motivación,</span>
+                  <span className="from-bottom">las ganas fluctúan todo <br/> el tiempo y duran poco</span>
+                </p>
+              </div>
+              <div className="centered-text">
+                <p className="text-9">
+                  <span className="from-left">¡Una mente <strong>entrenada</strong> sabe</span>
+                  <span className="from-right">que <i>disciplina</i> y <i>determinación</i></span>
+                  <span className="from-left">son CLAVES para lograr</span>
+                  <span className="from-right">los resultados tan deseandos!</span>
+                </p>
+              </div>
+              <div className="centered-text">
+                <p className="text-10">
+                  <span className="zoom-out">Yo tengo <br/>esas herramientas<br/> para brindarte</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </ReactLenis>
+  );
+};
 
 export default Motivation;
