@@ -16,7 +16,7 @@ export default function Landing() {
 
   return (
       <ModalProvider>
-        {/* <TopBar /> */}
+        <TopBar />
         <Home />
         <Introduction />
         <Programs />

@@ -11,16 +11,33 @@ gsap.registerPlugin(ScrollTrigger);
 const styles = css`
   height: 2000vh;
   top: 0;
+  position: relative;
   /* https://css-irl.info/css-halftone-patterns/ */
-  background-image: radial-gradient(
+  /* background-image: radial-gradient(
       circle at center,
       black 0.25rem,
       transparent 0
     ),
     radial-gradient(circle at center, black 0.25rem, transparent 0);
   background-size: 1.3rem 1.3rem;
-  background-position: 0 0, 0.65rem 0.65rem;
-  filter: blur(0.5px);
+  background-position: 0 0, 0.65rem 0.65rem; */
+  /* filter: blur(0.5px); */
+
+  .background {
+    background-image: url(images/motivation.jpg);
+          background-repeat: no-repeat;
+          background-size: auto 100%;
+    mix-blend-mode: luminosity;
+    opacity: 0.3;
+    background-attachment: fixed;
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+  }
 
   i {
     font-style: normal;
@@ -170,6 +187,22 @@ const styles = css`
     }
   }
 `;
+
+const background = (el) => {
+  gsap.fromTo(
+    el,
+    {backgroundPosition: "100% 0%" },
+    {
+      backgroundPosition: "0% 0%",
+      scrollTrigger: {
+        trigger: el,
+        start: "top bottom",
+        end: 'bottom+=5000px bottom',
+        scrub: true,
+      },
+    }
+  );
+};
 
 const questionText = (el) => {
   gsap.fromTo(
@@ -630,6 +663,7 @@ const Motivation = () => {
 
     gsap.ticker.add(update);
 
+    gsap.utils.toArray(".background").forEach(background);
     gsap.utils.toArray(".question-text").forEach(questionText);
     gsap.utils.toArray(".question-mark-1").forEach(questionMark1);
     gsap.utils.toArray(".question-mark-2").forEach(questionMark2);
@@ -663,6 +697,7 @@ const Motivation = () => {
         id="motivacion"
         ref={slide1Ref}
       >
+      <div className="background" />
         <article className="slide slide-1">
           <div className="content">
             <p className="question">
