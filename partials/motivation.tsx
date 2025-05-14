@@ -187,13 +187,6 @@ const styles = css`
         display: block;
       }
     }
-
-    .text-10 {
-      /* font-size: 90px; */
-      ${fontSize1};
-      /* ${desktop(css`
-      `)} */
-    }
   }
 `;
 
