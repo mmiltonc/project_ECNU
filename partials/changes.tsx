@@ -1,19 +1,27 @@
 "use client";
 import Stories, { PersonType, StoryProps } from "@/components/Stories";
+import { desktop, fontSize1, fontSize2, space } from "@/styles/global";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import Image from "next/image";
 import { useState } from "react";
 
 const styles = css`
-  padding: 160px 80px 0;
+  padding: 0 ${space(3)} 0;
+
+  ${desktop(css`
+    padding: 160px ${space(10)} 0;
+  `)}
 
   .title {
+    ${fontSize2};
     font-family: var(--font-jost);
     font-weight: 900;
-    font-size: 72px;
-    line-height: 1;
     margin-bottom: 72px;
+
+    ${desktop(css`
+      ${fontSize1};
+  `)}
   }
 
   .people-list {
@@ -43,7 +51,8 @@ const people = [
   {
     id: 2,
     name: "Juano",
-    quote: "Entendió mis necesidades, encontré una gran ayuda en él y una actividad apasionante.",
+    quote:
+      "Entendió mis necesidades, encontré una gran ayuda en él y una actividad apasionante.",
     before: require("@/public/images/before_after/before_juan.jpg"),
     after: require("@/public/images/before_after/after_juan.jpg"),
   },
@@ -68,7 +77,7 @@ const people = [
 const Changes = () => {
   const [triggerPersonId, setTriggerPersonId] = useState(-1);
   const buildPeopleFigure = (person: PersonType) => {
-    const stories:StoryProps[] =  [
+    const stories: StoryProps[] = [
       {
         id: 0,
         content: (
@@ -96,17 +105,19 @@ const Changes = () => {
           </div>
         ),
       },
-    ] ;
+    ];
 
-    return <li className="people-item" key={person.name}>
-      <Stories
-        stories={stories}
-        person={person}
-        triggerId={triggerPersonId}
-        finish={(id: number) => setTriggerPersonId(id % people.length)}
-      />
-    </li>
-  }
+    return (
+      <li className="people-item" key={person.name}>
+        <Stories
+          stories={stories}
+          person={person}
+          triggerId={triggerPersonId}
+          finish={(id: number) => setTriggerPersonId(id % people.length)}
+        />
+      </li>
+    );
+  };
 
   return (
     <section css={styles} className="section-changes" id="cambios-visibles">

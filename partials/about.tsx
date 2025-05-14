@@ -1,5 +1,6 @@
 "use client";
 
+import { desktop, fontSize1, fontSize2, fontSize3, space } from "@/styles/global";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import Image from "next/image";
@@ -7,29 +8,14 @@ import Image from "next/image";
 const styles = css`
   position: relative;
   overflow: hidden;
-  margin-top: 160px;
+
+  ${desktop(css`
+    margin-top: 160px;
+  `)}
 
   .anchor {
     position: absolute;
     top: -130px;
-  }
-
-  @keyframes ant-1 {
-    from {
-      transform: rotateZ(-50deg) translateY(2000px) translateX(740px);
-    }
-    to {
-      transform: rotateZ(-50deg) translateY(-2500px) translateX(440px);
-    }
-  }
-
-  @keyframes ant-2 {
-    from {
-      transform: rotateZ(50deg) translateY(1000px) translateX(970px);
-    }
-    to {
-      transform: rotateZ(50deg) translateY(-2000px) translateX(970px);
-    }
   }
 
   &:after,
@@ -55,7 +41,6 @@ const styles = css`
   }
 
   &:after {
-
     animation-name: ant-1;
     animation-duration: 18s;
     /* transform: rotateZ(-50deg) translateY(410%) translateX(440px); */
@@ -67,13 +52,28 @@ const styles = css`
   }
 
   .title {
+    ${fontSize2};
     color: #fd5f44;
     font-family: var(--font-jost);
     text-transform: uppercase;
     font-weight: 900;
-    font-size: 72px;
-    line-height: 1;
     margin-bottom: 72px;
+
+    ${desktop(css`
+      ${fontSize1};
+
+      span {
+        display: inline-block;
+      }
+    `)}
+
+    span {
+      display: block;
+
+      ${desktop(css`
+        display: inline-block;
+      `)}
+    }
 
     i {
       font-style: normal;
@@ -83,7 +83,7 @@ const styles = css`
 
   .about-card {
     position: relative;
-    padding: 60px 80px;
+    padding: ${space(3)};
 
     background: linear-gradient(
       to right,
@@ -95,6 +95,10 @@ const styles = css`
     box-shadow: 0 -1px 1px -1px #fd5f44, 0 -10px 30px 10px #ffffff05,
       0 1px 1px 0px #00000022, 0 10px 30px 10px #00000033;
     backdrop-filter: blur(6px);
+
+    ${desktop(css`
+      padding: 60px 80px;
+    `)}
 
     &:before {
       height: 1px;
@@ -112,16 +116,25 @@ const styles = css`
     }
 
     .about-info {
-      display: flex;
-      gap: 48px;
+      display: block;
+
+      ${desktop(css`
+        display: flex;
+        gap: 48px;
+      `)}
 
       .about-image {
         .image {
           border-radius: 4px;
           overflow: hidden;
-          height: 450px;
           width: auto;
           object-fit: contain;
+          margin-bottom: ${space(3)};
+
+          ${desktop(css`
+            margin-bottom: 0;
+            height: 450px;
+          `)}
         }
       }
 
@@ -132,13 +145,30 @@ const styles = css`
         flex-direction: column;
 
         .text {
+          ${fontSize3};
           font-family: var(--font-jost);
           font-weight: 200;
-          font-size: 24px;
-          line-height: 1.2;
           margin: 0;
         }
       }
+    }
+  }
+
+  @keyframes ant-1 {
+    from {
+      transform: rotateZ(-50deg) translateY(2000px) translateX(740px);
+    }
+    to {
+      transform: rotateZ(-50deg) translateY(-2500px) translateX(440px);
+    }
+  }
+
+  @keyframes ant-2 {
+    from {
+      transform: rotateZ(50deg) translateY(1000px) translateX(970px);
+    }
+    to {
+      transform: rotateZ(50deg) translateY(-2000px) translateX(970px);
     }
   }
 `;
@@ -147,10 +177,13 @@ const About = () => {
   return (
     <>
       <section css={styles} className="section-about">
-      <div className="anchor" id="quien-soy" />
+        <div className="anchor" id="quien-soy" />
         <div className="about-card">
           <h2 className="title">
-            De la energía <i>al propósito</i>
+            De la energía{" "}
+            <span>
+              <i>al propósito</i>
+            </span>
           </h2>
           <div className="about-info">
             <div className="about-image">

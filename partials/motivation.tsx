@@ -5,14 +5,18 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
 import { ReactLenis } from "lenis/react";
+import { space, desktop, fontSize1, fontSize2 } from "@/styles/global";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const styles = css`
-  height: 2000vh;
+  height: 2500vh;
   top: 0;
   position: relative;
 
+  ${desktop(css`
+    height: 2000vh;
+`)}
   .background {
     /* https://css-irl.info/css-halftone-patterns/ */
     background-image: url(images/motivation.jpg);
@@ -47,6 +51,7 @@ const styles = css`
     width: 100%;
 
     .content {
+      ${fontSize2};
       overflow: hidden;
       left: 0;
       top: 0;
@@ -58,9 +63,11 @@ const styles = css`
       justify-content: center;
       font-family: var(--font-jost);
       font-weight: 600;
-      font-size: 100px;
-      line-height: 1.2;
       text-transform: uppercase;
+
+      ${desktop(css`
+        ${fontSize1};
+      `)}
     }
   }
 
@@ -95,6 +102,14 @@ const styles = css`
     height: 100%;
     width: 100%;
 
+    span {
+      display: block;
+
+      ${desktop(css`
+        display: inline-block;
+      `)}
+    }
+
     .centered-text {
       width: 100%;
       height: 100%;
@@ -117,11 +132,14 @@ const styles = css`
     }
 
     p {
+      ${fontSize1};
       font-family: var(--font-jost);
       font-weight: 600;
-      font-size: 60px;
-      line-height: 1.2;
       opacity: 0;
+
+      ${desktop(css`
+        ${fontSize1};
+      `)}
     }
 
     .text-1,
@@ -131,7 +149,7 @@ const styles = css`
     .text-6,
     .text-7 {
       text-align: center;
-      width: calc(100% - 160px);
+      padding: 0 ${space(2)};
     }
 
     .slider {
@@ -144,6 +162,7 @@ const styles = css`
     }
 
     .text-2 {
+      padding: 0 ${space(2)};
       position: relative;
       white-space: nowrap;
       width: min-content;
@@ -153,6 +172,7 @@ const styles = css`
     .text-8,
     .text-9,
     .text-10 {
+      padding: 0 ${space(2)};
       opacity: 1;
       text-align: center;
 
@@ -169,7 +189,10 @@ const styles = css`
     }
 
     .text-10 {
-      font-size: 90px;
+      /* font-size: 90px; */
+      ${fontSize1};
+      /* ${desktop(css`
+      `)} */
     }
   }
 `;
@@ -693,13 +716,13 @@ const Motivation = () => {
               </div>
               <div className="centered-text">
                 <p className="text-3">
-                  ¿Qué sucede si esa motivación no aparece?
+                  ¿Qué sucede <span>si esa</span> motivación no aparece?
                 </p>
               </div>
               <div className="centered-text">
                 <p className="text-4">
-                  La única manera de que la motivación vuelva a tu vida, es a{" "}
-                  <strong>través de la Acción</strong>
+                  La única manera <span>de que la</span> motivación vuelva a tu vida es {" "}
+                  <strong><span>a través </span><span>de la Acción</span></strong>
                 </p>
               </div>
               <div className="centered-text">
@@ -720,10 +743,10 @@ const Motivation = () => {
                 <p className="text-8">
                   <span className="from-top">
                     Pero no puedes pretender
-                    <br /> guiarte por la motivación,
+                    guiarte por la motivación,
                   </span>
                   <span className="from-bottom">
-                    las ganas fluctúan todo <br /> el tiempo y duran poco
+                    las ganas fluctúan <span>todo el</span> tiempo y <span>duran poco</span>
                   </span>
                 </p>
               </div>
