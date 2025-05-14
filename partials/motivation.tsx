@@ -4,7 +4,7 @@ import { css } from "@emotion/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
-import { ReactLenis } from "lenis/react";
+import { LenisRef, ReactLenis } from "lenis/react";
 import { space, desktop, fontSize1, fontSize2 } from "@/styles/global";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,7 +16,7 @@ const styles = css`
 
   ${desktop(css`
     height: 2000vh;
-`)}
+  `)}
   .background {
     /* https://css-irl.info/css-halftone-patterns/ */
     background-image: url(images/motivation.jpg);
@@ -190,7 +190,7 @@ const styles = css`
   }
 `;
 
-const background = (el) => {
+const background = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     { backgroundPosition: "100% 0%" },
@@ -206,7 +206,7 @@ const background = (el) => {
   );
 };
 
-const questionText = (el) => {
+const questionText = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     {},
@@ -222,7 +222,7 @@ const questionText = (el) => {
   );
 };
 
-const questionMark1 = (el) => {
+const questionMark1 = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     { opacity: 0, x: -20 },
@@ -239,7 +239,7 @@ const questionMark1 = (el) => {
   );
 };
 
-const questionMark2 = (el) => {
+const questionMark2 = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     { opacity: 0, x: 20 },
@@ -256,7 +256,7 @@ const questionMark2 = (el) => {
   );
 };
 
-const question = (el) => {
+const question = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     {},
@@ -274,7 +274,7 @@ const question = (el) => {
   );
 };
 
-const text1 = (el) => {
+const text1 = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     { opacity: 0, y: 20, filter: "blur(4px)" },
@@ -307,7 +307,7 @@ const text1 = (el) => {
   );
 };
 
-const text2 = (el) => {
+const text2 = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     {},
@@ -327,7 +327,7 @@ const text2 = (el) => {
   );
 };
 
-const text3 = (el) => {
+const text3 = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     { opacity: 0, y: 20, filter: "blur(4px)" },
@@ -360,7 +360,7 @@ const text3 = (el) => {
   );
 };
 
-const text4 = (el) => {
+const text4 = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     { opacity: 0, y: 20, filter: "blur(4px)" },
@@ -393,7 +393,7 @@ const text4 = (el) => {
   );
 };
 
-const text5 = (el) => {
+const text5 = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     { opacity: 0, y: 20, filter: "blur(4px)" },
@@ -426,7 +426,7 @@ const text5 = (el) => {
   );
 };
 
-const text6 = (el) => {
+const text6 = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     { opacity: 0, y: 20, filter: "blur(4px)" },
@@ -459,7 +459,7 @@ const text6 = (el) => {
   );
 };
 
-const text7 = (el) => {
+const text7 = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     { opacity: 0, y: 20, filter: "blur(4px)" },
@@ -492,7 +492,7 @@ const text7 = (el) => {
   );
 };
 
-const text8FromTop = (el) => {
+const text8FromTop = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     { opacity: 0, y: -100, filter: "blur(4px)" },
@@ -510,7 +510,7 @@ const text8FromTop = (el) => {
   );
 };
 
-const text8FromBottom = (el) => {
+const text8FromBottom = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     { opacity: 0, y: 100, filter: "blur(4px)" },
@@ -528,7 +528,7 @@ const text8FromBottom = (el) => {
   );
 };
 
-const text8 = (el) => {
+const text8 = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     {},
@@ -545,7 +545,7 @@ const text8 = (el) => {
   );
 };
 
-const text9FromLeft = (el) => {
+const text9FromLeft = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     { opacity: 0, x: "-100%", filter: "blur(4px)" },
@@ -563,7 +563,7 @@ const text9FromLeft = (el) => {
   );
 };
 
-const text9FromRight = (el) => {
+const text9FromRight = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     { opacity: 0, x: "100%", filter: "blur(4px)" },
@@ -581,7 +581,7 @@ const text9FromRight = (el) => {
   );
 };
 
-const text9 = (el) => {
+const text9 = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     {},
@@ -599,7 +599,7 @@ const text9 = (el) => {
   );
 };
 
-const text10ZoomOut = (el) => {
+const text10ZoomOut = (el: HTMLElement) => {
   gsap.fromTo(
     el,
     { scale: 5, opacity: 0 },
@@ -632,35 +632,52 @@ const text10ZoomOut = (el) => {
 };
 
 const Motivation = () => {
-  const lenisRef = useRef();
+  const lenisRef = useRef<LenisRef | null>(null);
+
   const slide1Ref = useRef(null);
 
   useEffect(() => {
-    function update(time) {
+    function update(time: number) {
       lenisRef.current?.lenis?.raf(time * 1000);
     }
 
     gsap.ticker.add(update);
 
-    gsap.utils.toArray(".background").forEach(background);
-    gsap.utils.toArray(".question-text").forEach(questionText);
-    gsap.utils.toArray(".question-mark-1").forEach(questionMark1);
-    gsap.utils.toArray(".question-mark-2").forEach(questionMark2);
-    gsap.utils.toArray(".question").forEach(question);
-    gsap.utils.toArray(".text-1").forEach(text1);
-    gsap.utils.toArray(".text-2").forEach(text2);
-    gsap.utils.toArray(".text-3").forEach(text3);
-    gsap.utils.toArray(".text-4").forEach(text4);
-    gsap.utils.toArray(".text-5").forEach(text5);
-    gsap.utils.toArray(".text-6").forEach(text6);
-    gsap.utils.toArray(".text-7").forEach(text7);
-    gsap.utils.toArray(".text-8 .from-top").forEach(text8FromTop);
-    gsap.utils.toArray(".text-8 .from-bottom").forEach(text8FromBottom);
-    gsap.utils.toArray(".text-8").forEach(text8);
-    gsap.utils.toArray(".text-9 .from-left").forEach(text9FromLeft);
-    gsap.utils.toArray(".text-9 .from-right").forEach(text9FromRight);
-    gsap.utils.toArray(".text-9").forEach(text9);
-    gsap.utils.toArray(".text-10 .zoom-out").forEach(text10ZoomOut);
+    (gsap.utils.toArray(".background") as HTMLElement[]).forEach(background);
+    (gsap.utils.toArray(".question-text") as HTMLElement[]).forEach(
+      questionText
+    );
+    (gsap.utils.toArray(".question-mark-1") as HTMLElement[]).forEach(
+      questionMark1
+    );
+    (gsap.utils.toArray(".question-mark-2") as HTMLElement[]).forEach(
+      questionMark2
+    );
+    (gsap.utils.toArray(".question") as HTMLElement[]).forEach(question);
+    (gsap.utils.toArray(".text-1") as HTMLElement[]).forEach(text1);
+    (gsap.utils.toArray(".text-2") as HTMLElement[]).forEach(text2);
+    (gsap.utils.toArray(".text-3") as HTMLElement[]).forEach(text3);
+    (gsap.utils.toArray(".text-4") as HTMLElement[]).forEach(text4);
+    (gsap.utils.toArray(".text-5") as HTMLElement[]).forEach(text5);
+    (gsap.utils.toArray(".text-6") as HTMLElement[]).forEach(text6);
+    (gsap.utils.toArray(".text-7") as HTMLElement[]).forEach(text7);
+    (gsap.utils.toArray(".text-8 .from-top") as HTMLElement[]).forEach(
+      text8FromTop
+    );
+    (gsap.utils.toArray(".text-8 .from-bottom") as HTMLElement[]).forEach(
+      text8FromBottom
+    );
+    (gsap.utils.toArray(".text-8") as HTMLElement[]).forEach(text8);
+    (gsap.utils.toArray(".text-9 .from-left") as HTMLElement[]).forEach(
+      text9FromLeft
+    );
+    (gsap.utils.toArray(".text-9 .from-right") as HTMLElement[]).forEach(
+      text9FromRight
+    );
+    (gsap.utils.toArray(".text-9") as HTMLElement[]).forEach(text9);
+    (gsap.utils.toArray(".text-10 .zoom-out") as HTMLElement[]).forEach(
+      text10ZoomOut
+    );
 
     return () => {
       gsap.ticker.remove(update);
@@ -714,8 +731,12 @@ const Motivation = () => {
               </div>
               <div className="centered-text">
                 <p className="text-4">
-                  La única manera <span>de que la</span> motivación vuelva a tu vida es {" "}
-                  <strong><span>a través </span><span>de la Acción</span></strong>
+                  La única manera <span>de que la</span> motivación vuelva a tu
+                  vida es{" "}
+                  <strong>
+                    <span>a través </span>
+                    <span>de la Acción</span>
+                  </strong>
                 </p>
               </div>
               <div className="centered-text">
@@ -735,11 +756,11 @@ const Motivation = () => {
               <div className="centered-text">
                 <p className="text-8">
                   <span className="from-top">
-                    Pero no puedes pretender
-                    guiarte por la motivación,
+                    Pero no puedes pretender guiarte por la motivación,
                   </span>
                   <span className="from-bottom">
-                    las ganas fluctúan <span>todo el</span> tiempo y <span>duran poco</span>
+                    las ganas fluctúan <span>todo el</span> tiempo y{" "}
+                    <span>duran poco</span>
                   </span>
                 </p>
               </div>

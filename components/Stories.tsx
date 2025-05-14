@@ -3,7 +3,7 @@
 import { css } from "@emotion/react";
 import classNames from "classnames";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 const styles = css`
   width: 300px;
@@ -137,7 +137,7 @@ export type PersonType = {
 
 export type StoryProps = {
   id: number;
-  content: Object;
+  content: ReactNode;
 }
 
 export type StoriesProps = {
