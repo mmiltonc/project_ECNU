@@ -33,6 +33,7 @@ export const dynamic = "force-static";
 
 const styles = css`
   padding: ${space(10)} ${space(3)};
+  overflow-x: hidden;
 
   ${desktop(css`
     padding: ${space(20)} ${space(10)} 0;
