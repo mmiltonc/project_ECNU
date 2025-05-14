@@ -4,6 +4,8 @@ import { css } from "@emotion/react";
 import { desktop, fontSize1, fontSize2, space } from "@/styles/global";
 
 const styles = css`
+overflow-x: hidden;
+width: 100%;
   padding: 0 ${space(3)};
   background-image: radial-gradient(closest-side, #fd5f44, #051422) !important;
   position: relative;

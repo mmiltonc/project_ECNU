@@ -6,6 +6,8 @@ import { css } from "@emotion/react";
 import { sendGTMEvent } from "@next/third-parties/google";
 
 const styles = css`
+  overflow-x: hidden;
+  width: 100%;
   padding: 0 ${space(3)};
   background-image: url(images/bgbw.jpeg);
   background-position: bottom center;

@@ -12,26 +12,10 @@ gsap.registerPlugin(ScrollTrigger);
 const styles = css`
   height: 2500vh;
   top: 0;
-  position: relative;
 
   ${desktop(css`
     height: 2000vh;
-  `)}
-  .background {
-    /* https://css-irl.info/css-halftone-patterns/ */
-    background-image: url(images/motivation.jpg);
-    background-repeat: no-repeat;
-    background-size: auto 100%;
-    mix-blend-mode: luminosity;
-    opacity: 0.3;
-    background-attachment: fixed;
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-  }
+    `)}
 
   i {
     font-style: normal;
@@ -46,7 +30,7 @@ const styles = css`
   .slide {
     height: 100vh;
     position: sticky;
-    padding: 160px 80px;
+    /* padding: 160px 80px; */
     top: 0;
     width: 100%;
 
@@ -72,6 +56,23 @@ const styles = css`
   }
 
   .slide-1 {
+    /* https://css-irl.info/css-halftone-patterns/ */
+
+    .background {
+      content: "";
+      display: block;
+      background-image: url(images/motivation.jpg);
+      background-repeat: no-repeat;
+      background-size: auto 100vh;
+      mix-blend-mode: luminosity;
+      opacity: 0.3;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      position: sticky;
+    }
+
     .question {
       opacity: 1;
       filter: blur(0px);
@@ -197,9 +198,9 @@ const background = (el: HTMLElement) => {
     {
       backgroundPosition: "0% 0%",
       scrollTrigger: {
-        trigger: el,
+        trigger: '.section-about',
         start: "top bottom",
-        end: "bottom+=5000px bottom",
+        end: "bottom+=25000px bottom",
         scrub: true,
       },
     }
@@ -643,7 +644,7 @@ const Motivation = () => {
 
     gsap.ticker.add(update);
 
-    (gsap.utils.toArray(".background") as HTMLElement[]).forEach(background);
+    (gsap.utils.toArray(".slide-1 .background") as HTMLElement[]).forEach(background);
     (gsap.utils.toArray(".question-text") as HTMLElement[]).forEach(
       questionText
     );
@@ -693,103 +694,104 @@ const Motivation = () => {
         id="motivacion"
         ref={slide1Ref}
       >
-        <div className="background" />
-        <article className="slide slide-1">
-          <div className="content">
-            <p className="question">
-              <span className="question-mark-1">¿</span>
-              <span className="question-text">Tenés motivación</span>
-              <span className="question-mark-2">?</span>
-            </p>
-          </div>
-        </article>
-        <article className="slide slide-2">
-          <div className="content">
-            <div className="speech">
-              <div className="centered-text">
-                <p className="text-1">Quiero darte este mensaje</p>
+
+          <article className="slide slide-1">
+          <div className="background" />
+            <div className="content">
+              <p className="question">
+                <span className="question-mark-1">¿</span>
+                <span className="question-text">Tenés motivación</span>
+                <span className="question-mark-2">?</span>
+              </p>
+            </div>
+          </article>
+          <article className="slide slide-2">
+            <div className="content">
+              <div className="speech">
+                <div className="centered-text">
+                  <p className="text-1">Quiero darte este mensaje</p>
+                </div>
               </div>
             </div>
-          </div>
-        </article>
-        <article className="slide slide-3">
-          <div className="content">
-            <div className="speech">
-              <div className="sliding-text">
-                <p className="slider">
-                  <span className="text-2">
-                    La mayoría de las personas <i>esperan estar motivadas</i>{" "}
-                    para comenzar a realizar <strong>actividad física</strong>,
-                    pero...
-                  </span>
-                </p>
-              </div>
-              <div className="centered-text">
-                <p className="text-3">
-                  ¿Qué sucede <span>si esa</span> motivación no aparece?
-                </p>
-              </div>
-              <div className="centered-text">
-                <p className="text-4">
-                  La única manera <span>de que la</span> motivación vuelva a tu
-                  vida es{" "}
-                  <strong>
-                    <span>a través </span>
-                    <span>de la Acción</span>
-                  </strong>
-                </p>
-              </div>
-              <div className="centered-text">
-                <p className="text-5">
-                  Cuanto más te <strong>muevas</strong> más <i>endorfinas</i>
-                </p>
-              </div>
-              <div className="centered-text">
-                <p className="text-6">Tendrás una perspectiva más postiva</p>
-              </div>
-              <div className="centered-text">
-                <p className="text-7">
-                  Y cuando <i>menos lo esperes</i>, esa motivación{" "}
-                  <strong>resurgirá</strong>
-                </p>
-              </div>
-              <div className="centered-text">
-                <p className="text-8">
-                  <span className="from-top">
-                    Pero no puedes pretender guiarte por la motivación,
-                  </span>
-                  <span className="from-bottom">
-                    las ganas fluctúan <span>todo el</span> tiempo y{" "}
-                    <span>duran poco</span>
-                  </span>
-                </p>
-              </div>
-              <div className="centered-text">
-                <p className="text-9">
-                  <span className="from-left">
-                    ¡Una mente <strong>entrenada</strong> sabe
-                  </span>
-                  <span className="from-right">
-                    que <i>disciplina</i> y <i>determinación</i>
-                  </span>
-                  <span className="from-left">son CLAVES para lograr</span>
-                  <span className="from-right">
-                    los resultados tan deseandos!
-                  </span>
-                </p>
-              </div>
-              <div className="centered-text">
-                <p className="text-10">
-                  <span className="zoom-out">
-                    Yo tengo <br />
-                    esas herramientas
-                    <br /> para brindarte
-                  </span>
-                </p>
+          </article>
+          <article className="slide slide-3">
+            <div className="content">
+              <div className="speech">
+                <div className="sliding-text">
+                  <p className="slider">
+                    <span className="text-2">
+                      La mayoría de las personas <i>esperan estar motivadas</i>{" "}
+                      para comenzar a realizar <strong>actividad física</strong>
+                      , pero...
+                    </span>
+                  </p>
+                </div>
+                <div className="centered-text">
+                  <p className="text-3">
+                    ¿Qué sucede <span>si esa</span> motivación no aparece?
+                  </p>
+                </div>
+                <div className="centered-text">
+                  <p className="text-4">
+                    La única manera <span>de que la</span> motivación vuelva a
+                    tu vida es{" "}
+                    <strong>
+                      <span>a través </span>
+                      <span>de la Acción</span>
+                    </strong>
+                  </p>
+                </div>
+                <div className="centered-text">
+                  <p className="text-5">
+                    Cuanto más te <strong>muevas</strong> más <i>endorfinas</i>
+                  </p>
+                </div>
+                <div className="centered-text">
+                  <p className="text-6">Tendrás una perspectiva más postiva</p>
+                </div>
+                <div className="centered-text">
+                  <p className="text-7">
+                    Y cuando <i>menos lo esperes</i>, esa motivación{" "}
+                    <strong>resurgirá</strong>
+                  </p>
+                </div>
+                <div className="centered-text">
+                  <p className="text-8">
+                    <span className="from-top">
+                      Pero no puedes pretender guiarte por la motivación,
+                    </span>
+                    <span className="from-bottom">
+                      las ganas fluctúan <span>todo el</span> tiempo y{" "}
+                      <span>duran poco</span>
+                    </span>
+                  </p>
+                </div>
+                <div className="centered-text">
+                  <p className="text-9">
+                    <span className="from-left">
+                      ¡Una mente <strong>entrenada</strong> sabe
+                    </span>
+                    <span className="from-right">
+                      que <i>disciplina</i> y <i>determinación</i>
+                    </span>
+                    <span className="from-left">son CLAVES para lograr</span>
+                    <span className="from-right">
+                      los resultados tan deseandos!
+                    </span>
+                  </p>
+                </div>
+                <div className="centered-text">
+                  <p className="text-10">
+                    <span className="zoom-out">
+                      Yo tengo <br />
+                      esas herramientas
+                      <br /> para brindarte
+                    </span>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        </article>
+          </article>
       </section>
     </ReactLenis>
   );

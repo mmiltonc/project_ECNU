@@ -13,18 +13,17 @@ import Home from "@/partials/home";
 import TopBar from "@/components/topBar";
 
 export default function Landing() {
-
   return (
-      <ModalProvider>
-        <TopBar />
-        <Home />
-        <Introduction />
-        <Programs />
-        <Changes />
-        <About />
-        <Motivation />
-        <Faq />
-        {/* <Contact /> */}
-      </ModalProvider>
+    <ModalProvider>
+      <TopBar />
+      <Home />
+      <Introduction />
+      <Programs />
+      <Changes />
+      <About />
+      <Motivation />
+      <Faq />
+      {/* <Contact /> */}
+    </ModalProvider>
   );
 }

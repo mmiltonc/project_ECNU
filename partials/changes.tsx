@@ -7,6 +7,8 @@ import Image from "next/image";
 import { useState } from "react";
 
 const styles = css`
+overflow-x: hidden;
+width: 100%;
   padding: 0 ${space(3)} 0;
 
   ${desktop(css`
