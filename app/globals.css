@@ -1,6 +1,6 @@
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* @tailwind components;
+@tailwind utilities; */
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -18,6 +18,10 @@
 /* * {
   border: 1px blue solid;
 }  */
+
+html {
+  overflow-x: hidden;
+}
 
 body {
   font-weight: 300;
@@ -119,11 +123,11 @@ body {
   }
 }
 
-@layer components {
+/* @layer components {
   .animate-slide {
     animation: slide 20s linear infinite;
   }
-}
+} */
 
 /* Estilos para los gradientes radiales */
 .bg-radial-blue-yellow {
@@ -166,4 +170,24 @@ body {
 .gym-swiper .swiper-slide {
   display: flex;
   justify-content: center;
+}
+
+.sr-only {
+  display: none;
+}
+
+.show-mobile {
+  display: block;
+
+  @media only screen and (min-width: 1025px) {
+    display: none;
+  }
+}
+
+.show-desktop {
+  display: none;
+
+  @media only screen and (min-width: 1025px) {
+    display: block;
+  }
 }

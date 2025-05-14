@@ -21,10 +21,22 @@ import MercadopagoComponent from "@/components/shared/marcadopago-component";
 import Modal from "@mui/material/Modal";
 import PayPalComponent from "@/components/shared/paypal-component";
 import Typography from "@mui/material/Typography";
+import {
+  desktop,
+  fontSize1,
+  fontSize2,
+  fontSize3,
+  mobile,
+  space,
+} from "@/styles/global";
 export const dynamic = "force-static";
 
 const styles = css`
-  padding: 0 80px 0;
+  padding: ${space(10)} ${space(3)};
+
+  ${desktop(css`
+    padding: ${space(20)} ${space(10)} 0;
+  `)}
 
   strong {
     font-weight: 600;
@@ -36,33 +48,44 @@ const styles = css`
   }
 
   .article-program {
-    padding-top: 160px;
-
     .header {
-      margin-bottom: 64px;
+      margin-bottom: ${space(4)};
+
+      ${desktop(css`
+        margin-bottom: ${space(8)};
+      `)}
+
       .title {
+        ${fontSize2};
         font-family: var(--font-jost);
         font-weight: 900;
-        font-size: 80px;
-        line-height: 1;
         text-transform: uppercase;
+
+        ${desktop(css`
+          ${fontSize1};
+        `)}
       }
 
       .subtitle {
+        ${fontSize3};
         font-family: var(--font-jost);
         font-weight: 900;
         color: #fd5f44;
-        font-size: 80px;
-        line-height: 1;
         margin-bottom: 24px;
         text-transform: uppercase;
+
+        ${desktop(css`
+          ${fontSize2};
+        `)}
       }
     }
 
     .container {
-      padding: 0 80px 10px 200px;
-      margin-bottom: 132px;
       position: relative;
+
+      ${desktop(css`
+        padding: 0 80px 10px 200px;
+      `)}
 
       &:before {
         content: "";
@@ -76,6 +99,10 @@ const styles = css`
         background-repeat: repeat-y;
         background-size: contain;
         mix-blend-mode: soft-light;
+
+        ${mobile(css`
+          display: none;
+        `)}
       }
 
       &:after {
@@ -90,6 +117,10 @@ const styles = css`
         background-repeat: no-repeat;
         background-size: contain;
         mix-blend-mode: soft-light;
+
+        ${mobile(css`
+          display: none;
+        `)}
       }
 
       .text-section {
@@ -97,20 +128,19 @@ const styles = css`
 
         .heading {
           font-family: var(--font-jost);
-          font-size: 26px;
-          line-height: 1.2;
+          ${fontSize3};
           font-weight: 600;
           margin-bottom: 16px;
         }
         .text {
           font-family: var(--font-jost);
-          font-size: 24px;
+          ${fontSize3};
           line-height: 1.2;
         }
 
         .list {
           font-family: var(--font-jost);
-          font-size: 24px;
+          ${fontSize3};
           line-height: 1.2;
           list-style: inside decimal;
         }
@@ -122,7 +152,26 @@ const styles = css`
       flex-wrap: wrap;
       justify-content: center;
       gap: 32px;
-      background-image: radial-gradient(closest-side, #fd5f44, #051422) !important;
+      background-image: radial-gradient(
+        closest-side,
+        #fd5f44,
+        #051422
+      ) !important;
+      width: 100%;
+      min-height: 100vh;
+
+      ${desktop(css`
+        align-items: center;
+        flex-direction: column;
+        display: flex;
+        flex-direction: initial;
+      `)}
+
+      .card {
+        height: 570px;
+        width: 330px;
+      }
+      /* w-[330px] min-h-[570px] max-h-[570px] flex flex-col items-center rounded-3xl border-2 border-red-700 */
     }
   }
 `;
@@ -169,6 +218,8 @@ const Programs = () => {
   const [camposVisibles, setCamposVisibles] = useState(false);
   const [stepForm, setStepForm] = useState(1);
   const [modalPage, setModalPage] = useState(1);
+  const cardContainerGymRef = useRef(null)
+  const cardContainerPlanificationRef = useRef(null)
 
   const [formData, setFormData] = useState<FormDataType>({
     plan: "",
@@ -228,49 +279,36 @@ const Programs = () => {
     }
   }, [abrirModal]);
 
-  // useEffect(() => {
-  //   const url = new URL(window.location.href);
-  //   url.searchParams.delete("modal");
-  //   window.history.replaceState({}, "", url.toString());
-
-  //   const cleanHash = "#gym-virtual";
-  //   window.location.hash = cleanHash;
-  // }, []);
-
   return (
-    <section
-      css={styles}
-      ref={sectionRef}
-      className="programs-section"
-    >
+    <section css={styles} ref={sectionRef} className="programs-section">
       <article className="article-program" id="gym-virtual">
         <header className="header">
-          <div className="block lg:hidden">
+          <div className="show-mobile">
             <AnimatedText
               el="h2"
               text={"Gym Virtual"}
               className="title text-4xl font-bold"
             />
             <AnimatedText
-            delay={.7}
+              delay={0.7}
               text={"Etapa Uno"}
               className="subtitle text-4xl font-bold"
             />
           </div>
-          <div className="hidden lg:block">
+          <div className="show-desktop">
             <AnimatedText
               el="h2"
               text={"Gym Virtual"}
               className="title text-7xl font-bold"
             />
             <AnimatedText
-            delay={.7}
+              delay={0.7}
               text={"Etapa Uno"}
               className="subtitle text-4xl font-bold"
             />
           </div>
         </header>
-        <div className="container">
+        <div className="container plan-plus-gym-virtual" >
           <section className="text-section">
             <h3 className="heading">
               Un gimnasio virtual <i>pensado para vos</i>.
@@ -308,7 +346,7 @@ const Programs = () => {
           </section>
           <section className="text-section">
             <p className="text">
-              No necesitás estar motivado, {" "}
+              No necesitás estar motivado,{" "}
               <i>
                 <strong>solo dar el primer paso</strong>
               </i>
@@ -317,43 +355,53 @@ const Programs = () => {
           </section>
         </div>
 
-        <div className="cards">
-          {virtualGymCards.map((item, index) => {
-            return (
-              <CardDesktop
-                main={item.main}
-                index={index}
-                key={index}
-                type={item.type}
-                image={item.imagen}
-                setPlan={() => setFormData({ ...formData, plan: item.plan })}
-                setOpen={abrirModal}
-                plan={item.plan}
-              />
-            );
-          })}
+        <div className="cards" ref={cardContainerGymRef}>
+          <CardDesktop
+          parent={cardContainerGymRef}
+            main={virtualGymCards[0].main}
+            position="left"
+            type={virtualGymCards[0].type}
+            image={virtualGymCards[0].imagen}
+            setPlan={() =>
+              setFormData({ ...formData, plan: virtualGymCards[0].plan })
+            }
+            setOpen={abrirModal}
+            plan={virtualGymCards[0].plan}
+          />
+          <CardDesktop
+          parent={cardContainerGymRef}
+            main={virtualGymCards[1].main}
+            position="right"
+            type={virtualGymCards[1].type}
+            image={virtualGymCards[1].imagen}
+            setPlan={() =>
+              setFormData({ ...formData, plan: virtualGymCards[1].plan })
+            }
+            setOpen={abrirModal}
+            plan={virtualGymCards[1].plan}
+          />
         </div>
       </article>
       <article className="article-program" id="calistenia-online">
         <header className="header">
-          <div className="block lg:hidden">
+          <div className="show-mobile">
             <AnimatedText
               el="h2"
               text={"Calistenia Online"}
               className="title text-4xl font-bold"
-              />
+            />
             <AnimatedText
               delay={1}
               text={"Etapa Dos"}
               className="subtitle text-4xl font-bold"
             />
           </div>
-          <div className="hidden lg:block">
+          <div className="show-desktop">
             <AnimatedText
               el="h2"
               text={"Calistenia Online"}
               className="title text-7xl font-bold"
-              />
+            />
             <AnimatedText
               text={"Etapa Dos"}
               delay={1}
@@ -361,10 +409,13 @@ const Programs = () => {
             />
           </div>
         </header>
-        <div className="container">
+        <div className="container plan-plus-planificacion-online" >
           <section className="text-section">
             <h3 className="heading">
-              Entrenamientos diseñados según <i><strong>tus objetivos y preferencias</strong></i>
+              Entrenamientos diseñados según{" "}
+              <i>
+                <strong>tus objetivos y preferencias</strong>
+              </i>
               .
             </h3>
             <p className="text">
@@ -374,32 +425,49 @@ const Programs = () => {
           </section>
           <section className="text-section">
             <p className="text">
-              Recibís <i><strong>dos planificaciones nuevas cada mes</strong></i>, adaptadas y
-              ajustadas para que sigan siendo desafiantes y nos permitan
-              optimizar los mejores resultados posibles.
+              Recibís{" "}
+              <i>
+                <strong>dos planificaciones nuevas cada mes</strong>
+              </i>
+              , adaptadas y ajustadas para que sigan siendo desafiantes y nos
+              permitan optimizar los mejores resultados posibles.
             </p>
           </section>
           <section className="text-section">
-          <p className="text">
-              Lo que se construye con constancia, <i><strong>transforma</strong></i>.
+            <p className="text">
+              Lo que se construye con constancia,{" "}
+              <i>
+                <strong>transforma</strong>
+              </i>
+              .
             </p>
           </section>
         </div>
-        <div className="cards">
-          {planificationCards.map((item, index) => {
-            return (
-              <CardDesktop
-                main={item.main}
-                index={index}
-                key={index}
-                type={item.type}
-                image={item.imagen}
-                setPlan={() => setFormData({ ...formData, plan: item.plan })}
-                setOpen={abrirModal}
-                plan={item.plan}
-              />
-            );
-          })}
+        <div className="cards" ref={cardContainerPlanificationRef}>
+          <CardDesktop
+            parent={cardContainerPlanificationRef}
+            main={planificationCards[0].main}
+            position="left"
+            type={planificationCards[0].type}
+            image={planificationCards[0].imagen}
+            setPlan={() =>
+              setFormData({ ...formData, plan: planificationCards[0].plan })
+            }
+            setOpen={abrirModal}
+            plan={planificationCards[0].plan}
+          />
+          <CardDesktop
+            parent={cardContainerPlanificationRef}
+            main={planificationCards[1].main}
+            position="right"
+            type={planificationCards[1].type}
+            image={planificationCards[1].imagen}
+            setPlan={() =>
+              setFormData({ ...formData, plan: planificationCards[1].plan })
+            }
+            setOpen={abrirModal}
+            plan={planificationCards[1].plan}
+          />
         </div>
       </article>
       <Modal

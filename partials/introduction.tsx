@@ -1,32 +1,28 @@
 "use client";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { desktop, fontSize1, fontSize2, space } from "@/styles/global";
 
 const styles = css`
-  padding: 80px 80px 0;
+  padding: 0 ${space(3)};
   background-image: radial-gradient(closest-side, #fd5f44, #051422) !important;
   position: relative;
-  margin-top: 100px;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ${desktop(css`
+    padding: ${space(10)} ${space(10)} 0;
+  `)}
 
   .anchor {
     position: absolute;
     top: -160px;
   }
 
-  &:before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: -170px;
-    height: 70px;
-    width: 100%;
-    background: linear-gradient(to bottom, transparent, #051422);
-    z-index: 1;
-  }
-
   .container {
-    margin: 0 auto;
-    width: 900px;
+    /* width: 900px; */
     height: 700px;
     display: flex;
     justify-content: center;
@@ -35,7 +31,7 @@ const styles = css`
     .title {
       font-family: var(--font-nunito-sans);
       font-weight: 900;
-      font-size: 40px;
+      ${fontSize2};
       line-height: 1;
       margin-bottom: 24px;
     }

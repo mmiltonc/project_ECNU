@@ -1,18 +1,37 @@
 "use client";
+import { desktop, fontSize1, fontSize2, fontSize3, space } from "@/styles/global";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
 import { sendGTMEvent } from "@next/third-parties/google";
 
 const styles = css`
-  padding: 280px 80px 0;
+  padding: 0 ${space(3)};
   background-image: url(images/bgbw.jpeg);
-  background-position: top -100px center;
-  background-size: cover;
-  height: 775px;
+  background-position: bottom center;
+  background-size: auto 120%;
+  height: 100vh;
   position: relative;
   background-blend-mode: soft-light;
   background-color: #1e729822;
+
+  ${desktop(css`
+    padding: 280px ${space(10)} 0;
+    height: 775px;
+    background-size: cover;
+    background-position: bottom center;
+  `)}
+
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 70px;
+    width: 100%;
+    background: linear-gradient(to bottom, transparent, #051422);
+    z-index: 1;
+  }
 
   .tint {
     backdrop-filter: brightness(60%);
@@ -26,46 +45,75 @@ const styles = css`
   .content {
     position: relative;
     z-index: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100vh;
+    gap: 40px;
+
+    ${desktop(css`
+      display: block;
+    `)}
 
     .title {
+      ${fontSize1}
       font-family: var(--font-nunito-sans);
       font-weight: 900;
       color: #fd5f44;
-      font-size: 80px;
-      line-height: 1;
-      margin-bottom: 64px;
+      margin-bottom: ${space(7)};
       position: relative;
       display: inline-block;
+      padding-top: ${space(6)};
+
+      ${desktop(css`
+        margin-bottom: ${space(8)};
+        padding-top: 0;
+      `)}
+
+      span {
+        display: block;
+
+        ${desktop(css`
+          display: inline-block;
+        `)}
+      }
 
       &:before {
         content: "";
         position: absolute;
         left: -100px;
         right: -100px;
-        top: 10px;
-        height: 150px;
+        top: -30px;
+        height: 300px;
         background-image: url(images/trazo.png);
         background-repeat: no-repeat;
-        background-size: 100% 200px;
+        background-size: 100% 350px;
         background-position: bottom;
         opacity: 0.8;
         z-index: -1;
+
+        ${desktop(css`
+          height: 150px;
+          top: 0;
+          background-size: 100% 200px;
+        `)}
       }
     }
+
     .subtitle {
       font-weight: 400;
       font-family: var(--font-nunito-sans);
-      font-size: 30px;
-      line-height: 1.2;
+      ${fontSize2}
 
       strong {
         font-weight: 800;
       }
     }
+
     .cta-button {
       font-family: var(--font-oswald);
-      font-size: 20px;
-      padding: 10px 24px;
+      ${fontSize3}
+      padding: ${space(2)} ${space(3)};
       border-radius: 10px;
       border: 2px solid #fd5f44;
       text-transform: uppercase;
@@ -83,11 +131,20 @@ const Home = () => {
     <section css={styles} className="home-section" id="home">
       <div className="tint" />
       <div className="content">
-        <h1 className="title">EL CAMBIO NACE EN UNO</h1>
+        <h1 className="title">
+          <span>EL CAMBIO</span> <span>NACE EN UNO</span>
+        </h1>
         <h2 className="subtitle">
-          Comenzá a transformar en <strong>90</strong> días <br />
-          tu <strong>cuerpo</strong> y tu <strong>mente</strong> con mi sistema
-          de <br /> entrenamiento online.
+          <span className="show-mobile">
+            Transformar en <strong>90</strong> días <br /> tu{" "}
+            <strong>cuerpo</strong> y tu <strong>mente</strong> <br />
+            acompañado de mi sistema <br /> de entrenamiento online.
+          </span>
+          <span className="show-desktop">
+            Transformar en <strong>90</strong> días tu <strong>cuerpo</strong> y
+            tu <strong>mente</strong> <br />
+            acompañado de sistema de entrenamiento online.
+          </span>
         </h2>
         <button
           className="cta-button transition-transform duration-300 hover:scale-110"

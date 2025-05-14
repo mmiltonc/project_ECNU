@@ -12,21 +12,12 @@ const styles = css`
   height: 2000vh;
   top: 0;
   position: relative;
-  /* https://css-irl.info/css-halftone-patterns/ */
-  /* background-image: radial-gradient(
-      circle at center,
-      black 0.25rem,
-      transparent 0
-    ),
-    radial-gradient(circle at center, black 0.25rem, transparent 0);
-  background-size: 1.3rem 1.3rem;
-  background-position: 0 0, 0.65rem 0.65rem; */
-  /* filter: blur(0.5px); */
 
   .background {
+    /* https://css-irl.info/css-halftone-patterns/ */
     background-image: url(images/motivation.jpg);
-          background-repeat: no-repeat;
-          background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
     mix-blend-mode: luminosity;
     opacity: 0.3;
     background-attachment: fixed;
@@ -36,7 +27,6 @@ const styles = css`
     top: 0;
     right: 0;
     bottom: 0;
-
   }
 
   i {
@@ -75,7 +65,6 @@ const styles = css`
   }
 
   .slide-1 {
-
     .question {
       opacity: 1;
       filter: blur(0px);
@@ -105,7 +94,6 @@ const styles = css`
   .speech {
     height: 100%;
     width: 100%;
-
 
     .centered-text {
       width: 100%;
@@ -175,11 +163,9 @@ const styles = css`
       }
 
       .from-top,
-      .from-bottom
-      {
+      .from-bottom {
         display: block;
       }
-
     }
 
     .text-10 {
@@ -191,13 +177,13 @@ const styles = css`
 const background = (el) => {
   gsap.fromTo(
     el,
-    {backgroundPosition: "100% 0%" },
+    { backgroundPosition: "100% 0%" },
     {
       backgroundPosition: "0% 0%",
       scrollTrigger: {
         trigger: el,
         start: "top bottom",
-        end: 'bottom+=5000px bottom',
+        end: "bottom+=5000px bottom",
         scrub: true,
       },
     }
@@ -209,7 +195,6 @@ const questionText = (el) => {
     el,
     {},
     {
-
       opacity: 1,
       scrollTrigger: {
         trigger: el,
@@ -226,13 +211,12 @@ const questionMark1 = (el) => {
     el,
     { opacity: 0, x: -20 },
     {
-
       opacity: 1,
       x: 0,
       scrollTrigger: {
-        trigger: '.question-text',
-        start: 'bottom+=500px bottom',
-        end: 'bottom+=800px bottom',
+        trigger: ".question-text",
+        start: "bottom+=500px bottom",
+        end: "bottom+=800px bottom",
         scrub: true,
       },
     }
@@ -244,13 +228,12 @@ const questionMark2 = (el) => {
     el,
     { opacity: 0, x: 20 },
     {
-
       opacity: 1,
       x: 0,
       scrollTrigger: {
-        trigger: '.question-text',
-        start: 'bottom+=500px bottom',
-        end: 'bottom+=800px bottom',
+        trigger: ".question-text",
+        start: "bottom+=500px bottom",
+        end: "bottom+=800px bottom",
         scrub: true,
       },
     }
@@ -266,9 +249,9 @@ const question = (el) => {
       opacity: 0,
       transform: "scale(3)",
       scrollTrigger: {
-        trigger: '.question-text',
-        start: 'bottom+=1500px bottom',
-        end: 'bottom+=1900px bottom',
+        trigger: ".question-text",
+        start: "bottom+=1500px bottom",
+        end: "bottom+=1900px bottom",
         scrub: true,
       },
     }
@@ -280,14 +263,13 @@ const text1 = (el) => {
     el,
     { opacity: 0, y: 20, filter: "blur(4px)" },
     {
-
       opacity: 1,
       filter: "blur(0px)",
       y: 0,
       scrollTrigger: {
-        trigger: '.question-text',
-        start: 'bottom+=1700px bottom',
-        end: 'bottom+=2100px bottom',
+        trigger: ".question-text",
+        start: "bottom+=1700px bottom",
+        end: "bottom+=2100px bottom",
         scrub: true,
       },
     }
@@ -297,13 +279,12 @@ const text1 = (el) => {
     el,
     {},
     {
-
       opacity: 0,
       scale: 0.5,
       scrollTrigger: {
-        trigger: '.question-text',
-        start: 'bottom+=2700px bottom',
-        end: 'bottom+=3600px bottom',
+        trigger: ".question-text",
+        start: "bottom+=2700px bottom",
+        end: "bottom+=3600px bottom",
         scrub: true,
       },
     }
@@ -315,16 +296,15 @@ const text2 = (el) => {
     el,
     {},
     {
-
       opacity: 1,
       filter: "blur(0px)",
       x: "-100%",
       left: "-100%",
       scrollTrigger: {
-        trigger: '.text-1',
-        start: 'bottom+=1700px bottom',
-        end: 'bottom+=8900px bottom',
-        ease: 'none',
+        trigger: ".text-1",
+        start: "bottom+=1700px bottom",
+        end: "bottom+=8900px bottom",
+        ease: "none",
         scrub: true,
       },
     }
@@ -336,14 +316,13 @@ const text3 = (el) => {
     el,
     { opacity: 0, y: 20, filter: "blur(4px)" },
     {
-
       opacity: 1,
       filter: "blur(0px)",
       y: 0,
       scrollTrigger: {
-        trigger: '.text-2',
-        start: 'bottom+=6900px bottom',
-        end: 'bottom+=7300px bottom',
+        trigger: ".text-2",
+        start: "bottom+=6900px bottom",
+        end: "bottom+=7300px bottom",
         scrub: true,
       },
     }
@@ -353,13 +332,12 @@ const text3 = (el) => {
     el,
     {},
     {
-
       opacity: 0,
       scale: 0.5,
       scrollTrigger: {
-        trigger: '.text-2',
-        start: 'bottom+=7900px bottom',
-        end: 'bottom+=8800px bottom',
+        trigger: ".text-2",
+        start: "bottom+=7900px bottom",
+        end: "bottom+=8800px bottom",
         scrub: true,
       },
     }
@@ -371,14 +349,13 @@ const text4 = (el) => {
     el,
     { opacity: 0, y: 20, filter: "blur(4px)" },
     {
-
       opacity: 1,
       filter: "blur(0px)",
       y: 0,
       scrollTrigger: {
-        trigger: '.text-3',
-        start: 'bottom+=7900px bottom',
-        end: 'bottom+=8300px bottom',
+        trigger: ".text-3",
+        start: "bottom+=7900px bottom",
+        end: "bottom+=8300px bottom",
         scrub: true,
       },
     }
@@ -388,13 +365,12 @@ const text4 = (el) => {
     el,
     {},
     {
-
       opacity: 0,
       scale: 0.5,
       scrollTrigger: {
-        trigger: '.text-3',
-        start: 'bottom+=8900px bottom',
-        end: 'bottom+=9800px bottom',
+        trigger: ".text-3",
+        start: "bottom+=8900px bottom",
+        end: "bottom+=9800px bottom",
         scrub: true,
       },
     }
@@ -406,14 +382,13 @@ const text5 = (el) => {
     el,
     { opacity: 0, y: 20, filter: "blur(4px)" },
     {
-
       opacity: 1,
       filter: "blur(0px)",
       y: 0,
       scrollTrigger: {
-        trigger: '.text-4',
-        start: 'bottom+=8900px bottom',
-        end: 'bottom+=9300px bottom',
+        trigger: ".text-4",
+        start: "bottom+=8900px bottom",
+        end: "bottom+=9300px bottom",
         scrub: true,
       },
     }
@@ -423,13 +398,12 @@ const text5 = (el) => {
     el,
     {},
     {
-
       opacity: 0,
       scale: 0.5,
       scrollTrigger: {
-        trigger: '.text-4',
-        start: 'bottom+=9900px bottom',
-        end: 'bottom+=10800px bottom',
+        trigger: ".text-4",
+        start: "bottom+=9900px bottom",
+        end: "bottom+=10800px bottom",
         scrub: true,
       },
     }
@@ -441,14 +415,13 @@ const text6 = (el) => {
     el,
     { opacity: 0, y: 20, filter: "blur(4px)" },
     {
-
       opacity: 1,
       filter: "blur(0px)",
       y: 0,
       scrollTrigger: {
-        trigger: '.text-5',
-        start: 'bottom+=9900px bottom',
-        end: 'bottom+=10300px bottom',
+        trigger: ".text-5",
+        start: "bottom+=9900px bottom",
+        end: "bottom+=10300px bottom",
         scrub: true,
       },
     }
@@ -458,13 +431,12 @@ const text6 = (el) => {
     el,
     {},
     {
-
       opacity: 0,
       scale: 0.5,
       scrollTrigger: {
-        trigger: '.text-5',
-        start: 'bottom+=10900px bottom',
-        end: 'bottom+=11800px bottom',
+        trigger: ".text-5",
+        start: "bottom+=10900px bottom",
+        end: "bottom+=11800px bottom",
         scrub: true,
       },
     }
@@ -476,14 +448,13 @@ const text7 = (el) => {
     el,
     { opacity: 0, y: 20, filter: "blur(4px)" },
     {
-
       opacity: 1,
       filter: "blur(0px)",
       y: 0,
       scrollTrigger: {
-        trigger: '.text-6',
-        start: 'bottom+=10900px bottom',
-        end: 'bottom+=11300px bottom',
+        trigger: ".text-6",
+        start: "bottom+=10900px bottom",
+        end: "bottom+=11300px bottom",
         scrub: true,
       },
     }
@@ -493,13 +464,12 @@ const text7 = (el) => {
     el,
     {},
     {
-
       opacity: 0,
       scale: 0.5,
       scrollTrigger: {
-        trigger: '.text-6',
-        start: 'bottom+=11900px bottom',
-        end: 'bottom+=12800px bottom',
+        trigger: ".text-6",
+        start: "bottom+=11900px bottom",
+        end: "bottom+=12800px bottom",
         scrub: true,
       },
     }
@@ -511,14 +481,13 @@ const text8FromTop = (el) => {
     el,
     { opacity: 0, y: -100, filter: "blur(4px)" },
     {
-
       opacity: 1,
       filter: "blur(0px)",
       y: 0,
       scrollTrigger: {
-        trigger: '.text-7',
-        start: 'bottom+=11900px bottom',
-        end: 'bottom+=12300px bottom',
+        trigger: ".text-7",
+        start: "bottom+=11900px bottom",
+        end: "bottom+=12300px bottom",
         scrub: true,
       },
     }
@@ -530,14 +499,13 @@ const text8FromBottom = (el) => {
     el,
     { opacity: 0, y: 100, filter: "blur(4px)" },
     {
-
       opacity: 1,
       filter: "blur(0px)",
       y: 0,
       scrollTrigger: {
-        trigger: '.text-7',
-        start: 'bottom+=11900px bottom',
-        end: 'bottom+=12300px bottom',
+        trigger: ".text-7",
+        start: "bottom+=11900px bottom",
+        end: "bottom+=12300px bottom",
         scrub: true,
       },
     }
@@ -549,13 +517,12 @@ const text8 = (el) => {
     el,
     {},
     {
-
       opacity: 0,
       scale: 0.5,
       scrollTrigger: {
-        trigger: '.text-7',
-        start: 'bottom+=12900px bottom',
-        end: 'bottom+=13800px bottom',
+        trigger: ".text-7",
+        start: "bottom+=12900px bottom",
+        end: "bottom+=13800px bottom",
         scrub: true,
       },
     }
@@ -567,14 +534,13 @@ const text9FromLeft = (el) => {
     el,
     { opacity: 0, x: "-100%", filter: "blur(4px)" },
     {
-
       opacity: 1,
       filter: "blur(0px)",
       x: 0,
       scrollTrigger: {
-        trigger: '.text-8',
-        start: 'bottom+=12900px bottom',
-        end: 'bottom+=13900px bottom',
+        trigger: ".text-8",
+        start: "bottom+=12900px bottom",
+        end: "bottom+=13900px bottom",
         scrub: true,
       },
     }
@@ -586,14 +552,13 @@ const text9FromRight = (el) => {
     el,
     { opacity: 0, x: "100%", filter: "blur(4px)" },
     {
-
       opacity: 1,
       filter: "blur(0px)",
       x: 0,
       scrollTrigger: {
-        trigger: '.text-8',
-        start: 'bottom+=12900px bottom',
-        end: 'bottom+=13900px bottom',
+        trigger: ".text-8",
+        start: "bottom+=12900px bottom",
+        end: "bottom+=13900px bottom",
         scrub: true,
       },
     }
@@ -605,14 +570,13 @@ const text9 = (el) => {
     el,
     {},
     {
-
       opacity: 0,
       scale: 5,
       x: 0,
       scrollTrigger: {
-        trigger: '.text-8',
-        start: 'bottom+=14900px bottom',
-        end: 'bottom+=15500px bottom',
+        trigger: ".text-8",
+        start: "bottom+=14900px bottom",
+        end: "bottom+=15500px bottom",
         scrub: true,
       },
     }
@@ -622,15 +586,14 @@ const text9 = (el) => {
 const text10ZoomOut = (el) => {
   gsap.fromTo(
     el,
-    {scale: 5, opacity: 0},
+    { scale: 5, opacity: 0 },
     {
-
       opacity: 1,
       scale: 1,
       scrollTrigger: {
-        trigger: '.text-9',
-        start: 'bottom+=14900px bottom',
-        end: 'bottom+=15500px bottom',
+        trigger: ".text-9",
+        start: "bottom+=14900px bottom",
+        end: "bottom+=15500px bottom",
         scrub: true,
       },
     }
@@ -642,11 +605,11 @@ const text10ZoomOut = (el) => {
     {
       opacity: 0,
       scrollTrigger: {
-        trigger: '.text-9',
-        start: 'bottom+=16500px bottom',
-        end: 'bottom+=18000px bottom',
+        trigger: ".text-9",
+        start: "bottom+=16500px bottom",
+        end: "bottom+=18000px bottom",
         scrub: true,
-        ease: 'power2.out',
+        ease: "power2.out",
       },
     }
   );
@@ -697,7 +660,7 @@ const Motivation = () => {
         id="motivacion"
         ref={slide1Ref}
       >
-      <div className="background" />
+        <div className="background" />
         <article className="slide slide-1">
           <div className="content">
             <p className="question">
@@ -722,8 +685,9 @@ const Motivation = () => {
               <div className="sliding-text">
                 <p className="slider">
                   <span className="text-2">
-                  La mayoría de las personas <i>esperan estar motivadas</i> para
-                  comenzar a realizar <strong>actividad física</strong>, pero...
+                    La mayoría de las personas <i>esperan estar motivadas</i>{" "}
+                    para comenzar a realizar <strong>actividad física</strong>,
+                    pero...
                   </span>
                 </p>
               </div>
@@ -734,8 +698,8 @@ const Motivation = () => {
               </div>
               <div className="centered-text">
                 <p className="text-4">
-                  La única manera de que la motivación vuelva a tu
-                  vida, es a <strong>través de la Acción</strong>
+                  La única manera de que la motivación vuelva a tu vida, es a{" "}
+                  <strong>través de la Acción</strong>
                 </p>
               </div>
               <div className="centered-text">
@@ -744,32 +708,46 @@ const Motivation = () => {
                 </p>
               </div>
               <div className="centered-text">
-                <p className="text-6">
-                  Tendrás una perspectiva más postiva
-                </p>
+                <p className="text-6">Tendrás una perspectiva más postiva</p>
               </div>
               <div className="centered-text">
                 <p className="text-7">
-                  Y cuando <i>menos lo esperes</i>, esa motivación <strong>resurgirá</strong>
+                  Y cuando <i>menos lo esperes</i>, esa motivación{" "}
+                  <strong>resurgirá</strong>
                 </p>
               </div>
               <div className="centered-text">
                 <p className="text-8">
-                  <span className="from-top">Pero no puedes pretender<br/> guiarte por la motivación,</span>
-                  <span className="from-bottom">las ganas fluctúan todo <br/> el tiempo y duran poco</span>
+                  <span className="from-top">
+                    Pero no puedes pretender
+                    <br /> guiarte por la motivación,
+                  </span>
+                  <span className="from-bottom">
+                    las ganas fluctúan todo <br /> el tiempo y duran poco
+                  </span>
                 </p>
               </div>
               <div className="centered-text">
                 <p className="text-9">
-                  <span className="from-left">¡Una mente <strong>entrenada</strong> sabe</span>
-                  <span className="from-right">que <i>disciplina</i> y <i>determinación</i></span>
+                  <span className="from-left">
+                    ¡Una mente <strong>entrenada</strong> sabe
+                  </span>
+                  <span className="from-right">
+                    que <i>disciplina</i> y <i>determinación</i>
+                  </span>
                   <span className="from-left">son CLAVES para lograr</span>
-                  <span className="from-right">los resultados tan deseandos!</span>
+                  <span className="from-right">
+                    los resultados tan deseandos!
+                  </span>
                 </p>
               </div>
               <div className="centered-text">
                 <p className="text-10">
-                  <span className="zoom-out">Yo tengo <br/>esas herramientas<br/> para brindarte</span>
+                  <span className="zoom-out">
+                    Yo tengo <br />
+                    esas herramientas
+                    <br /> para brindarte
+                  </span>
                 </p>
               </div>
             </div>

@@ -24,7 +24,7 @@ export default function Landing() {
         <About />
         <Motivation />
         <Faq />
-        <Contact />
+        {/* <Contact /> */}
       </ModalProvider>
   );
 }
