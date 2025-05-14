@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import Container from './shared/container'
+import Container from '@/components/shared/container'
 import Image from 'next/image'
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import InstagramIcon from '@mui/icons-material/Instagram';

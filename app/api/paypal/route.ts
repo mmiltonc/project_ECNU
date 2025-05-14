@@ -63,7 +63,7 @@ const createOrder = async (formData: FormDataType, planInfo: PlanType, userId: U
       },
       purchaseUnits: [
         {
-          customId: userId,
+          customId: userId.toString(),
           amount: {
             currencyCode,
             value,

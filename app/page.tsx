@@ -1,33 +1,30 @@
+"use client";
+
 import Header from "@/components/shared/header";
-import { ModalProvider } from "./context/modalContext";
-import Introduction from "@/components/introduction";
-import Programs from "@/components/programs";
-import Products from "@/components/products";
-import Changes from "@/components/changes";
-import About from "@/components/about";
-import Motivation from "@/components/motivation";
-import Faq from "@/components/faq";
-import Contact from "@/components/contact";
-import Home from "@/components/home";
+import { ModalProvider } from "@/app/context/modalContext";
+import Introduction from "@/partials/introduction";
+import Programs from "@/partials/programs";
+import Changes from "@/partials/changes";
+import About from "@/partials/about";
+import Motivation from "@/partials/motivation";
+import Faq from "@/partials/faq";
+import Contact from "@/partials/contact";
+import Home from "@/partials/home";
+import TopBar from "@/components/topBar";
 
-export const metadata = {
-  title: "ECNU Team",
-  description: "ECNU Team - El cambio nace en uno",
-};
+export default function Landing() {
 
-export default function Layout() {
   return (
-    <ModalProvider>
-      <Home />
-      <Header />
-      <Introduction />
-      <Programs />
-      <Products />
-      <Changes />
-      <About />
-      <Motivation />
-      <Faq />
-      <Contact />
-    </ModalProvider>
+      <ModalProvider>
+        <TopBar />
+        <Home />
+        <Introduction />
+        <Programs />
+        <Changes />
+        <About />
+        <Motivation />
+        <Faq />
+        {/* <Contact /> */}
+      </ModalProvider>
   );
 }

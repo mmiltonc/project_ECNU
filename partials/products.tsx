@@ -10,9 +10,6 @@ const Products = () => {
 
     return (
         <section className='w-full h-full my-40 lg:w-auto lg:h-[450px]' id='products'>
-            {/* <div className='mt-40 ml-14 text-4xl'>
-                <h3>Descrube productos ECNU de nuestra tienda !</h3>
-            </div> */}
             <div className='relative flex flex-col w-full h-[250px] lg:w-full lg:h-full lg:justify-center lg:items-center overflow-hidden'>
                 <div className='absolute top-0 left-0 flex w-[350%] h-full animate-slide border-none'>
                 <div className='relative w-full h-full'>
@@ -41,21 +38,6 @@ const Products = () => {
                 </span>
                 </div>
             </div>
-            {/* <Swiper 
-                navigation={false}
-                modules={[Navigation]} 
-                slidesPerView={4} // Muestra 5 productos por slide
-                className="w-[95%] h-full text-black mySwiper"
-            >
-                {productos.map((producto) => (
-                    <SwiperSlide
-                    key={producto.id}
-                    className="flex flex-col justify-center items-center text-center p-1 bg-transparent shadow-lg rounded-lg"
-                    >
-                        <ProductCard producto={producto}></ProductCard>
-                    </SwiperSlide>
-                ))}
-            </Swiper> */}
         </section>
     )
 }

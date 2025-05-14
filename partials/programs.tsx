@@ -1,4 +1,6 @@
 "use client";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 import { useEffect, useState, useRef } from "react";
 import { useModal } from "../app/context/modalContext";
 import {
@@ -7,20 +9,172 @@ import {
   PHONE_CODES,
   PlansTypes,
 } from "@/app/types/formData";
-import { GymVirtual } from "./shared/gymVirtual";
-import { Steps } from "./shared/steps";
-import AnimatedText from "./shared/animatedText";
+import { Steps } from "@/components/shared/steps";
+import AnimatedText from "@/components/shared/animatedText";
 import Box from "@mui/material/Box";
 import CampaignIcon from "@mui/icons-material/Campaign";
-import CardDesktop from "./shared/card-desktop";
+import CardDesktop from "@/components/shared/card-desktop";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import InfoIcon from "@mui/icons-material/Info";
-import MercadopagoComponent from "./shared/marcadopago-component";
+import MercadopagoComponent from "@/components/shared/marcadopago-component";
 import Modal from "@mui/material/Modal";
 import PayPalComponent from "@/components/shared/paypal-component";
 import Typography from "@mui/material/Typography";
+import {
+  desktop,
+  fontSize1,
+  fontSize2,
+  fontSize3,
+  mobile,
+  space,
+} from "@/styles/global";
 export const dynamic = "force-static";
+
+const styles = css`
+  padding: ${space(10)} ${space(3)};
+
+  ${desktop(css`
+    padding: ${space(20)} ${space(10)} 0;
+  `)}
+
+  strong {
+    font-weight: 600;
+  }
+
+  i {
+    color: #87a7cb;
+    font-style: normal;
+  }
+
+  .article-program {
+    .header {
+      margin-bottom: ${space(4)};
+
+      ${desktop(css`
+        margin-bottom: ${space(8)};
+      `)}
+
+      .title {
+        ${fontSize2};
+        font-family: var(--font-jost);
+        font-weight: 900;
+        text-transform: uppercase;
+
+        ${desktop(css`
+          ${fontSize1};
+        `)}
+      }
+
+      .subtitle {
+        ${fontSize3};
+        font-family: var(--font-jost);
+        font-weight: 900;
+        color: #fd5f44;
+        margin-bottom: 24px;
+        text-transform: uppercase;
+
+        ${desktop(css`
+          ${fontSize2};
+        `)}
+      }
+    }
+
+    .container {
+      position: relative;
+
+      ${desktop(css`
+        padding: 0 80px 10px 200px;
+      `)}
+
+      &:before {
+        content: "";
+        position: absolute;
+        left: 82px;
+        top: -30px;
+        height: calc(100% - 32px);
+        width: 17px;
+        transform: rotate(180deg);
+        background-image: url(images/pasos-hormiga.png);
+        background-repeat: repeat-y;
+        background-size: contain;
+        mix-blend-mode: soft-light;
+
+        ${mobile(css`
+          display: none;
+        `)}
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        left: 50px;
+        bottom: -10px;
+        height: 80px;
+        width: 80px;
+        transform: rotate(180deg);
+        background-image: url(images/hormiga-arriba.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        mix-blend-mode: soft-light;
+
+        ${mobile(css`
+          display: none;
+        `)}
+      }
+
+      .text-section {
+        margin-bottom: 32px;
+
+        .heading {
+          font-family: var(--font-jost);
+          ${fontSize3};
+          font-weight: 600;
+          margin-bottom: 16px;
+        }
+        .text {
+          font-family: var(--font-jost);
+          ${fontSize3};
+          line-height: 1.2;
+        }
+
+        .list {
+          font-family: var(--font-jost);
+          ${fontSize3};
+          line-height: 1.2;
+          list-style: inside decimal;
+        }
+      }
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px;
+      background-image: radial-gradient(
+        closest-side,
+        #fd5f44,
+        #051422
+      ) !important;
+      width: 100%;
+      min-height: 100vh;
+
+      ${desktop(css`
+        align-items: center;
+        flex-direction: column;
+        display: flex;
+        flex-direction: initial;
+      `)}
+
+      .card {
+        height: 570px;
+        width: 330px;
+      }
+      /* w-[330px] min-h-[570px] max-h-[570px] flex flex-col items-center rounded-3xl border-2 border-red-700 */
+    }
+  }
+`;
 
 const planificationCards = [
   {
@@ -64,6 +218,8 @@ const Programs = () => {
   const [camposVisibles, setCamposVisibles] = useState(false);
   const [stepForm, setStepForm] = useState(1);
   const [modalPage, setModalPage] = useState(1);
+  const cardContainerGymRef = useRef(null)
+  const cardContainerPlanificationRef = useRef(null)
 
   const [formData, setFormData] = useState<FormDataType>({
     plan: "",
@@ -94,7 +250,7 @@ const Programs = () => {
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
-    console.log(name, value)
+    console.log(name, value);
     setFormData(() => ({
       ...formData,
       [name]: value,
@@ -123,118 +279,197 @@ const Programs = () => {
     }
   }, [abrirModal]);
 
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    url.searchParams.delete("modal");
-    window.history.replaceState({}, "", url.toString());
-
-    const cleanHash = "#clasesyretos";
-    window.location.hash = cleanHash;
-  }, []);
-
   return (
-    <section
-      ref={sectionRef}
-      className="w-auto flex flex-col lg:mt-0"
-      id="clasesyretos"
-    >
-      <div className="flex flex-col pt-10 mb-10 ml-4 text-4xl font-bold lg:hidden">
-        <AnimatedText
-          text={["GYM VIRTUAL", "Y PLANIFICACIONES"]}
-          className="text-white text-4xl font-bold"
-        />
-      </div>
-      <div className="lg:block md:hidden sm:hidden 2sm:hidden lg:mt-[100px] lg:ml-8">
-        {/* <span className='text-white text-8xl font-bold'>CLASES, PLANIFICACIONES Y RETOS.</span> */}
-        <AnimatedText
-          text={["GYM VIRTUAL", "Y PLANIFICACIONES"]}
-          className="text-white text-7xl font-bold"
-        />
-      </div>
-      <div
-        className="w-full h-auto mt-4
-                    lg:flex lg:flex-col lg:justify-center lg:items-center lg:mt-20 lg:mb-52"
-      >
-        <>
-          <div className="flex flex-col justify-center items-center mt-14">
-            <p className="w-[100%] text-center text-5xl">GIMNASIO VIRTUAL</p>
-            <p className="w-[100%] text-center text-3xl">ROMPIENDO BARRERAS</p>
-            <p className="w-[100%] text-center font-bold text-3xl text-red-800">
-              ETAPA UNO
+    <section css={styles} ref={sectionRef} className="programs-section">
+      <article className="article-program" id="gym-virtual">
+        <header className="header">
+          <div className="show-mobile">
+            <AnimatedText
+              el="h2"
+              text={"Gym Virtual"}
+              className="title text-4xl font-bold"
+            />
+            <AnimatedText
+              delay={0.7}
+              text={"Etapa Uno"}
+              className="subtitle text-4xl font-bold"
+            />
+          </div>
+          <div className="show-desktop">
+            <AnimatedText
+              el="h2"
+              text={"Gym Virtual"}
+              className="title text-7xl font-bold"
+            />
+            <AnimatedText
+              delay={0.7}
+              text={"Etapa Uno"}
+              className="subtitle text-4xl font-bold"
+            />
+          </div>
+        </header>
+        <div className="container plan-plus-gym-virtual" >
+          <section className="text-section">
+            <h3 className="heading">
+              Un gimnasio virtual <i>pensado para vos</i>.
+            </h3>
+            <p className="text">
+              Entrenás con tu propio peso corporal, desde casa, sin equipos.
             </p>
-          </div>
-          <div className="flex justify-center items-center mt-20 mb-14 ">
-            <p
-              className="w-[80%] text-center text-2xl
-                              lg:w-[55%]"
-            >
-              Un gimnasio virtual con tu propio peso corporal, creado para
-              convertirte en esa persona que queres lograr física y mentalmente,
-              3 desafíos (Reto perder grasa, Pectorales de hierro, Abdomen de
-              acero) sobrepasarás niveles en ascenso incursionandote en la
-              actividad física, con 45 minutos por día conseguirás un cuerpo
-              funcional y atlético.
+            <p className="text">
+              El objetivo es simple: convertirte en esa versión física y mental
+              que querés lograr.
             </p>
-          </div>
-          <GymVirtual />
-          <div className="w-full flex flex-wrap justify-center gap-8 lg:mt-30 bg-radial-red-black">
-            {virtualGymCards.map((item, index) => {
-              return (
-                <CardDesktop
-                  main={item.main}
-                  index={index}
-                  key={index}
-                  type={item.type}
-                  image={item.imagen}
-                  setPlan={() => setFormData({ ...formData, plan: item.plan })}
-                  setOpen={abrirModal}
-                  plan={item.plan}
-                />
-              );
-            })}
-          </div>
-          <div className="flex flex-col justify-center items-center mt-40">
-            <p className="w-[100%] text-center text-5xl">PLANIFICACIONES</p>
-            <p className="w-[100%] text-center text-3xl">
-              PERSONALIZA TUS ENTRENAMIENTOS ONLINE
+          </section>
+
+          <section className="text-section">
+            <h3 className="heading">
+              Vas a tener <i>3 desafíos</i> progresivos:
+            </h3>
+            <ol className="list">
+              <li>
+                <strong>Reto Perder Grasa</strong>
+              </li>
+              <li>
+                <strong>Pectorales de Hierro</strong>
+              </li>
+              <li>
+                <strong>Abdomen de Acero</strong>
+              </li>
+            </ol>
+          </section>
+          <section className="text-section">
+            <p className="text">
+              Con solo 45 minutos al día, vas a ir superando niveles, creando el
+              hábito, y construyendo un cuerpo funcional, fuerte y atlético.
             </p>
-            <p className="w-[100%] text-center font-bold text-3xl text-red-800">
-              ETAPA DOS
+          </section>
+          <section className="text-section">
+            <p className="text">
+              No necesitás estar motivado,{" "}
+              <i>
+                <strong>solo dar el primer paso</strong>
+              </i>
+              .
             </p>
+          </section>
+        </div>
+
+        <div className="cards" ref={cardContainerGymRef}>
+          <CardDesktop
+          parent={cardContainerGymRef}
+            main={virtualGymCards[0].main}
+            position="left"
+            type={virtualGymCards[0].type}
+            image={virtualGymCards[0].imagen}
+            setPlan={() =>
+              setFormData({ ...formData, plan: virtualGymCards[0].plan })
+            }
+            setOpen={abrirModal}
+            plan={virtualGymCards[0].plan}
+          />
+          <CardDesktop
+          parent={cardContainerGymRef}
+            main={virtualGymCards[1].main}
+            position="right"
+            type={virtualGymCards[1].type}
+            image={virtualGymCards[1].imagen}
+            setPlan={() =>
+              setFormData({ ...formData, plan: virtualGymCards[1].plan })
+            }
+            setOpen={abrirModal}
+            plan={virtualGymCards[1].plan}
+          />
+        </div>
+      </article>
+      <article className="article-program" id="calistenia-online">
+        <header className="header">
+          <div className="show-mobile">
+            <AnimatedText
+              el="h2"
+              text={"Calistenia Online"}
+              className="title text-4xl font-bold"
+            />
+            <AnimatedText
+              delay={1}
+              text={"Etapa Dos"}
+              className="subtitle text-4xl font-bold"
+            />
           </div>
-          <div className="flex justify-center items-center mt-20 mb-32">
-            <p
-              className="w-[80%] text-center text-2xl
-                              lg:w-[55%]"
-            >
-              Mis planificaciones online de calistenia están diseñadas
-              específicamente en base a tus preferencias y objetivos. Esta
-              pensado para niveles intermedios y avanzados. Con esta modalidad
-              podrás entrenar desde tu casa con materiales (Barra Dominadas).
-              También se pueden utilizar barras en cualquier parque cercano a tu
-              domicilio. Obtendrás dos planificaciones online por mes y se irán
-              modificando de manera mensual para que sean desafiantes y logremos
-              optimizar los mejores resultados posibles.
+          <div className="show-desktop">
+            <AnimatedText
+              el="h2"
+              text={"Calistenia Online"}
+              className="title text-7xl font-bold"
+            />
+            <AnimatedText
+              text={"Etapa Dos"}
+              delay={1}
+              className="subtitle text-4xl font-bold"
+            />
+          </div>
+        </header>
+        <div className="container plan-plus-planificacion-online" >
+          <section className="text-section">
+            <h3 className="heading">
+              Entrenamientos diseñados según{" "}
+              <i>
+                <strong>tus objetivos y preferencias</strong>
+              </i>
+              .
+            </h3>
+            <p className="text">
+              Pensado para niveles intermedios y avanzados, podés entrenar desde
+              casa con una barra de dominadas o usar las del parque más cercano.
             </p>
-          </div>
-          <div className="w-full flex flex-wrap justify-center gap-8 lg:mt-20 bg-radial-red-black">
-            {planificationCards.map((item, index) => {
-              return (
-                <CardDesktop
-                  main={item.main}
-                  index={index}
-                  key={index}
-                  type={item.type}
-                  image={item.imagen}
-                  setPlan={() => setFormData({ ...formData, plan: item.plan })}
-                  setOpen={abrirModal}
-                  plan={item.plan}
-                />
-              );
-            })}
-          </div>
-        </>
-      </div>
+          </section>
+          <section className="text-section">
+            <p className="text">
+              Recibís{" "}
+              <i>
+                <strong>dos planificaciones nuevas cada mes</strong>
+              </i>
+              , adaptadas y ajustadas para que sigan siendo desafiantes y nos
+              permitan optimizar los mejores resultados posibles.
+            </p>
+          </section>
+          <section className="text-section">
+            <p className="text">
+              Lo que se construye con constancia,{" "}
+              <i>
+                <strong>transforma</strong>
+              </i>
+              .
+            </p>
+          </section>
+        </div>
+        <div className="cards" ref={cardContainerPlanificationRef}>
+          <CardDesktop
+            parent={cardContainerPlanificationRef}
+            main={planificationCards[0].main}
+            position="left"
+            type={planificationCards[0].type}
+            image={planificationCards[0].imagen}
+            setPlan={() =>
+              setFormData({ ...formData, plan: planificationCards[0].plan })
+            }
+            setOpen={abrirModal}
+            plan={planificationCards[0].plan}
+          />
+          <CardDesktop
+            parent={cardContainerPlanificationRef}
+            main={planificationCards[1].main}
+            position="right"
+            type={planificationCards[1].type}
+            image={planificationCards[1].imagen}
+            setPlan={() =>
+              setFormData({ ...formData, plan: planificationCards[1].plan })
+            }
+            setOpen={abrirModal}
+            plan={planificationCards[1].plan}
+          />
+        </div>
+      </article>
       <Modal
         open={isOpen}
         onClose={handleClose}
@@ -356,7 +591,6 @@ const Programs = () => {
                                   className="block w-full px-3 py-2 border border-gray-300 rounded-l-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                   placeholder="Solo correos gmail"
                                   required
-
                                 />
                                 <span className="flex items-center px-1.5 py-2 border border-gray-300 rounded-r-md bg-gray-100">
                                   @gmail.com
