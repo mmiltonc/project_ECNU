@@ -373,20 +373,6 @@ const Programs = () => {
     }
   }, [isOpen, lenis]);
 
-  // useEffect(() => {
-  //   const lenis = initLenis();
-
-  //   if (isOpen) {
-  //     lenis.stop();
-  //   } else {
-  //     lenis.start();
-  //   }
-
-  //   return () => {
-  //     lenis.start(); // por si se desmonta el modal inesperadamente
-  //   };
-  // }, [isOpen]);
-
   const handleVirtualGymCTA = () => {
     setFormData({ ...formData, plan: virtualGymCards[0].plan });
     openModal();
@@ -457,21 +443,18 @@ const Programs = () => {
   }, [openModal]);
 
   useEffect(() => {
-    handleVirtualGymCTA();
-    const modal = document.querySelector(".modal-content");
-    if (!modal) return;
-
-    const stopScrollPropagation = (e: Event) => e.stopPropagation();
-
-    modal.addEventListener("wheel", stopScrollPropagation, { passive: false });
-    modal.addEventListener("touchmove", stopScrollPropagation, {
-      passive: false,
-    });
-
-    return () => {
-      modal.removeEventListener("wheel", stopScrollPropagation);
-      modal.removeEventListener("touchmove", stopScrollPropagation);
-    };
+    // handleVirtualGymCTA();
+    // const modal = document.querySelector(".modal-content");
+    // if (!modal) return;
+    // const stopScrollPropagation = (e: Event) => e.stopPropagation();
+    // modal.addEventListener("wheel", stopScrollPropagation, { passive: false });
+    // modal.addEventListener("touchmove", stopScrollPropagation, {
+    //   passive: false,
+    // });
+    // return () => {
+    //   modal.removeEventListener("wheel", stopScrollPropagation);
+    //   modal.removeEventListener("touchmove", stopScrollPropagation);
+    // };
   }, []);
 
   const textInputStyles = {
