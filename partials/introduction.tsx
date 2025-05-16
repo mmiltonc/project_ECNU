@@ -1,7 +1,13 @@
 "use client";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { desktop, fontSize1, fontSize2, space } from "@/styles/global";
+import {
+  desktop,
+  fontSize1,
+  fontSize2,
+  fontSize3,
+  space,
+} from "@/styles/global";
 
 const styles = css`
   overflow-x: hidden;
@@ -25,17 +31,16 @@ const styles = css`
     flex-direction: column;
 
     .title {
+      ${fontSize2};
       font-family: var(--font-nunito-sans);
       font-weight: 900;
-      ${fontSize2};
       line-height: 1;
       margin-bottom: 24px;
     }
 
     .text {
+      ${fontSize3};
       font-family: var(--font-jost);
-      font-size: 24px;
-      line-height: 1.2;
       margin-bottom: 24px;
 
       &:last-of-type {
@@ -58,8 +63,9 @@ const Introduction = () => {
           nuevo camino?
         </p>
         <p className="text">
-          Elegí entre mis desafíos o planificaciones online y da el paso que
-          cambiara tu vida para siempre.
+          Elegí entre <strong>Gym Virtual</strong> o{" "}
+          <strong>Calistenia Online</strong> y da el paso que cambiará tu vida
+          para siempre.
         </p>
       </div>
     </section>

@@ -1,6 +1,7 @@
 "use client";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { desktop, fontSize4, space } from "@/styles/global";
 import Image from "next/image";
 
 const styles = css`
@@ -18,9 +19,9 @@ const styles = css`
   border-bottom: 1px solid #ffffff0c;
   display: none;
 
-  @media only screen and (min-width: 1024px) {
+  ${desktop(css`
     display: flex;
-  }
+  `)}
 
   .navigation {
     .link-list {
@@ -30,7 +31,7 @@ const styles = css`
         .link {
           font-family: var(--font-oswald);
           text-transform: uppercase;
-          font-size: 20px;
+          ${fontSize4};
 
           &:hover {
             color: #fd5f44;
@@ -41,8 +42,8 @@ const styles = css`
           :before {
             content: "•";
             display: inline-block;
-            margin-left: 10px;
-            margin-right: 10px;
+            margin-left: ${space(1)};
+            margin-right: ${space(1)};
             font-size: 30px;
             line-height: 0%;
           }

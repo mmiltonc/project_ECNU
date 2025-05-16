@@ -1,10 +1,12 @@
 "use client";
 import {
   desktop,
+  desktopLarge,
   fontSize1,
   fontSize2,
   fontSize3,
   space,
+  tablet,
 } from "@/styles/global";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -23,8 +25,8 @@ const styles = css`
   background-blend-mode: soft-light;
   background-color: #1e729822;
 
-  ${desktop(css`
-    height: 775px;
+  ${tablet(css`
+    height: 100vh;
     background-size: cover;
     background-position: bottom center;
   `)}
@@ -46,7 +48,6 @@ const styles = css`
     flex-direction: column;
     justify-content: space-evenly;
     height: 100%;
-    gap: 40px;
 
     ${desktop(css`
       padding: 280px ${space(10)} 0;
@@ -69,7 +70,7 @@ const styles = css`
       font-family: var(--font-nunito-sans);
       font-weight: 900;
       color: #fd5f44;
-      margin-bottom: ${space(7)};
+      margin-bottom: ${space(10)};
       position: relative;
       display: inline-block;
       padding-top: ${space(6)};
@@ -112,27 +113,34 @@ const styles = css`
     .subtitle {
       font-weight: 400;
       font-family: var(--font-nunito-sans);
-      ${fontSize2}
+      ${fontSize2};
 
       strong {
         font-weight: 800;
       }
     }
 
-    .cta-button {
-      ${fontSize3}
-      font-family: var(--font-oswald);
-      padding: ${space(2)} ${space(3)};
-      border-radius: 10px;
-      border: 2px solid #fd5f44;
-      text-transform: uppercase;
-      background-color: #fd5f44;
-      margin: ${space(8)} auto 0;
-      display: block;
-      box-shadow: 0 4px 5px rgba(0, 0, 0, 0.24), 0 1px 10px rgba(0, 0, 0, 0.28),
-        0 2px 4px rgba(0, 0, 0, 0.24), 0 -1px 3px rgba(0, 0, 0, 0.2);
-      position: relative;
-      z-index: 1001;
+    .cta-box {
+      height: 60%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .cta-button {
+        ${fontSize3}
+        font-family: var(--font-oswald);
+        padding: ${space(2)} ${space(3)};
+        border-radius: 10px;
+        border: 2px solid #fd5f44;
+        text-transform: uppercase;
+        background-color: #fd5f44;
+        display: block;
+        box-shadow: 0 4px 5px rgba(0, 0, 0, 0.24),
+          0 1px 10px rgba(0, 0, 0, 0.28), 0 2px 4px rgba(0, 0, 0, 0.24),
+          0 -1px 3px rgba(0, 0, 0, 0.2);
+        position: relative;
+        z-index: 1001;
+      }
     }
   }
 `;
@@ -157,17 +165,21 @@ const Home = () => {
             acompañado de sistema de entrenamiento online.
           </span>
         </h2>
-        <button
-          className="cta-button transition-transform duration-300 hover:scale-110"
-          onClick={() => sendGTMEvent({ event: "buttonClicked", value: "xyz" })}
-        >
-          <a
-            href="#gym-virtual"
-            className="transition ease-in-out duration-350"
+        <div className="cta-box">
+          <button
+            className="cta-button transition-transform duration-300 hover:scale-110"
+            onClick={() =>
+              sendGTMEvent({ event: "buttonClicked", value: "xyz" })
+            }
           >
-            Quiero mi transformación
-          </a>
-        </button>
+            <a
+              href="#gym-virtual"
+              className="transition ease-in-out duration-350"
+            >
+              Quiero mi transformación
+            </a>
+          </button>
+        </div>
       </div>
     </section>
   );

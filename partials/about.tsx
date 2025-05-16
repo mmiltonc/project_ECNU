@@ -133,13 +133,17 @@ const styles = css`
         .image {
           border-radius: 4px;
           overflow: hidden;
-          width: auto;
-          object-fit: contain;
+          width: 100%;
+          object-fit: cover;
           margin-bottom: ${space(3)};
+          max-height: 400px;
 
           ${desktop(css`
+            max-height: initial;
+            max-width: 40vw;
+            height: 100%;
+            width: auto;
             margin-bottom: 0;
-            height: 450px;
           `)}
         }
       }

@@ -28,6 +28,7 @@ import {
   fontSize4,
   mobile,
   space,
+  tablet,
 } from "@/styles/global";
 import { useLenis } from "lenis/react";
 import { Button, MenuItem, SelectProps, TextField } from "@mui/material";
@@ -87,7 +88,7 @@ const styles = css`
     .container {
       position: relative;
 
-      ${desktop(css`
+      ${tablet(css`
         padding: 0 ${space(10)} ${space(10)} ${space(25)};
         margin-bottom: ${space(10)};
       `)}
@@ -170,7 +171,7 @@ const styles = css`
         #051422
       ) !important;
 
-      ${desktop(css`
+      ${tablet(css`
         padding: ${space(6)} 0;
         min-height: auto;
         left: 0;
@@ -188,7 +189,7 @@ const styles = css`
         border-radius: ${space(1)};
         padding: ${space(2)};
 
-        ${desktop(css`
+        ${tablet(css`
           width: 330px;
         `)}
       }
@@ -212,7 +213,7 @@ const styles = css`
         transform: scale(1.05);
       }
 
-      ${desktop(css`
+      ${tablet(css`
         width: max-content;
         margin: 0 auto;
       `)}

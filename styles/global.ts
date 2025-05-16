@@ -7,7 +7,7 @@ export const mobile = (content: SerializedStyles) => css`
 `;
 
 export const tablet = (content: SerializedStyles) => css`
-  @media only screen and (max-width: 1024px) {
+  @media only screen and (min-width: 768px) {
     ${content}
   }
 `;
@@ -25,72 +25,148 @@ export const desktopLarge = (content: SerializedStyles) => css`
 `;
 
 export const fontSize1 = css`
-  font-size: 40px;
+  --font-base: 40px;
+  font-size: var(--font-base);
   line-height: 1;
+
+  ${tablet(
+    css`
+      font-size: calc(var(--font-base) * 1.2);
+      line-height: 1;
+    `
+  )};
 
   ${desktop(
     css`
-      font-size: 80px;
+      font-size: calc(var(--font-base) * 1.5);
+      line-height: 1;
+    `
+  )};
+
+  ${desktopLarge(
+    css`
+      font-size: calc(var(--font-base) * 2);
       line-height: 1;
     `
   )};
 `;
 
 export const fontSize2 = css`
-  font-size: 24px;
+  --font-base: 28px;
+  font-size: var(--font-base);
   line-height: 1;
+
+  ${tablet(
+    css`
+      font-size: calc(var(--font-base) * 1.2);
+      line-height: 1;
+    `
+  )};
 
   ${desktop(
     css`
-      font-size: 30px;
+      font-size: calc(var(--font-base) * 1.25);
+      line-height: 1.2;
+    `
+  )};
+
+  ${desktopLarge(
+    css`
+      font-size: calc(var(--font-base) * 1.5);
       line-height: 1.2;
     `
   )};
 `;
 
 export const fontSize3 = css`
-  font-size: 20px;
+  --font-base: 20px;
+  font-size: var(--font-base);
   line-height: 1;
+
+  ${tablet(
+    css`
+      font-size: calc(var(--font-base) * 1.1);
+      line-height: 1;
+    `
+  )};
 
   ${desktop(
     css`
-      font-size: 24px;
+      font-size: calc(var(--font-base) * 1.2);
+      line-height: 1.2;
+    `
+  )};
+
+  ${desktopLarge(
+    css`
+      font-size: calc(var(--font-base) * 1.25);
       line-height: 1.2;
     `
   )};
 `;
 
 export const fontSize4 = css`
-  font-size: 16px;
+  --font-base: 16px;
+  font-size: var(--font-base);
   line-height: 1.25;
+
+  ${tablet(
+    css`
+      font-size: calc(var(--font-base) * 1.05);
+      line-height: 1;
+    `
+  )};
 
   ${desktop(
     css`
-      font-size: 20px;
+      font-size: calc(var(--font-base) * 1.1);
+      line-height: 1.25;
+    `
+  )};
+
+  ${desktopLarge(
+    css`
+      font-size: calc(var(--font-base) * 1.25);
       line-height: 1.25;
     `
   )};
 `;
 
 export const fontSize5 = css`
-  font-size: 13px;
+  --font-base: 13px;
+  font-size: var(--font-base);
   line-height: 1.25;
 
   ${desktop(
     css`
-      font-size: 16px;
+      font-size: calc(var(--font-base) * 1.1);
+      line-height: 1.25;
+    `
+  )};
+
+  ${desktopLarge(
+    css`
+      font-size: calc(var(--font-base) * 1.25);
       line-height: 1.25;
     `
   )};
 `;
 
 export const fontSize6 = css`
-  font-size: 10px;
+  --font-base: 10px;
+  font-size: var(--font-base);
   line-height: 1.25;
 
   ${desktop(
     css`
-      font-size: 12px;
+      font-size: calc(var(--font-base) * 1.1);
+      line-height: 1.25;
+    `
+  )};
+
+  ${desktopLarge(
+    css`
+      font-size: calc(var(--font-base) * 1.25);
       line-height: 1.25;
     `
   )};
