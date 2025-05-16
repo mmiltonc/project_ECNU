@@ -60,4 +60,40 @@ export const fontSize3 = css`
   )};
 `;
 
-export const space = (n = 1) => `${8 * n}px`
+export const fontSize4 = css`
+  font-size: 16px;
+  line-height: 1.25;
+
+  ${desktop(
+    css`
+      font-size: 20px;
+      line-height: 1.25;
+    `
+  )};
+`;
+
+export const fontSize5 = css`
+  font-size: 13px;
+  line-height: 1.25;
+
+  ${desktop(
+    css`
+      font-size: 16px;
+      line-height: 1.25;
+    `
+  )};
+`;
+
+export const fontSize6 = css`
+  font-size: 10px;
+  line-height: 1.25;
+
+  ${desktop(
+    css`
+      font-size: 12px;
+      line-height: 1.25;
+    `
+  )};
+`;
+
+export const space = (n = 1) => `${8 * n}px`;

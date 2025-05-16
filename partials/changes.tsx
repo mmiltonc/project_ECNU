@@ -7,12 +7,12 @@ import Image from "next/image";
 import { useState } from "react";
 
 const styles = css`
-overflow-x: hidden;
-width: 100%;
-  padding: 0 ${space(3)} 0;
+  overflow-x: hidden;
+  width: 100%;
+  padding: ${space(6)} ${space(3)} ${space(3)};
 
   ${desktop(css`
-    padding: 160px ${space(10)} 0;
+    padding: ${space(20)} ${space(10)} ${space(10)};
   `)}
 
   .title {
@@ -23,7 +23,7 @@ width: 100%;
 
     ${desktop(css`
       ${fontSize1};
-  `)}
+    `)}
   }
 
   .people-list {

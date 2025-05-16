@@ -1,47 +1,56 @@
 [
-    {
-        "idx": 1,
-        "question": "¿Qué es Gym virtual Rompiendo barreras?",
-        "answer": "Un gimnasio virtual con tu propio peso, creado para convertirte en esa persona que queres lograr física y mentalmente! Sobrepasarás niveles con una dificultad en ascenso, incursionandote en la actividad física, entrando de una manera y al superar cada desafío construirás ese hombre/mujer que deseas ser. •Gimnasio virtual contiene 3 retos por superar: -Perder grasa(3 Niveles) -Pectorales de hierro(3 Niveles) -Abdomen de acero(3 Niveles)"
-    },
-    {
-        "idx": 2,
-        "question": "¿Que son las planificaciones online de calistenia?",
-        "answer": "NIVEL INTERMEDIO / AVANZADO •Las planificaciones online de calistenia son rutinas específicamente personalizadas según el objetivo del alumno, con el fin de crear fuerza e hipertrofia muscular, incursionandote en un deporte atrapante, donde superarás los límites que jamás creíste poder superar. "
-    },
-    {
-        "idx": 3,
-        "question": "¿Qué sucede luego de abonar el Gym virtual o las planificaciones online de calistenia?",
-        "answer": "Una vez abonado cualquiera de las dos modalidades, se programará una videollamada con Lucas Pallotta para ultimar detalles sobre tus objetivos a lograr y él te explicará la forma más eficiente para trabajar e ir logrando ese objetivo tan deseado que estás buscando."
-    },
-    {
-        "idx": 4,
-        "question": "¿En cuánto tiempo me llega el contenido que accedí?",
-        "answer": "En ambas modalidades te llegará el contenido a tu Mail en 48 hs hábiles una vez realizada la videollamada."
-    },
-    {
-        "idx": 5,
-        "question": "¿Puedo realizar las planificaciones online de calistenia con cualquier nivel?",
-        "answer": "Es necesario que cumplas los requisitos de nivel Intermedio - Avanzado, ciertas repeticiones en distintos ejercicios básicos de calistenia."
-    },
-    {
-        "idx": 6,
-        "question": "¿Necesito materiales para ambas modalidades?",
-        "answer": "Gym Virtual Rompiendo Barreras no necesita materiales, simplemente conectas las rutinas desde tu teléfono a la Tablet, Notebook o Smart TV y te pones a trabajar. •Las planificaciones online de calistenia es necesario contar con materiales(Barra de dominadas y paralelas) o en su defecto contar con un parque cercano a tu domicilio con esos materiales para trabajar."
-    },
-    {
-        "idx": 7,
-        "question": "¿Una vez que ingreso al Gym Virtual o a las planificaciones quién me ayuda a quitarme las dudas?",
-        "answer": "Además del VIVO que podrás asistir todas las semanas para complementar con tu rutina habitual, tendrás un seguimiento semanal directo por WhatsApp con tu entrenador que estará a disposición para ayudarte."
-    },
-    {
-        "idx": 8,
-        "question": "¿Como sé cuáles son los ejercicios que tengo que ejecutar de mi rutina?",
-        "answer": "Todas las rutinas que se te enviarán cuentan con videos detallados para cada ejercicio para que sepas de qué manera ejecutarlos de manera correcta."
-    },
-    {
-        "idx": 9,
-        "question": "¿En las planificaciones online hago lo mismo todos los meses?",
-        "answer": "Mensualmente se modificarán para que sean desafiantes y logres superarte constantemente."
-    }
+  {
+    "id": 1,
+    "question": "¿Qué es Gym Virtual Rompiendo Barreras?",
+    "answer": "Un gimnasio virtual basado en el entrenamiento con tu propio peso, diseñado para ayudarte a crecer física y mentalmente. Avanzás a través de niveles con dificultad progresiva, superando desafíos que te transforman en la persona que querés ser. Incluye 3 retos: Perder grasa (3 niveles) • Pectorales de hierro (3 niveles) • Abdomen de acero (3 niveles)",
+    "category": "Planes"
+  },
+  {
+    "id": 2,
+    "question": "¿Qué son las planificaciones online de calistenia?",
+    "answer": "Diseñadas para niveles intermedios y avanzados, las planificaciones online de calistenia son rutinas personalizadas según tus objetivos. Buscan desarrollar fuerza e hipertrofia muscular, mientras te sumergís en un deporte desafiante que te lleva a superar tus propios límites.",
+    "category": "Planes"
+  },
+  {
+    "id": 3,
+    "question": "¿Qué sucede luego de abonar el Gym Virtual o las planificaciones online de calistenia?",
+    "answer": "Luego del pago, coordinás una videollamada con Lucas Pallotta para definir tus objetivos y recibir una guía clara sobre cómo trabajar de forma eficiente para alcanzarlos.",
+    "category": "Pago"
+  },
+  {
+    "id": 4,
+    "question": "¿En cuánto tiempo me llega el contenido que accedí?",
+    "answer": "El contenido se envía por mail dentro de las 48 horas hábiles posteriores a la videollamada.",
+    "category": "Pago"
+  },
+  {
+    "id": 5,
+    "question": "¿Puedo realizar las planificaciones online de calistenia con cualquier nivel?",
+    "answer": "No. Se requiere nivel intermedio o avanzado, con dominio de ciertas repeticiones en ejercicios básicos de calistenia.",
+    "category": "Práctica"
+  },
+  {
+    "id": 6,
+    "question": "¿Necesito materiales para ambas modalidades?",
+    "answer": "Para el Gym Virtual no necesitás materiales: solo conectás tu rutina desde el teléfono, tablet, notebook o Smart TV. Para las planificaciones online sí se requiere una barra de dominadas y paralelas, o acceso a un parque con ese equipamiento.",
+    "category": "Práctica"
+  },
+  {
+    "id": 7,
+    "question": "¿Una vez que ingreso al Gym Virtual o a las planificaciones, quién me ayuda a quitarme las dudas?",
+    "answer": "Sí. Además de una clase en vivo semanal, tenés seguimiento semanal personalizado por WhatsApp para resolver dudas y acompañarte en el proceso.",
+    "category": "Consultas"
+  },
+  {
+    "id": 8,
+    "question": "¿Cómo sé cuáles son los ejercicios que tengo que ejecutar de mi rutina?",
+    "answer": "Todas las rutinas incluyen videos explicativos para que sepas cómo ejecutar cada ejercicio correctamente.",
+    "category": "Consultas"
+  },
+  {
+    "id": 9,
+    "question": "¿En las planificaciones online hago lo mismo todos los meses?",
+    "answer": "No. Cada mes se actualizan para que sigan siendo desafiantes y te ayuden a seguir progresando.",
+    "category": "Consultas"
+  }
 ]

@@ -1,62 +1,129 @@
-"use client"
-import { useState } from 'react'
-import AccordionItem from '@/components/shared/accordion-item'
-import Questions from '../public/data/faq.json'
-import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
-import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
-const Faq = () => {
+"use client";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+import {
+  desktop,
+  fontSize1,
+  fontSize2,
+  fontSize3,
+  fontSize4,
+  fontSize5,
+  fontSize6,
+  space,
+} from "@/styles/global";
+import faq from "../public/data/faq.json";
+import classNames from "classnames";
+import { useState } from "react";
 
-    const [active, setActive] = useState([false, false, false, false, false, false, false, false, false, false])
-    const isSomeActive = active.some((element) => element)
-    const handleClick = () => {
-        isSomeActive ? setActive([false, false, false, false, false, false, false ,false, false, false]) : setActive([true, true, true, true, true, true, true, true, true, true])
+const styles = css`
+  padding: ${space(6)} ${space(3)};
+  background-color: var(--white-color);
+  color: var(--background-color);
+
+  ${desktop(css`
+    padding: ${space(10)};
+  `)}
+
+  .title {
+    ${fontSize2};
+    font-family: var(--font-jost);
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: ${space(3)};
+
+    ${desktop(css`
+      ${fontSize1};
+      margin-bottom: ${space(6)};
+    `)}
+  }
+
+  .filters {
+    display: flex;
+    gap: ${space(0.5)};
+    margin-bottom: ${space(2)};
+
+    .filter-button {
+      ${fontSize6};
+      text-transform: uppercase;
+      color: var(--secondary-color);
+      border: 1px solid var(--secondary-color);
+      padding: ${space(0.5)} ${space(1)};
+      border-radius: ${space(3)};
+
+      ${desktop(css`
+        ${fontSize5};
+      `)}
+
+      &.active {
+        font-weight: 600;
+        color: var(--background-color);
+        border-color: var(--background-color);
+      }
     }
+  }
 
-    return (
-        <>
-            <section className='h-auto pb-16 bg-white px-10 
-                                lg:pt-40 lg:flex lg:flex-row lg:px-0' 
-                    id='faq'>
-                <div className='lg:w-2/6 lg:min-h-[700px]'>
-                    <div className='w-full lg:flex lg:justify-end'>
-                        <h1 className='flex justify-center pt-14 text-black text-3xl font-bold
-                                       lg:hidden'>
-                        Preguntas Frecuentes</h1>
-                    </div>
-                    <div className='hidden lg:w-full lg:h-[200px] lg:text-black lg:block lg:ml-20'>
-                        <h1 className='text-7xl w-26 font-extrabold tracking-[50px] pb-10'>PREGUNTAS</h1>
-                        <h1 className='relative left-[95px] bottom-[183.05px] w-10 text-7xl text-center font-extrabold break-all tracking-widest'>FRECUENTES</h1>
-                    </div>
-                    <div className='flex items-center justify-center w-full text-black
-                                    lg:relative lg:bottom-[245px] lg:left-[750px]'>
-                        <button onClick={handleClick} 
-                        className='flex flex-row justify-center items-center mt-10'>
-                            <div className='relative w-10 h-10 transition-all ease-in-out duration-500'>
-                                {!isSomeActive ? <ArrowCircleUpIcon className='lg:w-20 lg:h-20'/> : <ArrowCircleDownIcon className='lg:w-20 lg:h-20'/>}
-                            </div>
-                        </button>
-                    </div>
-                </div>
-                <div className='lg:relative lg:right-40 lg:top-10 lg:w-4/6 lg:pr-20 lg:mt-20 lg:pb-20'>
-                    <div className='w-full mt-2'>
-                        {Questions.map((data, index) => {
-                            return(
-                                <div className='w-full' key={'question'+index}>
-                                    <AccordionItem
-                                        idx={data.idx}
-                                        question={data.question}
-                                        answer={data.answer}
-                                        turn={active}
-                                        setTurn={setActive}
-                                    />
-                                </div>
-                            )
-                        })}
-                    </div>
-                </div>
-            </section>
-        </>
-    )
-}
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: ${space(6)};
+
+    .faq-item {
+      .question {
+        ${fontSize4};
+        font-weight: 600;
+        font-family: var(--font-owsald);
+        margin-bottom: ${space(1)};
+      }
+
+      .answer {
+        ${fontSize4};
+        font-family: var(--font-owsald);
+      }
+    }
+  }
+`;
+
+const Faq = () => {
+  const [activeCategory, setActiveCategory] = useState("Todo");
+  const categories = [
+    "Todo",
+    ...Array.from(new Set(faq.map(({ category }) => category).sort())),
+  ];
+
+  const handleFilters = (category: string) => {
+    setActiveCategory(activeCategory === category ? "Todo" : category);
+  };
+
+  const filterQuestionsByCategory = ({ category }: { category: string }) =>
+    activeCategory === "Todo" || category === activeCategory;
+
+  const buildFilterButtons = (category: string) => (
+    <button
+      key={category}
+      className={classNames([
+        "filter-button",
+        category.toLowerCase(),
+        { active: category === activeCategory },
+      ])}
+      onClick={() => handleFilters(category)}
+    >
+      {category}
+    </button>
+  );
+  return (
+    <section css={styles} className="faq" id="preguntas-frecuentes">
+      <h2 className="title">Preguntas Frecuentes</h2>
+      <div className="filters">{categories.map(buildFilterButtons)}</div>
+      <div className="faq-list">
+        {faq.filter(filterQuestionsByCategory).map((data) => (
+          <article className="faq-item" key={data.id}>
+            <h3 className="question">{data.question}</h3>
+            <p className="answer">{data.answer}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+};
 
 export default Faq;

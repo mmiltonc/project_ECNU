@@ -1,5 +1,11 @@
 "use client";
-import { desktop, fontSize1, fontSize2, fontSize3, space } from "@/styles/global";
+import {
+  desktop,
+  fontSize1,
+  fontSize2,
+  fontSize3,
+  space,
+} from "@/styles/global";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
@@ -8,32 +14,20 @@ import { sendGTMEvent } from "@next/third-parties/google";
 const styles = css`
   overflow-x: hidden;
   width: 100%;
-  padding: 0 ${space(3)};
+
   background-image: url(images/bgbw.jpeg);
   background-position: bottom center;
   background-size: auto 120%;
-  height: 100vh;
+  height: 100svh;
   position: relative;
   background-blend-mode: soft-light;
   background-color: #1e729822;
 
   ${desktop(css`
-    padding: 280px ${space(10)} 0;
     height: 775px;
     background-size: cover;
     background-position: bottom center;
   `)}
-
-  &:before {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 70px;
-    width: 100%;
-    background: linear-gradient(to bottom, transparent, #051422);
-    z-index: 1;
-  }
 
   .tint {
     backdrop-filter: brightness(60%);
@@ -45,17 +39,30 @@ const styles = css`
   }
 
   .content {
+    padding: 0 ${space(3)};
     position: relative;
     z-index: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    height: 100vh;
+    height: 100%;
     gap: 40px;
 
     ${desktop(css`
+      padding: 280px ${space(10)} 0;
       display: block;
     `)}
+
+    &:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 70px;
+      width: 100%;
+      background: linear-gradient(to bottom, transparent, #051422);
+      z-index: 1;
+    }
 
     .title {
       ${fontSize1}
@@ -113,17 +120,19 @@ const styles = css`
     }
 
     .cta-button {
-      font-family: var(--font-oswald);
       ${fontSize3}
+      font-family: var(--font-oswald);
       padding: ${space(2)} ${space(3)};
       border-radius: 10px;
       border: 2px solid #fd5f44;
       text-transform: uppercase;
       background-color: #fd5f44;
-      margin: 120px auto 0;
+      margin: ${space(8)} auto 0;
       display: block;
       box-shadow: 0 4px 5px rgba(0, 0, 0, 0.24), 0 1px 10px rgba(0, 0, 0, 0.28),
         0 2px 4px rgba(0, 0, 0, 0.24), 0 -1px 3px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1001;
     }
   }
 `;

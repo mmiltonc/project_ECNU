@@ -1,6 +1,12 @@
 "use client";
 
-import { desktop, fontSize1, fontSize2, fontSize3, space } from "@/styles/global";
+import {
+  desktop,
+  fontSize1,
+  fontSize2,
+  fontSize3,
+  space,
+} from "@/styles/global";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import Image from "next/image";
@@ -83,7 +89,7 @@ const styles = css`
 
   .about-card {
     position: relative;
-    padding: ${space(3)};
+    padding: ${space(6)} ${space(3)};
 
     background: linear-gradient(
       to right,
@@ -175,53 +181,51 @@ const styles = css`
 
 const About = () => {
   return (
-    <>
-      <section css={styles} className="section-about">
-        <div className="anchor" id="quien-soy" />
-        <div className="about-card">
-          <h2 className="title">
-            De la energía{" "}
-            <span>
-              <i>al propósito</i>
-            </span>
-          </h2>
-          <div className="about-info">
-            <div className="about-image">
-              <Image
-                width={628}
-                height={1118}
-                src="/images/truck_flag.jpg"
-                alt="lucas antes"
-                className="image"
-              />
-            </div>
-            <div className="about-bio">
-              <p className="text">
-                Hola, soy Lucas Pallotta, atleta e instructor de calistenia de
-                alto rendimiento.
-              </p>
-              <p className="text">
-                A lo largo de los años, he desarrollado herramientas para el
-                control y la armonización de la mente y el cuerpo. Mi principal
-                don es la disciplina, y me apasiona ayudar a quienes están
-                dispuestos a permitirme influenciar en sus vidas.
-              </p>
-              <p className="text">
-                La actividad física va mucho más allá de simplemente alcanzar un
-                cuerpo saludable o esbelto. Para mí, es un canalizador
-                fundamental de energía, tanto positiva como negativa, que nos
-                permite transformar nuestras emociones y pensamientos en acción.
-              </p>
-              <p className="text">
-                A través del ejercicio, no sólo fortalecemos nuestros músculos,
-                también cultivamos nuestro autoestima y desarrollamos la
-                perseverancia necesaria para alcanzar nuestros sueños.
-              </p>
-            </div>
+    <section css={styles} className="section-about">
+      <div className="anchor" id="quien-soy" />
+      <div className="about-card">
+        <h2 className="title">
+          De la energía{" "}
+          <span>
+            <i>al propósito</i>
+          </span>
+        </h2>
+        <div className="about-info">
+          <div className="about-image">
+            <Image
+              width={628}
+              height={1118}
+              src="/images/truck_flag.jpg"
+              alt="lucas antes"
+              className="image"
+            />
+          </div>
+          <div className="about-bio">
+            <p className="text">
+              Hola, soy Lucas Pallotta, atleta e instructor de calistenia de
+              alto rendimiento.
+            </p>
+            <p className="text">
+              A lo largo de los años, he desarrollado herramientas para el
+              control y la armonización de la mente y el cuerpo. Mi principal
+              don es la disciplina, y me apasiona ayudar a quienes están
+              dispuestos a permitirme influenciar en sus vidas.
+            </p>
+            <p className="text">
+              La actividad física va mucho más allá de simplemente alcanzar un
+              cuerpo saludable o esbelto. Para mí, es un canalizador fundamental
+              de energía, tanto positiva como negativa, que nos permite
+              transformar nuestras emociones y pensamientos en acción.
+            </p>
+            <p className="text">
+              A través del ejercicio, no sólo fortalecemos nuestros músculos,
+              también cultivamos nuestro autoestima y desarrollamos la
+              perseverancia necesaria para alcanzar nuestros sueños.
+            </p>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

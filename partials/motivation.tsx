@@ -15,7 +15,7 @@ const styles = css`
 
   ${desktop(css`
     height: 2000vh;
-    `)}
+  `)}
 
   i {
     font-style: normal;
@@ -198,7 +198,7 @@ const background = (el: HTMLElement) => {
     {
       backgroundPosition: "0% 0%",
       scrollTrigger: {
-        trigger: '.section-about',
+        trigger: ".section-about",
         start: "top bottom",
         end: "bottom+=25000px bottom",
         scrub: true,
@@ -231,7 +231,7 @@ const questionMark1 = (el: HTMLElement) => {
       opacity: 1,
       x: 0,
       scrollTrigger: {
-        trigger: ".question-text",
+        trigger: ".section-about .question-text",
         start: "bottom+=500px bottom",
         end: "bottom+=800px bottom",
         scrub: true,
@@ -248,7 +248,7 @@ const questionMark2 = (el: HTMLElement) => {
       opacity: 1,
       x: 0,
       scrollTrigger: {
-        trigger: ".question-text",
+        trigger: ".section-about .question-text",
         start: "bottom+=500px bottom",
         end: "bottom+=800px bottom",
         scrub: true,
@@ -266,7 +266,7 @@ const question = (el: HTMLElement) => {
       opacity: 0,
       transform: "scale(3)",
       scrollTrigger: {
-        trigger: ".question-text",
+        trigger: ".section-about .question-text",
         start: "bottom+=1500px bottom",
         end: "bottom+=1900px bottom",
         scrub: true,
@@ -284,7 +284,7 @@ const text1 = (el: HTMLElement) => {
       filter: "blur(0px)",
       y: 0,
       scrollTrigger: {
-        trigger: ".question-text",
+        trigger: ".section-about .question-text",
         start: "bottom+=1700px bottom",
         end: "bottom+=2100px bottom",
         scrub: true,
@@ -299,7 +299,7 @@ const text1 = (el: HTMLElement) => {
       opacity: 0,
       scale: 0.5,
       scrollTrigger: {
-        trigger: ".question-text",
+        trigger: ".section-about .question-text",
         start: "bottom+=2700px bottom",
         end: "bottom+=3600px bottom",
         scrub: true,
@@ -318,7 +318,7 @@ const text2 = (el: HTMLElement) => {
       x: "-100%",
       left: "-100%",
       scrollTrigger: {
-        trigger: ".text-1",
+        trigger: ".section-about .text-1",
         start: "bottom+=1700px bottom",
         end: "bottom+=8900px bottom",
         ease: "none",
@@ -337,7 +337,7 @@ const text3 = (el: HTMLElement) => {
       filter: "blur(0px)",
       y: 0,
       scrollTrigger: {
-        trigger: ".text-2",
+        trigger: ".section-about .text-2",
         start: "bottom+=6900px bottom",
         end: "bottom+=7300px bottom",
         scrub: true,
@@ -352,7 +352,7 @@ const text3 = (el: HTMLElement) => {
       opacity: 0,
       scale: 0.5,
       scrollTrigger: {
-        trigger: ".text-2",
+        trigger: ".section-about .text-2",
         start: "bottom+=7900px bottom",
         end: "bottom+=8800px bottom",
         scrub: true,
@@ -370,7 +370,7 @@ const text4 = (el: HTMLElement) => {
       filter: "blur(0px)",
       y: 0,
       scrollTrigger: {
-        trigger: ".text-3",
+        trigger: ".section-about .text-3",
         start: "bottom+=7900px bottom",
         end: "bottom+=8300px bottom",
         scrub: true,
@@ -385,7 +385,7 @@ const text4 = (el: HTMLElement) => {
       opacity: 0,
       scale: 0.5,
       scrollTrigger: {
-        trigger: ".text-3",
+        trigger: ".section-about .text-3",
         start: "bottom+=8900px bottom",
         end: "bottom+=9800px bottom",
         scrub: true,
@@ -403,7 +403,7 @@ const text5 = (el: HTMLElement) => {
       filter: "blur(0px)",
       y: 0,
       scrollTrigger: {
-        trigger: ".text-4",
+        trigger: ".section-about .text-4",
         start: "bottom+=8900px bottom",
         end: "bottom+=9300px bottom",
         scrub: true,
@@ -418,7 +418,7 @@ const text5 = (el: HTMLElement) => {
       opacity: 0,
       scale: 0.5,
       scrollTrigger: {
-        trigger: ".text-4",
+        trigger: ".section-about .text-4",
         start: "bottom+=9900px bottom",
         end: "bottom+=10800px bottom",
         scrub: true,
@@ -436,7 +436,7 @@ const text6 = (el: HTMLElement) => {
       filter: "blur(0px)",
       y: 0,
       scrollTrigger: {
-        trigger: ".text-5",
+        trigger: ".section-about .text-5",
         start: "bottom+=9900px bottom",
         end: "bottom+=10300px bottom",
         scrub: true,
@@ -451,7 +451,7 @@ const text6 = (el: HTMLElement) => {
       opacity: 0,
       scale: 0.5,
       scrollTrigger: {
-        trigger: ".text-5",
+        trigger: ".section-about .text-5",
         start: "bottom+=10900px bottom",
         end: "bottom+=11800px bottom",
         scrub: true,
@@ -469,7 +469,7 @@ const text7 = (el: HTMLElement) => {
       filter: "blur(0px)",
       y: 0,
       scrollTrigger: {
-        trigger: ".text-6",
+        trigger: ".section-about .text-6",
         start: "bottom+=10900px bottom",
         end: "bottom+=11300px bottom",
         scrub: true,
@@ -484,7 +484,7 @@ const text7 = (el: HTMLElement) => {
       opacity: 0,
       scale: 0.5,
       scrollTrigger: {
-        trigger: ".text-6",
+        trigger: ".section-about .text-6",
         start: "bottom+=11900px bottom",
         end: "bottom+=12800px bottom",
         scrub: true,
@@ -502,7 +502,7 @@ const text8FromTop = (el: HTMLElement) => {
       filter: "blur(0px)",
       y: 0,
       scrollTrigger: {
-        trigger: ".text-7",
+        trigger: ".section-about .text-7",
         start: "bottom+=11900px bottom",
         end: "bottom+=12300px bottom",
         scrub: true,
@@ -520,7 +520,7 @@ const text8FromBottom = (el: HTMLElement) => {
       filter: "blur(0px)",
       y: 0,
       scrollTrigger: {
-        trigger: ".text-7",
+        trigger: ".section-about .text-7",
         start: "bottom+=11900px bottom",
         end: "bottom+=12300px bottom",
         scrub: true,
@@ -537,7 +537,7 @@ const text8 = (el: HTMLElement) => {
       opacity: 0,
       scale: 0.5,
       scrollTrigger: {
-        trigger: ".text-7",
+        trigger: ".section-about .text-7",
         start: "bottom+=12900px bottom",
         end: "bottom+=13800px bottom",
         scrub: true,
@@ -555,7 +555,7 @@ const text9FromLeft = (el: HTMLElement) => {
       filter: "blur(0px)",
       x: 0,
       scrollTrigger: {
-        trigger: ".text-8",
+        trigger: ".section-about .text-8",
         start: "bottom+=12900px bottom",
         end: "bottom+=13900px bottom",
         scrub: true,
@@ -573,7 +573,7 @@ const text9FromRight = (el: HTMLElement) => {
       filter: "blur(0px)",
       x: 0,
       scrollTrigger: {
-        trigger: ".text-8",
+        trigger: ".section-about .text-8",
         start: "bottom+=12900px bottom",
         end: "bottom+=13900px bottom",
         scrub: true,
@@ -591,7 +591,7 @@ const text9 = (el: HTMLElement) => {
       scale: 5,
       x: 0,
       scrollTrigger: {
-        trigger: ".text-8",
+        trigger: ".section-about .text-8",
         start: "bottom+=14900px bottom",
         end: "bottom+=15500px bottom",
         scrub: true,
@@ -608,7 +608,7 @@ const text10ZoomOut = (el: HTMLElement) => {
       opacity: 1,
       scale: 1,
       scrollTrigger: {
-        trigger: ".text-9",
+        trigger: ".section-about .text-9",
         start: "bottom+=14900px bottom",
         end: "bottom+=15500px bottom",
         scrub: true,
@@ -622,7 +622,7 @@ const text10ZoomOut = (el: HTMLElement) => {
     {
       opacity: 0,
       scrollTrigger: {
-        trigger: ".text-9",
+        trigger: ".section-about .text-9",
         start: "bottom+=16500px bottom",
         end: "bottom+=18000px bottom",
         scrub: true,
@@ -644,41 +644,63 @@ const Motivation = () => {
 
     gsap.ticker.add(update);
 
-    (gsap.utils.toArray(".slide-1 .background") as HTMLElement[]).forEach(background);
-    (gsap.utils.toArray(".question-text") as HTMLElement[]).forEach(
-      questionText
+    (
+      gsap.utils.toArray(".section-about .slide-1 .background") as HTMLElement[]
+    ).forEach(background);
+    (
+      gsap.utils.toArray(".section-about .question-text") as HTMLElement[]
+    ).forEach(questionText);
+    (
+      gsap.utils.toArray(".section-about .question-mark-1") as HTMLElement[]
+    ).forEach(questionMark1);
+    (
+      gsap.utils.toArray(".section-about .question-mark-2") as HTMLElement[]
+    ).forEach(questionMark2);
+    (gsap.utils.toArray(".section-about .question") as HTMLElement[]).forEach(
+      question
     );
-    (gsap.utils.toArray(".question-mark-1") as HTMLElement[]).forEach(
-      questionMark1
+    (gsap.utils.toArray(".section-about .text-1") as HTMLElement[]).forEach(
+      text1
     );
-    (gsap.utils.toArray(".question-mark-2") as HTMLElement[]).forEach(
-      questionMark2
+    (gsap.utils.toArray(".section-about .text-2") as HTMLElement[]).forEach(
+      text2
     );
-    (gsap.utils.toArray(".question") as HTMLElement[]).forEach(question);
-    (gsap.utils.toArray(".text-1") as HTMLElement[]).forEach(text1);
-    (gsap.utils.toArray(".text-2") as HTMLElement[]).forEach(text2);
-    (gsap.utils.toArray(".text-3") as HTMLElement[]).forEach(text3);
-    (gsap.utils.toArray(".text-4") as HTMLElement[]).forEach(text4);
-    (gsap.utils.toArray(".text-5") as HTMLElement[]).forEach(text5);
-    (gsap.utils.toArray(".text-6") as HTMLElement[]).forEach(text6);
-    (gsap.utils.toArray(".text-7") as HTMLElement[]).forEach(text7);
-    (gsap.utils.toArray(".text-8 .from-top") as HTMLElement[]).forEach(
-      text8FromTop
+    (gsap.utils.toArray(".section-about .text-3") as HTMLElement[]).forEach(
+      text3
     );
-    (gsap.utils.toArray(".text-8 .from-bottom") as HTMLElement[]).forEach(
-      text8FromBottom
+    (gsap.utils.toArray(".section-about .text-4") as HTMLElement[]).forEach(
+      text4
     );
-    (gsap.utils.toArray(".text-8") as HTMLElement[]).forEach(text8);
-    (gsap.utils.toArray(".text-9 .from-left") as HTMLElement[]).forEach(
-      text9FromLeft
+    (gsap.utils.toArray(".section-about .text-5") as HTMLElement[]).forEach(
+      text5
     );
-    (gsap.utils.toArray(".text-9 .from-right") as HTMLElement[]).forEach(
-      text9FromRight
+    (gsap.utils.toArray(".section-about .text-6") as HTMLElement[]).forEach(
+      text6
     );
-    (gsap.utils.toArray(".text-9") as HTMLElement[]).forEach(text9);
-    (gsap.utils.toArray(".text-10 .zoom-out") as HTMLElement[]).forEach(
-      text10ZoomOut
+    (gsap.utils.toArray(".section-about .text-7") as HTMLElement[]).forEach(
+      text7
     );
+    (
+      gsap.utils.toArray(".section-about .text-8 .from-top") as HTMLElement[]
+    ).forEach(text8FromTop);
+    (
+      gsap.utils.toArray(".section-about .text-8 .from-bottom") as HTMLElement[]
+    ).forEach(text8FromBottom);
+    (gsap.utils.toArray(".section-about .text-8") as HTMLElement[]).forEach(
+      text8
+    );
+    (
+      gsap.utils.toArray(".section-about .text-9 .from-left") as HTMLElement[]
+    ).forEach(text9FromLeft);
+    (
+      gsap.utils.toArray(".section-about .text-9 .from-right") as HTMLElement[]
+    ).forEach(text9FromRight);
+    (gsap.utils.toArray(".section-about .text-9") as HTMLElement[]).forEach(
+      text9
+    );
+    (
+      gsap.utils.toArray(".section-about .text-10 .zoom-out") as HTMLElement[]
+    ).forEach(text10ZoomOut);
 
     return () => {
       gsap.ticker.remove(update);
@@ -694,104 +716,103 @@ const Motivation = () => {
         id="motivacion"
         ref={slide1Ref}
       >
-
-          <article className="slide slide-1">
+        <article className="slide slide-1">
           <div className="background" />
-            <div className="content">
-              <p className="question">
-                <span className="question-mark-1">¿</span>
-                <span className="question-text">Tenés motivación</span>
-                <span className="question-mark-2">?</span>
-              </p>
-            </div>
-          </article>
-          <article className="slide slide-2">
-            <div className="content">
-              <div className="speech">
-                <div className="centered-text">
-                  <p className="text-1">Quiero darte este mensaje</p>
-                </div>
+          <div className="content">
+            <p className="question">
+              <span className="question-mark-1">¿</span>
+              <span className="question-text">Tenés motivación</span>
+              <span className="question-mark-2">?</span>
+            </p>
+          </div>
+        </article>
+        <article className="slide slide-2">
+          <div className="content">
+            <div className="speech">
+              <div className="centered-text">
+                <p className="text-1">Quiero darte este mensaje</p>
               </div>
             </div>
-          </article>
-          <article className="slide slide-3">
-            <div className="content">
-              <div className="speech">
-                <div className="sliding-text">
-                  <p className="slider">
-                    <span className="text-2">
-                      La mayoría de las personas <i>esperan estar motivadas</i>{" "}
-                      para comenzar a realizar <strong>actividad física</strong>
-                      , pero...
-                    </span>
-                  </p>
-                </div>
-                <div className="centered-text">
-                  <p className="text-3">
-                    ¿Qué sucede <span>si esa</span> motivación no aparece?
-                  </p>
-                </div>
-                <div className="centered-text">
-                  <p className="text-4">
-                    La única manera <span>de que la</span> motivación vuelva a
-                    tu vida es{" "}
-                    <strong>
-                      <span>a través </span>
-                      <span>de la Acción</span>
-                    </strong>
-                  </p>
-                </div>
-                <div className="centered-text">
-                  <p className="text-5">
-                    Cuanto más te <strong>muevas</strong> más <i>endorfinas</i>
-                  </p>
-                </div>
-                <div className="centered-text">
-                  <p className="text-6">Tendrás una perspectiva más postiva</p>
-                </div>
-                <div className="centered-text">
-                  <p className="text-7">
-                    Y cuando <i>menos lo esperes</i>, esa motivación{" "}
-                    <strong>resurgirá</strong>
-                  </p>
-                </div>
-                <div className="centered-text">
-                  <p className="text-8">
-                    <span className="from-top">
-                      Pero no puedes pretender guiarte por la motivación,
-                    </span>
-                    <span className="from-bottom">
-                      las ganas fluctúan <span>todo el</span> tiempo y{" "}
-                      <span>duran poco</span>
-                    </span>
-                  </p>
-                </div>
-                <div className="centered-text">
-                  <p className="text-9">
-                    <span className="from-left">
-                      ¡Una mente <strong>entrenada</strong> sabe
-                    </span>
-                    <span className="from-right">
-                      que <i>disciplina</i> y <i>determinación</i>
-                    </span>
-                    <span className="from-left">son CLAVES para lograr</span>
-                    <span className="from-right">
-                      los resultados tan deseandos!
-                    </span>
-                  </p>
-                </div>
-                <div className="centered-text">
-                  <p className="text-10">
-                    <span className="zoom-out">
-                      Yo tengo <br />
-                      esas herramientas
-                      <br /> para brindarte
-                    </span>
-                  </p>
-                </div>
+          </div>
+        </article>
+        <article className="slide slide-3">
+          <div className="content">
+            <div className="speech">
+              <div className="sliding-text">
+                <p className="slider">
+                  <span className="text-2">
+                    La mayoría de las personas <i>esperan estar motivadas</i>{" "}
+                    para comenzar a realizar <strong>actividad física</strong>,
+                    pero...
+                  </span>
+                </p>
+              </div>
+              <div className="centered-text">
+                <p className="text-3">
+                  ¿Qué sucede <span>si esa</span> motivación no aparece?
+                </p>
+              </div>
+              <div className="centered-text">
+                <p className="text-4">
+                  La única manera <span>de que la</span> motivación vuelva a tu
+                  vida es{" "}
+                  <strong>
+                    <span>a través </span>
+                    <span>de la Acción</span>
+                  </strong>
+                </p>
+              </div>
+              <div className="centered-text">
+                <p className="text-5">
+                  Cuanto más te <strong>muevas</strong> más <i>endorfinas</i>
+                </p>
+              </div>
+              <div className="centered-text">
+                <p className="text-6">Tendrás una perspectiva más postiva</p>
+              </div>
+              <div className="centered-text">
+                <p className="text-7">
+                  Y cuando <i>menos lo esperes</i>, esa motivación{" "}
+                  <strong>resurgirá</strong>
+                </p>
+              </div>
+              <div className="centered-text">
+                <p className="text-8">
+                  <span className="from-top">
+                    Pero no puedes pretender guiarte por la motivación,
+                  </span>
+                  <span className="from-bottom">
+                    las ganas fluctúan <span>todo el</span> tiempo y{" "}
+                    <span>duran poco</span>
+                  </span>
+                </p>
+              </div>
+              <div className="centered-text">
+                <p className="text-9">
+                  <span className="from-left">
+                    ¡Una mente <strong>entrenada</strong> sabe
+                  </span>
+                  <span className="from-right">
+                    que <i>disciplina</i> y <i>determinación</i>
+                  </span>
+                  <span className="from-left">son CLAVES para lograr</span>
+                  <span className="from-right">
+                    los resultados tan deseandos!
+                  </span>
+                </p>
+              </div>
+              <div className="centered-text">
+                <p className="text-10">
+                  <span className="zoom-out">
+                    Yo tengo <br />
+                    esas herramientas
+                    <br /> para brindarte
+                  </span>
+                </p>
               </div>
             </div>
-          </article>
+          </div>
+        </article>
       </section>
     </ReactLenis>
   );

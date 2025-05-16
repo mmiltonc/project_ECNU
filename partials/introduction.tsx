@@ -4,8 +4,8 @@ import { css } from "@emotion/react";
 import { desktop, fontSize1, fontSize2, space } from "@/styles/global";
 
 const styles = css`
-overflow-x: hidden;
-width: 100%;
+  overflow-x: hidden;
+  width: 100%;
   padding: 0 ${space(3)};
   background-image: radial-gradient(closest-side, #fd5f44, #051422) !important;
   position: relative;
@@ -15,16 +15,10 @@ width: 100%;
   justify-content: center;
 
   ${desktop(css`
-    padding: ${space(10)} ${space(10)} 0;
+    padding: ${space(0)} ${space(10)} 0;
   `)}
 
-  .anchor {
-    position: absolute;
-    top: -160px;
-  }
-
   .container {
-    /* width: 900px; */
     height: 700px;
     display: flex;
     justify-content: center;
@@ -43,14 +37,17 @@ width: 100%;
       font-size: 24px;
       line-height: 1.2;
       margin-bottom: 24px;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
     }
   }
 `;
 
 const Introduction = () => {
   return (
-    <section css={styles} className="introduction-section">
-      <div className="anchor" id="cambia-tu-vida" />
+    <section css={styles} className="introduction-section" id="cambia-tu-vida">
       <div className="container">
         <h2 className="title">¿Por qué ECNU Online mejoraría mi vida?</h2>
 

@@ -97,6 +97,11 @@ const TopBar = () => {
               ¿Quién soy?
             </a>
           </li>
+          <li className="link-item">
+            <a href="#preguntas-frecuentes" className="link">
+              FAQ
+            </a>
+          </li>
         </ul>
       </div>
     </nav>
