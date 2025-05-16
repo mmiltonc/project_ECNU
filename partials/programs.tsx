@@ -223,6 +223,7 @@ const styles = css`
     position: fixed;
     top: 0;
     display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     height: 100%;
@@ -707,12 +708,11 @@ const Programs = () => {
                 controlsList="nodownload noremoteplayback noplaybackrate"
                 className="video"
                 src={
-                  formData.plan === PlansTypes.VirtualGym || true
+                  formData.plan === PlansTypes.VirtualGym
                     ? require("../public/videos/intro_gym.mp4")
                     : require("../public/videos/intro_planificaciones.mp4")
                 }
               />
-              {/* <Steps step={stepForm} modal={modalPage} /> */}
               <form className="form">
                 {stepForm === 1 && (
                   <>
