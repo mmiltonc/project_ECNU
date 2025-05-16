@@ -11,22 +11,12 @@ gsap.registerPlugin(ScrollTrigger);
 interface CardProps {
   main: boolean;
   position: "left" | "right";
-  type: string;
   image?: string | StaticImageData;
   plan: PlansTypes;
   parent: React.RefObject<HTMLDivElement>;
 }
 
-const CardDesktop: FC<CardProps> = ({
-  main,
-  position,
-  image,
-  type,
-  setPlan,
-  setOpen,
-  parent,
-  plan,
-}) => {
+const CardDesktop: FC<CardProps> = ({ position, image, parent }) => {
   const cardRef = useRef(null);
   const isMobile = useMediaQuery("(max-width: 800px)");
 

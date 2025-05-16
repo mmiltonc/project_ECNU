@@ -460,7 +460,7 @@ const Programs = () => {
     const modal = document.querySelector(".modal-content");
     if (!modal) return;
 
-    const stopScrollPropagation = (e) => e.stopPropagation();
+    const stopScrollPropagation = (e: Event) => e.stopPropagation();
 
     modal.addEventListener("wheel", stopScrollPropagation, { passive: false });
     modal.addEventListener("touchmove", stopScrollPropagation, {
@@ -599,7 +599,6 @@ const Programs = () => {
             parent={cardContainerGymRef}
             main={virtualGymCards[0].main}
             position="left"
-            type={virtualGymCards[0].type}
             image={virtualGymCards[0].imagen}
             plan={virtualGymCards[0].plan}
           />
@@ -607,7 +606,6 @@ const Programs = () => {
             parent={cardContainerGymRef}
             main={virtualGymCards[1].main}
             position="right"
-            type={virtualGymCards[1].type}
             image={virtualGymCards[1].imagen}
             plan={virtualGymCards[1].plan}
           />
@@ -682,7 +680,6 @@ const Programs = () => {
             parent={cardContainerPlanificationRef}
             main={planificationCards[0].main}
             position="left"
-            type={planificationCards[0].type}
             image={planificationCards[0].imagen}
             plan={planificationCards[0].plan}
           />
@@ -690,7 +687,6 @@ const Programs = () => {
             parent={cardContainerPlanificationRef}
             main={planificationCards[1].main}
             position="right"
-            type={planificationCards[1].type}
             image={planificationCards[1].imagen}
             plan={planificationCards[1].plan}
           />
