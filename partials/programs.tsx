@@ -387,7 +387,10 @@ const styles = css`
 
               .payment-button {
                 width: 100%;
-                text-align: right;
+
+                ${desktop(css`
+                  text-align: right;
+                `)}
                 .paypal-button {
                   display: flex;
                   justify-content: center;
@@ -806,21 +809,25 @@ const Programs = () => {
 
           {modalPage === 1 && (
             <div className="step-1">
-              <video
-                autoPlay
-                controls={false}
-                disablePictureInPicture
-                controlsList="nodownload noremoteplayback noplaybackrate"
-                className="video"
-                onClick={(evt: any) => {
-                  evt.target?.paused ? evt.target?.play() : evt.target?.pause();
-                }}
-                src={
-                  formData.plan === PlansTypes.VirtualGym || true
-                    ? require("../public/videos/intro_gym.mp4")
-                    : require("../public/videos/intro_planificaciones.mp4")
-                }
-              />
+              {isOpen && (
+                <video
+                  autoPlay
+                  controls={false}
+                  disablePictureInPicture
+                  controlsList="nodownload noremoteplayback noplaybackrate nofullscreen"
+                  className="video"
+                  onClick={(evt: any) => {
+                    evt.target?.paused
+                      ? evt.target?.play()
+                      : evt.target?.pause();
+                  }}
+                  src={
+                    formData.plan === PlansTypes.VirtualGym
+                      ? require("../public/videos/intro_gym.mp4")
+                      : require("../public/videos/intro_planificaciones.mp4")
+                  }
+                />
+              )}
               <form className="form">
                 {stepForm === 1 && (
                   <>
@@ -1087,7 +1094,7 @@ const Programs = () => {
                   autoPlay
                   controls
                   disablePictureInPicture
-                  controlsList="nodownload noremoteplayback noplaybackrate"
+                  controlsList="nodownload noremoteplayback noplaybackrate nofullscreen"
                   className="rounded-md"
                   src={require("../public/videos/agradecimiento_pago.mp4")}
                 />
