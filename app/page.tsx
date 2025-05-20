@@ -1,7 +1,6 @@
 "use client";
 
 import Header from "@/components/shared/header";
-import { ModalProvider } from "@/app/context/modalContext";
 import Introduction from "@/partials/introduction";
 import Programs from "@/partials/programs";
 import Changes from "@/partials/changes";
@@ -14,7 +13,7 @@ import TopBar from "@/components/topBar";
 
 export default function Landing() {
   return (
-    <ModalProvider>
+    <>
       <TopBar />
       <Home />
       <Introduction />
@@ -24,6 +23,6 @@ export default function Landing() {
       <Motivation />
       <Faq />
       <Contact />
-    </ModalProvider>
+    </>
   );
 }

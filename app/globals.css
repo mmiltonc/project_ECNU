@@ -16,6 +16,10 @@ body {
   font-weight: 300;
   color: var(--white-color);
   background: var(--background-color);
+
+  &.modal-open {
+    overflow: hidden;
+  }
 }
 
 input:focus{

@@ -2,12 +2,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useEffect, useState, useRef } from "react";
-import { useModal } from "../app/context/modalContext";
+import { useModal } from "@/app/context/useModal";
 import {
   COUNTRIES,
   FormDataType,
   PHONE_CODES,
   PlansTypes,
+  PlanType,
 } from "@/app/types/formData";
 import { Steps } from "@/components/shared/steps";
 import AnimatedText from "@/components/shared/animatedText";
@@ -20,18 +21,22 @@ import MercadopagoComponent from "@/components/shared/marcadopago-component";
 import Modal from "@mui/material/Modal";
 import PayPalComponent from "@/components/shared/paypal-component";
 import Typography from "@mui/material/Typography";
+import plansData from "@/app/data/plans.json";
 import {
   desktop,
   fontSize1,
   fontSize2,
   fontSize3,
   fontSize4,
+  fontSize5,
   mobile,
   space,
   tablet,
 } from "@/styles/global";
 import { useLenis } from "lenis/react";
 import { Button, MenuItem, SelectProps, TextField } from "@mui/material";
+import classNames from "classnames";
+import CloseIcon from "@mui/icons-material/Close";
 export const dynamic = "force-static";
 
 const styles = css`
@@ -223,15 +228,21 @@ const styles = css`
   .modal {
     position: fixed;
     top: 0;
-    display: flex;
     display: none;
     justify-content: center;
     align-items: center;
     height: 100%;
     width: 100%;
+    background: #051422a0;
+    z-index: 1006;
+    backdrop-filter: blur(2px);
+
+    &.open {
+      display: flex;
+    }
 
     .modal-content {
-      max-width: 1000px;
+      max-width: 500px;
       height: 100%;
       width: 100%;
       background-color: var(--white-color);
@@ -241,45 +252,62 @@ const styles = css`
       overflow-y: auto;
       touch-action: auto;
       overscroll-behavior: contain;
+      position: relative;
 
       ${desktop(css`
-        padding: ${space(6)};
         border-radius: ${space(1)};
-        height: 700px;
-        width: 80%;
+        max-height: 862px;
+        height: 100%;
+        width: 90%;
       `)}
+
+      .modal-close-button {
+        display: block;
+        width: 24px;
+        height: 24px;
+        color: var(--white-color);
+        opacity: 0.5;
+        position: absolute;
+        right: ${space(2)};
+        top: ${space(2)};
+        cursor: pointer;
+        z-index: 1008;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
     }
 
     .step-1 {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: ${space(3)};
+      height: 100%;
 
-      ${desktop(css`
+      /* ${desktop(css`
         flex-direction: initial;
-      `)}
+      `)} */
 
       .video {
-        position: sticky;
-        top: 0;
-        border-radius: ${space(0.5)};
         width: 100%;
+        z-index: 1007;
+        cursor: pointer;
       }
 
       .form {
         display: flex;
         flex-direction: column;
-        gap: ${space(3)};
         width: 100%;
+        height: 100%;
         color: var(--background-color);
-        padding: 0 ${space(3)};
+        padding: ${space(3)} ${space(3)};
         font-family: var(--font-jost);
 
         .title {
           ${fontSize3};
           font-family: var(--font-jost);
           font-weight: 600;
+          margin-bottom: ${space(2)};
         }
 
         .fields {
@@ -311,6 +339,79 @@ const styles = css`
             display: flex;
             gap: ${space(1)};
             justify-content: flex-end;
+          }
+        }
+
+        .payment-form {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          .header {
+            .payment-details {
+              margin-bottom: ${space(2)};
+              .payment-details-partial {
+                padding: ${space(1)} 0;
+                display: flex;
+                justify-content: space-between;
+              }
+
+              span {
+                display: flex;
+                align-items: flex-start;
+                gap: ${space(0.5)};
+
+                small {
+                  padding-top: 2px;
+                  text-decoration: underline;
+                }
+              }
+            }
+
+            .payment-action {
+              margin-bottom: ${space(2)};
+              display: flex;
+              flex-direction: column;
+              gap: ${space(1)};
+
+              ${desktop(css`
+                flex-direction: initial;
+                justify-content: space-between;
+                align-items: center;
+              `)}
+
+              .payment-info {
+                width: 100%;
+                ${fontSize5};
+              }
+
+              .payment-button {
+                width: 100%;
+                text-align: right;
+                .paypal-button {
+                  display: flex;
+                  justify-content: center;
+                }
+                .mercadopago-button {
+                  height: 50px;
+                  background-color: #ffe700;
+                  border-radius: ${space(1)};
+
+                  img {
+                    height: 100%;
+                    object-fit: contain;
+                  }
+                }
+              }
+            }
+          }
+
+          .footer {
+            .payment-back {
+              .back-button {
+                display: inline-block;
+              }
+            }
           }
         }
       }
@@ -361,6 +462,7 @@ const Programs = () => {
   const [camposVisibles, setCamposVisibles] = useState(false);
   const [stepForm, setStepForm] = useState(1);
   const [modalPage, setModalPage] = useState(1);
+  const [planInfo, setPlanInfo] = useState({} as PlanType);
   const cardContainerGymRef = useRef(null);
   const cardContainerPlanificationRef = useRef(null);
 
@@ -414,7 +516,6 @@ const Programs = () => {
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setFormData(() => ({
       ...formData,
       [name]: value,
@@ -444,19 +545,36 @@ const Programs = () => {
   }, [openModal]);
 
   useEffect(() => {
-    // handleVirtualGymCTA();
-    // const modal = document.querySelector(".modal-content");
-    // if (!modal) return;
-    // const stopScrollPropagation = (e: Event) => e.stopPropagation();
-    // modal.addEventListener("wheel", stopScrollPropagation, { passive: false });
-    // modal.addEventListener("touchmove", stopScrollPropagation, {
-    //   passive: false,
-    // });
-    // return () => {
-    //   modal.removeEventListener("wheel", stopScrollPropagation);
-    //   modal.removeEventListener("touchmove", stopScrollPropagation);
-    // };
-  }, []);
+    const modal = document.querySelector(".modal-content");
+    const body = document.querySelector("body");
+    if (!modal) return;
+    const stopScrollPropagation = (e: Event) => e.stopPropagation();
+    if (isOpen) {
+      body?.classList.add("modal-open");
+      modal.addEventListener("wheel", stopScrollPropagation, {
+        passive: false,
+      });
+      modal.addEventListener("touchmove", stopScrollPropagation, {
+        passive: false,
+      });
+    } else {
+      body?.classList.remove("modal-open");
+      modal.removeEventListener("wheel", stopScrollPropagation);
+      modal.removeEventListener("touchmove", stopScrollPropagation);
+    }
+    return () => {
+      modal.removeEventListener("wheel", stopScrollPropagation);
+      modal.removeEventListener("touchmove", stopScrollPropagation);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    const info = plansData.plans.find(
+      (plan: any) => plan.sku === formData.plan
+    ) as PlanType;
+
+    setPlanInfo(info);
+  }, [formData.plan]);
 
   const textInputStyles = {
     "& .MuiInputBase-input": {
@@ -499,6 +617,7 @@ const Programs = () => {
     color: "var(--secondary-color)",
     fontFamily: "var(--font-jost)",
     "&:hover": {
+      borderColor: "var(--secondary-color)",
       // backgroundColor: "var(--secondary-color)",
     },
   };
@@ -681,18 +800,23 @@ const Programs = () => {
         </button>
       </article>
 
-      <div className="modal">
+      <div className={classNames(["modal", { open: isOpen }])}>
         <div className="modal-content">
+          <CloseIcon className="modal-close-button" onClick={handleClose} />
+
           {modalPage === 1 && (
             <div className="step-1">
               <video
                 autoPlay
-                controls
+                controls={false}
                 disablePictureInPicture
                 controlsList="nodownload noremoteplayback noplaybackrate"
                 className="video"
+                onClick={(evt: any) => {
+                  evt.target?.paused ? evt.target?.play() : evt.target?.pause();
+                }}
                 src={
-                  formData.plan === PlansTypes.VirtualGym
+                  formData.plan === PlansTypes.VirtualGym || true
                     ? require("../public/videos/intro_gym.mp4")
                     : require("../public/videos/intro_planificaciones.mp4")
                 }
@@ -855,37 +979,81 @@ const Programs = () => {
                   </>
                 )}
                 {stepForm === 2 && (
-                  <>
-                    <div className="">
-                      <CampaignIcon className="" />
-                      <span className="">
-                        {`
-                                                      Desarrollar tu mejor físico está a solo unos pasos más de distancia.
-                                                      Un gran hombre dijo una vez: "No cuentes los días, haz que los días cuenten".
-                                                      —Muhammad Alí. Recuerde que los resultados no se obtienen a menos que comiences,
-                                                      ¡Así que comencemos HOY!
-                                                    `}
-                      </span>
-                    </div>
-                    <div className="">
-                      <div className="">
-                        <span className="">Metodos de pago</span>
+                  <div className="payment-form">
+                    <div className="header">
+                      <p className="title">Pago</p>
+                      <div className="payment-details">
+                        <div className="payment-details-partial">
+                          <span>{planInfo.name}</span>
+                          {formData.pais === "ARG" && (
+                            <span>
+                              {Number(planInfo?.price.ars)} <small>00</small>{" "}
+                              ARS
+                            </span>
+                          )}
+                          {formData.pais !== "ARG" && (
+                            <span>
+                              {Number(planInfo?.price.usd)} <small>00</small>{" "}
+                              USD
+                            </span>
+                          )}
+                        </div>
+                        <hr />
+                        <div className="payment-details-partial">
+                          <strong>Total</strong>
+                          {formData.pais === "ARG" && (
+                            <span>
+                              {Number(planInfo?.price.ars)} <small>00</small>{" "}
+                              ARS
+                            </span>
+                          )}
+                          {formData.pais !== "ARG" && (
+                            <span>
+                              {Number(planInfo?.price.usd)} <small>00</small>{" "}
+                              USD
+                            </span>
+                          )}
+                        </div>
+                        {/* <span className="">
+                        Desarrollar tu mejor físico está a solo unos pasos más
+                        de distancia. Un gran hombre dijo una vez: "No cuentes
+                        los días, haz que los días cuenten". —Muhammad Alí.
+                        Recuerde que los resultados no se obtienen a menos que
+                        comiences, ¡Así que comencemos HOY!
+                      </span> */}
                       </div>
-                      <div className="">
-                        {formData.pais === "ARG" && (
-                          <MercadopagoComponent formData={formData} />
-                        )}
-                        {formData.pais !== "ARG" && (
-                          <PayPalComponent formData={formData} />
-                        )}
-                        <div className="">
-                          <button className="" onClick={() => setStepForm(1)}>
-                            Volver
-                          </button>
+                      <div className="payment-action">
+                        <div className="payment-info">
+                          <span className="">Opciones de pago en tu país:</span>
+                        </div>
+                        <div className="payment-button">
+                          {formData.pais !== "ARG" && (
+                            <PayPalComponent
+                              className="paypal-button"
+                              formData={formData}
+                            />
+                          )}
+                          {formData.pais === "ARG" && (
+                            <MercadopagoComponent
+                              className="mercadopago-button"
+                              formData={formData}
+                            />
+                          )}
                         </div>
                       </div>
                     </div>
-                  </>
+                    <div className="footer">
+                      <div className="payment-back"></div>
+                      <Button
+                        className="back-button"
+                        variant="outlined"
+                        onClick={() => setStepForm(1)}
+                        sx={cancelButtonStyles}
+                      >
+                        Volver
+                      </Button>
+                    </div>
+                  </div>
                 )}
               </form>
             </div>
@@ -922,7 +1090,7 @@ const Programs = () => {
                   controlsList="nodownload noremoteplayback noplaybackrate"
                   className="rounded-md"
                   src={require("../public/videos/agradecimiento_pago.mp4")}
-                ></video>
+                />
               </div>
               <Steps step={stepForm} modal={modalPage} />
               <div className="">

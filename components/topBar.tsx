@@ -12,7 +12,7 @@ const styles = css`
   position: fixed;
   width: 100%;
   top: 0;
-  z-index: 2000;
+  z-index: 1005;
   display: flex;
   justify-content: space-between;
   align-items: center;

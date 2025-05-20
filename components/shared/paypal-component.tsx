@@ -5,23 +5,24 @@ import {
   PayPalButtons,
   ReactPayPalScriptOptions,
 } from "@paypal/react-paypal-js";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 type Props = {
   formData: FormDataType;
+  className: string;
 };
 
 export default function PayPalComponent(props: Props) {
-  const router = useRouter()
-  const { formData } = props;
+  const router = useRouter();
+  const { formData, className } = props;
 
-  const options:ReactPayPalScriptOptions = {
+  const options: ReactPayPalScriptOptions = {
     clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "",
     currency: "USD",
     intent: "capture",
   };
 
-  const style:PayPalButtonStyle = {
+  const style: PayPalButtonStyle = {
     layout: "horizontal",
     color: "blue",
     shape: "rect",
@@ -42,7 +43,7 @@ export default function PayPalComponent(props: Props) {
     console.log("aprobado: ", data);
     const order = await actions.order.capture();
     console.log("order: ", order);
-    router.push('/?modal=1')
+    router.push("/?modal=1");
   };
 
   const onCancel = (data: any) => {
@@ -54,16 +55,15 @@ export default function PayPalComponent(props: Props) {
   };
 
   return (
-    <div className="flex w-40">
-      <PayPalScriptProvider options={options}>
-        <PayPalButtons
-          style={style}
-          createOrder={createOrder}
-          onApprove={onApprove}
-          onCancel={onCancel}
-          onError={onError}
-        />
-      </PayPalScriptProvider>
-    </div>
+    <PayPalScriptProvider options={options}>
+      <PayPalButtons
+        className={className}
+        style={style}
+        createOrder={createOrder}
+        onApprove={onApprove}
+        onCancel={onCancel}
+        onError={onError}
+      />
+    </PayPalScriptProvider>
   );
 }
