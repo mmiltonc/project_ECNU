@@ -50,7 +50,7 @@ const animateWithScroll = (steps: ScrollAnimation | ScrollAnimation[]) => {
 };
 
 const styles = css`
-  height: 2500svh;
+  height: 5000svh;
   /* height: 10svh; */
   top: 0;
 
@@ -251,7 +251,7 @@ const questionText = (el: HTMLElement) =>
     el,
     states: [{}, { opacity: 1 }],
     trigger: el,
-    range: [0, 0],
+    range: [0, 3],
   });
 
 const questionMark1 = (el: HTMLElement) =>
@@ -311,7 +311,7 @@ const text2 = (el: HTMLElement) =>
       { opacity: 1, filter: "blur(0px)", x: "-100%", left: "-100%" },
     ],
     trigger: ".section-about .text-1",
-    range: [9, 49],
+    range: [14, 49],
     ease: "none",
   });
 
