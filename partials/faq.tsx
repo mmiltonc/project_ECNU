@@ -16,68 +16,70 @@ import classNames from "classnames";
 import { useState } from "react";
 
 const styles = css`
-  padding: ${space(6)} ${space(3)};
-  background-color: var(--white-color);
   color: var(--background-color);
-
-  ${desktop(css`
-    padding: ${space(10)};
-  `)}
-
-  .title {
-    ${fontSize2};
-    font-family: var(--font-jost);
-    font-weight: 900;
-    text-transform: uppercase;
-    margin-bottom: ${space(3)};
+  background-color: var(--white-color);
+  .faq-container {
+    padding: ${space(6)} ${space(3)};
 
     ${desktop(css`
-      ${fontSize1};
-      margin-bottom: ${space(6)};
+      padding: ${space(20)} ${space(10)} ${space(10)};
     `)}
-  }
 
-  .filters {
-    display: flex;
-    gap: ${space(0.5)};
-    margin-bottom: ${space(2)};
-
-    .filter-button {
-      ${fontSize6};
+    .title {
+      ${fontSize2};
+      font-family: var(--font-jost);
+      font-weight: 900;
       text-transform: uppercase;
-      color: var(--secondary-color);
-      border: 1px solid var(--secondary-color);
-      padding: ${space(0.5)} ${space(1)};
-      border-radius: ${space(3)};
+      margin-bottom: ${space(3)};
 
       ${desktop(css`
-        ${fontSize5};
+        ${fontSize1};
+        margin-bottom: ${space(6)};
       `)}
+    }
 
-      &.active {
-        font-weight: 600;
-        color: var(--background-color);
-        border-color: var(--background-color);
+    .filters {
+      display: flex;
+      gap: ${space(0.5)};
+      margin-bottom: ${space(2)};
+
+      .filter-button {
+        ${fontSize6};
+        text-transform: uppercase;
+        color: var(--secondary-color);
+        border: 1px solid var(--secondary-color);
+        padding: ${space(0.5)} ${space(1)};
+        border-radius: ${space(3)};
+
+        ${desktop(css`
+          ${fontSize5};
+        `)}
+
+        &.active {
+          font-weight: 600;
+          color: var(--background-color);
+          border-color: var(--background-color);
+        }
       }
     }
-  }
 
-  .faq-list {
-    display: flex;
-    flex-direction: column;
-    gap: ${space(6)};
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: ${space(6)};
 
-    .faq-item {
-      .question {
-        ${fontSize4};
-        font-weight: 600;
-        font-family: var(--font-owsald);
-        margin-bottom: ${space(1)};
-      }
+      .faq-item {
+        .question {
+          ${fontSize4};
+          font-weight: 600;
+          font-family: var(--font-owsald);
+          margin-bottom: ${space(1)};
+        }
 
-      .answer {
-        ${fontSize4};
-        font-family: var(--font-owsald);
+        .answer {
+          ${fontSize4};
+          font-family: var(--font-owsald);
+        }
       }
     }
   }
@@ -112,15 +114,17 @@ const Faq = () => {
   );
   return (
     <section css={styles} className="faq" id="preguntas-frecuentes">
-      <h2 className="title">Preguntas Frecuentes</h2>
-      <div className="filters">{categories.map(buildFilterButtons)}</div>
-      <div className="faq-list">
-        {faq.filter(filterQuestionsByCategory).map((data) => (
-          <article className="faq-item" key={data.id}>
-            <h3 className="question">{data.question}</h3>
-            <p className="answer">{data.answer}</p>
-          </article>
-        ))}
+      <div className="faq-container">
+        <h2 className="title">Preguntas Frecuentes</h2>
+        <div className="filters">{categories.map(buildFilterButtons)}</div>
+        <div className="faq-list">
+          {faq.filter(filterQuestionsByCategory).map((data) => (
+            <article className="faq-item" key={data.id}>
+              <h3 className="question">{data.question}</h3>
+              <p className="answer">{data.answer}</p>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
