@@ -43,7 +43,7 @@ export default function PayPalComponent(props: Props) {
     console.log("aprobado: ", data);
     const order = await actions.order.capture();
     console.log("order: ", order);
-    router.push("/?modal=1");
+    router.push("/?modal=purchaseSuccess");
   };
 
   const onCancel = (data: any) => {
@@ -51,6 +51,7 @@ export default function PayPalComponent(props: Props) {
   };
 
   const onError = (data: any) => {
+    router.push("/?modal=purchaseFailed");
     console.log("error: ", data);
   };
 
