@@ -11,11 +11,9 @@ export const useModal = (): ModalType => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => {
-    console.log("opening");
     setIsOpen(true);
   };
   const closeModal = () => {
-    console.log("closing");
     setIsOpen(false);
   };
 

@@ -184,6 +184,7 @@ const Contact = () => {
   const whatsappText = encodeURI(
     "Hola Lucas, estuve viendo el sitio y tengo algunas dudas. ¿Podés ayudarme?"
   );
+
   return (
     <footer css={styles} className="contact" id="contacto">
       <div className="footer-top">

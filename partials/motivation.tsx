@@ -9,13 +9,52 @@ import { space, desktop, fontSize1, fontSize2 } from "@/styles/global";
 
 gsap.registerPlugin(ScrollTrigger);
 
+type ScrollAnimation = {
+  el: HTMLElement;
+  states: [gsap.TweenVars, gsap.TweenVars]; // [from, to]
+  trigger: string | HTMLElement;
+  range: [number, number]; // [start, end]
+  scrub?: boolean;
+  ease?: string;
+  proportional?: number;
+};
+
+const animateWithScroll = (steps: ScrollAnimation | ScrollAnimation[]) => {
+  const list = Array.isArray(steps) ? steps : [steps];
+
+  list.forEach(
+    ({
+      el,
+      states,
+      trigger,
+      range,
+      scrub = true,
+      ease,
+      proportional = 0.9,
+    }) => {
+      const [from, to] = states;
+      const [start, end] = range;
+
+      gsap.fromTo(el, from, {
+        ...to,
+        scrollTrigger: {
+          trigger,
+          start: `bottom+=${vhOffset(start, proportional)} bottom`,
+          end: `bottom+=${vhOffset(end, proportional)} bottom`,
+          scrub,
+          ...(ease ? { ease } : {}),
+        },
+      });
+    }
+  );
+};
+
 const styles = css`
-  height: 2500vh;
+  height: 5000svh;
+  /* height: 10svh; */
   top: 0;
 
-  ${desktop(css`
-    height: 2000vh;
-  `)}
+  /* ${desktop(css``)} */
 
   i {
     font-style: normal;
@@ -28,7 +67,7 @@ const styles = css`
   }
 
   .slide {
-    height: 100vh;
+    height: 100svh;
     position: sticky;
     /* padding: 160px 80px; */
     top: 0;
@@ -41,7 +80,7 @@ const styles = css`
       top: 0;
       position: absolute;
       width: 100%;
-      height: 100vh;
+      height: 100svh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -63,12 +102,12 @@ const styles = css`
       display: block;
       background-image: url(images/motivation.jpg);
       background-repeat: no-repeat;
-      background-size: auto 100vh;
+      background-size: auto 100svh;
       mix-blend-mode: luminosity;
       opacity: 0.3;
       top: 0;
       left: 0;
-      height: 100vh;
+      height: 100svh;
       width: 100vw;
       position: sticky;
     }
@@ -117,7 +156,7 @@ const styles = css`
       position: absolute;
       top: 0;
       left: 0;
-      height: 100vh;
+      height: 100svh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -129,7 +168,7 @@ const styles = css`
       position: absolute;
       top: 0;
       left: 0;
-      height: 100vh;
+      height: 100svh;
     }
 
     p {
@@ -190,447 +229,266 @@ const styles = css`
     }
   }
 `;
-
-const background = (el: HTMLElement) => {
-  gsap.fromTo(
-    el,
-    { backgroundPosition: "100% 0%" },
-    {
-      backgroundPosition: "0% 0%",
-      scrollTrigger: {
-        trigger: ".section-about",
-        start: "top bottom",
-        end: "bottom+=25000px bottom",
-        scrub: true,
-      },
-    }
-  );
+const vhOffset = (percentage: number, proportional = 1) => {
+  const section = document.querySelector("#motivacion") as HTMLElement;
+  return section.offsetHeight * (percentage / 100) * proportional;
 };
 
-const questionText = (el: HTMLElement) => {
-  gsap.fromTo(
+const background = (el: HTMLElement) =>
+  animateWithScroll({
     el,
-    {},
-    {
-      opacity: 1,
-      scrollTrigger: {
-        trigger: el,
-        start: "top bottom",
-        end: "top",
-        scrub: true,
-      },
-    }
-  );
-};
+    states: [
+      { backgroundPosition: "100% 0%" },
+      { backgroundPosition: "3% 0%" },
+    ],
+    trigger: ".section-about",
+    range: [0, 100],
+    proportional: 1,
+  });
 
-const questionMark1 = (el: HTMLElement) => {
-  gsap.fromTo(
+const questionText = (el: HTMLElement) =>
+  animateWithScroll({
     el,
-    { opacity: 0, x: -20 },
-    {
-      opacity: 1,
-      x: 0,
-      scrollTrigger: {
-        trigger: ".section-about .question-text",
-        start: "bottom+=500px bottom",
-        end: "bottom+=800px bottom",
-        scrub: true,
-      },
-    }
-  );
-};
+    states: [{}, { opacity: 1 }],
+    trigger: el,
+    range: [0, 3],
+  });
 
-const questionMark2 = (el: HTMLElement) => {
-  gsap.fromTo(
+const questionMark1 = (el: HTMLElement) =>
+  animateWithScroll({
     el,
-    { opacity: 0, x: 20 },
-    {
-      opacity: 1,
-      x: 0,
-      scrollTrigger: {
-        trigger: ".section-about .question-text",
-        start: "bottom+=500px bottom",
-        end: "bottom+=800px bottom",
-        scrub: true,
-      },
-    }
-  );
-};
+    states: [
+      { opacity: 0, x: -20 },
+      { opacity: 1, x: 0 },
+    ],
+    trigger: ".section-about .question-text",
+    range: [3, 4],
+  });
 
-const question = (el: HTMLElement) => {
-  gsap.fromTo(
+const questionMark2 = (el: HTMLElement) =>
+  animateWithScroll({
     el,
-    {},
-    {
-      filter: "blur(10px)",
-      opacity: 0,
-      transform: "scale(3)",
-      scrollTrigger: {
-        trigger: ".section-about .question-text",
-        start: "bottom+=1500px bottom",
-        end: "bottom+=1900px bottom",
-        scrub: true,
-      },
-    }
-  );
-};
+    states: [
+      { opacity: 0, x: 20 },
+      { opacity: 1, x: 0 },
+    ],
+    trigger: ".section-about .question-text",
+    range: [3, 4],
+  });
 
-const text1 = (el: HTMLElement) => {
-  gsap.fromTo(
+const question = (el: HTMLElement) =>
+  animateWithScroll({
     el,
-    { opacity: 0, y: 20, filter: "blur(4px)" },
-    {
-      opacity: 1,
-      filter: "blur(0px)",
-      y: 0,
-      scrollTrigger: {
-        trigger: ".section-about .question-text",
-        start: "bottom+=1700px bottom",
-        end: "bottom+=2100px bottom",
-        scrub: true,
-      },
-    }
-  );
+    states: [{}, { filter: "blur(10px)", opacity: 0, transform: "scale(3)" }],
+    trigger: ".section-about .question-text",
+    range: [8, 12],
+  });
 
-  gsap.fromTo(
-    el,
-    {},
+const text1 = (el: HTMLElement) =>
+  animateWithScroll([
     {
-      opacity: 0,
-      scale: 0.5,
-      scrollTrigger: {
-        trigger: ".section-about .question-text",
-        start: "bottom+=2700px bottom",
-        end: "bottom+=3600px bottom",
-        scrub: true,
-      },
-    }
-  );
-};
+      el,
+      states: [
+        { opacity: 0, y: 20, filter: "blur(4px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)" },
+      ],
+      trigger: ".section-about .question-text",
+      range: [9, 12],
+    },
+    {
+      el,
+      states: [{}, { opacity: 0, scale: 0.5 }],
+      trigger: ".section-about .question-text",
+      range: [15, 20],
+    },
+  ]);
 
-const text2 = (el: HTMLElement) => {
-  gsap.fromTo(
+const text2 = (el: HTMLElement) =>
+  animateWithScroll({
     el,
-    {},
-    {
-      opacity: 1,
-      filter: "blur(0px)",
-      x: "-100%",
-      left: "-100%",
-      scrollTrigger: {
-        trigger: ".section-about .text-1",
-        start: "bottom+=1700px bottom",
-        end: "bottom+=8900px bottom",
-        ease: "none",
-        scrub: true,
-      },
-    }
-  );
-};
+    states: [
+      {},
+      { opacity: 1, filter: "blur(0px)", x: "-100%", left: "-100%" },
+    ],
+    trigger: ".section-about .text-1",
+    range: [14, 49],
+    ease: "none",
+  });
 
-const text3 = (el: HTMLElement) => {
-  gsap.fromTo(
-    el,
-    { opacity: 0, y: 20, filter: "blur(4px)" },
+const text3 = (el: HTMLElement) =>
+  animateWithScroll([
     {
-      opacity: 1,
-      filter: "blur(0px)",
-      y: 0,
-      scrollTrigger: {
-        trigger: ".section-about .text-2",
-        start: "bottom+=6900px bottom",
-        end: "bottom+=7300px bottom",
-        scrub: true,
-      },
-    }
-  );
+      el,
+      states: [
+        { opacity: 0, y: 20, filter: "blur(4px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)" },
+      ],
+      trigger: ".section-about .text-2",
+      range: [38, 41],
+    },
+    {
+      el,
+      states: [{}, { opacity: 0, scale: 0.5 }],
+      trigger: ".section-about .text-2",
+      range: [44, 49],
+    },
+  ]);
 
-  gsap.fromTo(
-    el,
-    {},
+const text4 = (el: HTMLElement) =>
+  animateWithScroll([
     {
-      opacity: 0,
-      scale: 0.5,
-      scrollTrigger: {
-        trigger: ".section-about .text-2",
-        start: "bottom+=7900px bottom",
-        end: "bottom+=8800px bottom",
-        scrub: true,
-      },
-    }
-  );
-};
+      el,
+      states: [
+        { opacity: 0, y: 20, filter: "blur(4px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)" },
+      ],
+      trigger: ".section-about .text-3",
+      range: [44, 46],
+    },
+    {
+      el,
+      states: [{}, { opacity: 0, scale: 0.5 }],
+      trigger: ".section-about .text-3",
+      range: [49, 54],
+    },
+  ]);
 
-const text4 = (el: HTMLElement) => {
-  gsap.fromTo(
-    el,
-    { opacity: 0, y: 20, filter: "blur(4px)" },
+const text5 = (el: HTMLElement) =>
+  animateWithScroll([
     {
-      opacity: 1,
-      filter: "blur(0px)",
-      y: 0,
-      scrollTrigger: {
-        trigger: ".section-about .text-3",
-        start: "bottom+=7900px bottom",
-        end: "bottom+=8300px bottom",
-        scrub: true,
-      },
-    }
-  );
+      el,
+      states: [
+        { opacity: 0, y: 20, filter: "blur(4px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)" },
+      ],
+      trigger: ".section-about .text-4",
+      range: [49, 52],
+    },
+    {
+      el,
+      states: [{}, { opacity: 0, scale: 0.5 }],
+      trigger: ".section-about .text-4",
+      range: [55, 60],
+    },
+  ]);
 
-  gsap.fromTo(
-    el,
-    {},
+const text6 = (el: HTMLElement) =>
+  animateWithScroll([
     {
-      opacity: 0,
-      scale: 0.5,
-      scrollTrigger: {
-        trigger: ".section-about .text-3",
-        start: "bottom+=8900px bottom",
-        end: "bottom+=9800px bottom",
-        scrub: true,
-      },
-    }
-  );
-};
+      el,
+      states: [
+        { opacity: 0, y: 20, filter: "blur(4px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)" },
+      ],
+      trigger: ".section-about .text-5",
+      range: [55, 57],
+    },
+    {
+      el,
+      states: [{}, { opacity: 0, scale: 0.5 }],
+      trigger: ".section-about .text-5",
+      range: [61, 66],
+    },
+  ]);
 
-const text5 = (el: HTMLElement) => {
-  gsap.fromTo(
-    el,
-    { opacity: 0, y: 20, filter: "blur(4px)" },
+const text7 = (el: HTMLElement) =>
+  animateWithScroll([
     {
-      opacity: 1,
-      filter: "blur(0px)",
-      y: 0,
-      scrollTrigger: {
-        trigger: ".section-about .text-4",
-        start: "bottom+=8900px bottom",
-        end: "bottom+=9300px bottom",
-        scrub: true,
-      },
-    }
-  );
+      el,
+      states: [
+        { opacity: 0, y: 20, filter: "blur(4px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)" },
+      ],
+      trigger: ".section-about .text-6",
+      range: [61, 63],
+    },
+    {
+      el,
+      states: [{}, { opacity: 0, scale: 0.5 }],
+      trigger: ".section-about .text-6",
+      range: [66, 71],
+    },
+  ]);
 
-  gsap.fromTo(
+const text8FromTop = (el: HTMLElement) =>
+  animateWithScroll({
     el,
-    {},
-    {
-      opacity: 0,
-      scale: 0.5,
-      scrollTrigger: {
-        trigger: ".section-about .text-4",
-        start: "bottom+=9900px bottom",
-        end: "bottom+=10800px bottom",
-        scrub: true,
-      },
-    }
-  );
-};
+    states: [
+      { opacity: 0, y: -100, filter: "blur(4px)" },
+      { opacity: 1, y: 0, filter: "blur(0px)" },
+    ],
+    trigger: ".section-about .text-7",
+    range: [66, 68],
+  });
 
-const text6 = (el: HTMLElement) => {
-  gsap.fromTo(
+const text8FromBottom = (el: HTMLElement) =>
+  animateWithScroll({
     el,
-    { opacity: 0, y: 20, filter: "blur(4px)" },
-    {
-      opacity: 1,
-      filter: "blur(0px)",
-      y: 0,
-      scrollTrigger: {
-        trigger: ".section-about .text-5",
-        start: "bottom+=9900px bottom",
-        end: "bottom+=10300px bottom",
-        scrub: true,
-      },
-    }
-  );
+    states: [
+      { opacity: 0, y: 100, filter: "blur(4px)" },
+      { opacity: 1, y: 0, filter: "blur(0px)" },
+    ],
+    trigger: ".section-about .text-7",
+    range: [66, 68],
+  });
 
-  gsap.fromTo(
+const text8 = (el: HTMLElement) =>
+  animateWithScroll({
     el,
-    {},
-    {
-      opacity: 0,
-      scale: 0.5,
-      scrollTrigger: {
-        trigger: ".section-about .text-5",
-        start: "bottom+=10900px bottom",
-        end: "bottom+=11800px bottom",
-        scrub: true,
-      },
-    }
-  );
-};
+    states: [{}, { opacity: 0, scale: 0.5 }],
+    trigger: ".section-about .text-7",
+    range: [72, 77],
+  });
 
-const text7 = (el: HTMLElement) => {
-  gsap.fromTo(
+const text9FromLeft = (el: HTMLElement) =>
+  animateWithScroll({
     el,
-    { opacity: 0, y: 20, filter: "blur(4px)" },
-    {
-      opacity: 1,
-      filter: "blur(0px)",
-      y: 0,
-      scrollTrigger: {
-        trigger: ".section-about .text-6",
-        start: "bottom+=10900px bottom",
-        end: "bottom+=11300px bottom",
-        scrub: true,
-      },
-    }
-  );
+    states: [
+      { opacity: 0, x: "-100%", filter: "blur(4px)" },
+      { opacity: 1, x: 0, filter: "blur(0px)" },
+    ],
+    trigger: ".section-about .text-8",
+    range: [72, 77],
+  });
 
-  gsap.fromTo(
+const text9FromRight = (el: HTMLElement) =>
+  animateWithScroll({
     el,
-    {},
-    {
-      opacity: 0,
-      scale: 0.5,
-      scrollTrigger: {
-        trigger: ".section-about .text-6",
-        start: "bottom+=11900px bottom",
-        end: "bottom+=12800px bottom",
-        scrub: true,
-      },
-    }
-  );
-};
+    states: [
+      { opacity: 0, x: "100%", filter: "blur(4px)" },
+      { opacity: 1, x: 0, filter: "blur(0px)" },
+    ],
+    trigger: ".section-about .text-8",
+    range: [72, 77],
+  });
 
-const text8FromTop = (el: HTMLElement) => {
-  gsap.fromTo(
+const text9 = (el: HTMLElement) =>
+  animateWithScroll({
     el,
-    { opacity: 0, y: -100, filter: "blur(4px)" },
-    {
-      opacity: 1,
-      filter: "blur(0px)",
-      y: 0,
-      scrollTrigger: {
-        trigger: ".section-about .text-7",
-        start: "bottom+=11900px bottom",
-        end: "bottom+=12300px bottom",
-        scrub: true,
-      },
-    }
-  );
-};
+    states: [{}, { opacity: 0, scale: 5, x: 0 }],
+    trigger: ".section-about .text-8",
+    range: [83, 86],
+  });
 
-const text8FromBottom = (el: HTMLElement) => {
-  gsap.fromTo(
-    el,
-    { opacity: 0, y: 100, filter: "blur(4px)" },
+const text10ZoomOut = (el: HTMLElement) =>
+  animateWithScroll([
     {
-      opacity: 1,
-      filter: "blur(0px)",
-      y: 0,
-      scrollTrigger: {
-        trigger: ".section-about .text-7",
-        start: "bottom+=11900px bottom",
-        end: "bottom+=12300px bottom",
-        scrub: true,
-      },
-    }
-  );
-};
-
-const text8 = (el: HTMLElement) => {
-  gsap.fromTo(
-    el,
-    {},
+      el,
+      states: [
+        { scale: 5, opacity: 0 },
+        { opacity: 1, scale: 1 },
+      ],
+      trigger: ".section-about .text-9",
+      range: [83, 86],
+    },
     {
-      opacity: 0,
-      scale: 0.5,
-      scrollTrigger: {
-        trigger: ".section-about .text-7",
-        start: "bottom+=12900px bottom",
-        end: "bottom+=13800px bottom",
-        scrub: true,
-      },
-    }
-  );
-};
-
-const text9FromLeft = (el: HTMLElement) => {
-  gsap.fromTo(
-    el,
-    { opacity: 0, x: "-100%", filter: "blur(4px)" },
-    {
-      opacity: 1,
-      filter: "blur(0px)",
-      x: 0,
-      scrollTrigger: {
-        trigger: ".section-about .text-8",
-        start: "bottom+=12900px bottom",
-        end: "bottom+=13900px bottom",
-        scrub: true,
-      },
-    }
-  );
-};
-
-const text9FromRight = (el: HTMLElement) => {
-  gsap.fromTo(
-    el,
-    { opacity: 0, x: "100%", filter: "blur(4px)" },
-    {
-      opacity: 1,
-      filter: "blur(0px)",
-      x: 0,
-      scrollTrigger: {
-        trigger: ".section-about .text-8",
-        start: "bottom+=12900px bottom",
-        end: "bottom+=13900px bottom",
-        scrub: true,
-      },
-    }
-  );
-};
-
-const text9 = (el: HTMLElement) => {
-  gsap.fromTo(
-    el,
-    {},
-    {
-      opacity: 0,
-      scale: 5,
-      x: 0,
-      scrollTrigger: {
-        trigger: ".section-about .text-8",
-        start: "bottom+=14900px bottom",
-        end: "bottom+=15500px bottom",
-        scrub: true,
-      },
-    }
-  );
-};
-
-const text10ZoomOut = (el: HTMLElement) => {
-  gsap.fromTo(
-    el,
-    { scale: 5, opacity: 0 },
-    {
-      opacity: 1,
-      scale: 1,
-      scrollTrigger: {
-        trigger: ".section-about .text-9",
-        start: "bottom+=14900px bottom",
-        end: "bottom+=15500px bottom",
-        scrub: true,
-      },
-    }
-  );
-
-  gsap.fromTo(
-    el,
-    {},
-    {
-      opacity: 0,
-      scrollTrigger: {
-        trigger: ".section-about .text-9",
-        start: "bottom+=16500px bottom",
-        end: "bottom+=18000px bottom",
-        scrub: true,
-        ease: "power2.out",
-      },
-    }
-  );
-};
+      el,
+      states: [{}, { opacity: 0 }],
+      trigger: ".section-about .text-9",
+      range: [91, 100],
+      ease: "power2.out",
+    },
+  ]);
 
 const Motivation = () => {
   const lenisRef = useRef<LenisRef | null>(null);
