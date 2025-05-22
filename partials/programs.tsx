@@ -38,6 +38,7 @@ import { Button, MenuItem, SelectProps, TextField } from "@mui/material";
 import classNames from "classnames";
 import CloseIcon from "@mui/icons-material/Close";
 export const dynamic = "force-static";
+import Joi from 'joi';
 
 const styles = css`
   width: 100%;
@@ -468,6 +469,55 @@ const Programs = () => {
   const [planInfo, setPlanInfo] = useState({} as PlanType);
   const cardContainerGymRef = useRef(null);
   const cardContainerPlanificationRef = useRef(null);
+  const [formData, setFormData] = useState<FormDataType>({
+    plan: "",
+    nombre: "",
+    pais: "",
+    ciudad: "",
+    emailLocalPart: "",
+    celular: "",
+    objetivos: "",
+  });
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+
+  const formSchema = Joi.object({
+    plan: Joi.string().required().messages({
+      'string.empty': 'El plan es obligatorio.'
+    }),
+    nombre: Joi.string().min(3).required().messages({
+      'string.empty': 'El nombre es obligatorio.',
+      'string.min': 'El nombre debe tener al menos 3 caracteres.'
+    }),
+    pais: Joi.string().min(3).required().messages({
+      'string.empty': 'El país es obligatorio.',
+      'string.min': 'El país debe tener al menos 3 caracteres.'
+    }),
+    ciudad: Joi.string().min(3).required().messages({
+      'string.empty': 'La ciudad es obligatoria.',
+      'string.min': 'La ciudad debe tener al menos 3 caracteres.'
+    }),
+    emailLocalPart: Joi.string()
+      .email({ tlds: { allow: false } })
+      .required()
+      .messages({
+        'string.empty': 'El email es obligatorio.',
+        'string.email': 'El email no es válido.'
+      }),
+    celular: Joi.string()
+      .pattern(/^\d+$/)
+      .min(6)
+      .required()
+      .messages({
+        'string.empty': 'El celular es obligatorio.',
+        'string.pattern.base': 'El celular solo debe contener números.',
+        'string.min': 'El celular debe tener al menos 6 dígitos.'
+      }),
+    objetivos: Joi.string().min(10).required().messages({
+      'string.empty': 'Los objetivos son obligatorios.',
+      'string.min': 'Los objetivos deben tener al menos 10 caracteres.'
+    })
+  });
 
   useEffect(() => {
     if (!lenis) return;
@@ -478,52 +528,6 @@ const Programs = () => {
       lenis.start(); // Reactiva el scroll
     }
   }, [isOpen, lenis]);
-
-  const handleVirtualGymCTA = () => {
-    setFormData({ ...formData, plan: virtualGymCards[0].plan });
-    openModal();
-    lenis?.stop();
-  };
-
-  const handleOnlinePlanificationCTA = () => {
-    setFormData({ ...formData, plan: planificationCards[0].plan });
-    openModal();
-    lenis?.stop();
-  };
-
-  const [formData, setFormData] = useState<FormDataType>({
-    plan: "",
-    nombre: "",
-    pais: "",
-    ciudad: "",
-    emailLocalPart: "",
-    celular: "",
-    objetivos: "",
-  });
-
-  const handleClose = () => {
-    setCamposVisibles(false);
-    setFormData({
-      plan: "",
-      nombre: "",
-      pais: "",
-      ciudad: "",
-      emailLocalPart: "",
-      celular: "",
-      objetivos: "",
-    });
-    closeModal();
-    setModalPage(1);
-    setStepForm(1);
-  };
-
-  const handleInputChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData(() => ({
-      ...formData,
-      [name]: value,
-    }));
-  };
 
   useEffect(() => {
     if (formData.nombre?.trim() && formData.pais?.trim()) {
@@ -578,6 +582,60 @@ const Programs = () => {
 
     setPlanInfo(info);
   }, [formData.plan]);
+
+  const handleVirtualGymCTA = () => {
+    setFormData({ ...formData, plan: virtualGymCards[0].plan });
+    openModal();
+    lenis?.stop();
+  };
+
+  const handleOnlinePlanificationCTA = () => {
+    setFormData({ ...formData, plan: planificationCards[0].plan });
+    openModal();
+    lenis?.stop();
+  };
+
+  const handleClose = () => {
+    setCamposVisibles(false);
+    setFormData({
+      plan: "",
+      nombre: "",
+      pais: "",
+      ciudad: "",
+      emailLocalPart: "",
+      celular: "",
+      objetivos: "",
+    });
+    closeModal();
+    setModalPage(1);
+    setStepForm(1);
+  };
+
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData(() => ({
+      ...formData,
+      [name]: value,
+    }));
+  };
+
+  const handleFormValidation = () => {
+    const { error, value } = formSchema.validate(formData, { abortEarly: false });
+
+    if (error) {
+      const errores: Record<string, string> = {};
+      error.details.forEach(err => {
+        if (err.context?.key) {
+          errores[err.context.key] = err.message;
+        }
+      });
+      setFormErrors(errores); // Guardamos los errores
+    } else {
+      setFormErrors({}); // Limpiamos errores si pasa la validación
+      console.log('Datos validados:', value);
+      setStepForm(2);
+    }
+  }
 
   const textInputStyles = {
     "& .MuiInputBase-input": {
@@ -849,6 +907,7 @@ const Programs = () => {
                           sx={textInputStyles}
                           required
                         />
+                        {formErrors.nombre && <p style={{ color: 'red' }}>{formErrors.nombre}</p>}
                       </div>
                       <div className="field">
                         <label className="" htmlFor="pais">
@@ -877,6 +936,7 @@ const Programs = () => {
                             </MenuItem>
                           ))}
                         </TextField>
+                        {formErrors.pais && <p style={{ color: 'red' }}>{formErrors.pais}</p>}
                       </div>
                       {camposVisibles && (
                         <>
@@ -894,6 +954,7 @@ const Programs = () => {
                               sx={textInputStyles}
                               required
                             />
+                            {formErrors.ciudad && <p style={{ color: 'red' }}>{formErrors.ciudad}</p>}
                           </div>
                           <div className="field">
                             <label className="" htmlFor="emailLocalPart">
@@ -918,6 +979,7 @@ const Programs = () => {
                                 },
                               }}
                             />
+                            {formErrors.emailLocalPart && <p style={{ color: 'red' }}>{formErrors.emailLocalPart}</p>}
                           </div>
                           <div className="field">
                             <label className="" htmlFor="celular">
@@ -946,6 +1008,7 @@ const Programs = () => {
                                 },
                               }}
                             />
+                            {formErrors.celular && <p style={{ color: 'red' }}>{formErrors.celular}</p>}
                           </div>
                           <div className="field">
                             <label className="" htmlFor="objetivos">
@@ -963,6 +1026,7 @@ const Programs = () => {
                               maxRows={4}
                               required
                             />
+                            {formErrors.objetivos && <p style={{ color: 'red' }}>{formErrors.objetivos}</p>}
                           </div>
                           <div className="submit">
                             <Button
@@ -974,7 +1038,7 @@ const Programs = () => {
                             </Button>
                             <Button
                               variant="contained"
-                              onClick={() => setStepForm(2)}
+                              onClick={handleFormValidation}
                               sx={nextButtonStyles}
                             >
                               Siguiente
