@@ -166,19 +166,15 @@ const Home = () => {
           </span>
         </h2>
         <div className="cta-box">
-          <button
-            className="cta-button transition-transform duration-300 hover:scale-110"
+          <a
+            href="#gym-virtual"
             onClick={() =>
               sendGTMEvent({ event: "buttonClicked", value: "xyz" })
             }
+            className="cta-button"
           >
-            <a
-              href="#gym-virtual"
-              className="transition ease-in-out duration-350"
-            >
-              Quiero mi transformación
-            </a>
-          </button>
+            Quiero mi transformación
+          </a>
         </div>
       </div>
     </section>

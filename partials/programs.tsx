@@ -52,7 +52,7 @@ const styles = css`
   }
 
   .article-program {
-    padding: ${space(6)} ${space(3)};
+    padding: ${space(3)} ${space(3)};
 
     ${desktop(css`
       padding: ${space(20)} ${space(10)} 0;
@@ -234,7 +234,7 @@ const styles = css`
     height: 100%;
     width: 100%;
     background: #051422a0;
-    z-index: 1006;
+    z-index: 1012;
     backdrop-filter: blur(2px);
 
     &.open {

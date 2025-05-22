@@ -18,8 +18,9 @@ import { useState } from "react";
 const styles = css`
   color: var(--background-color);
   background-color: var(--white-color);
+
   .faq-container {
-    padding: ${space(6)} ${space(3)};
+    padding: ${space(3)} ${space(3)};
 
     ${desktop(css`
       padding: ${space(20)} ${space(10)} ${space(10)};

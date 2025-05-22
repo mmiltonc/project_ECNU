@@ -19,11 +19,6 @@ const styles = css`
     margin-top: 160px;
   `)}
 
-  .anchor {
-    position: absolute;
-    top: -130px;
-  }
-
   &:after,
   &:before {
     animation-duration: 10s;
@@ -89,7 +84,7 @@ const styles = css`
 
   .about-card {
     position: relative;
-    padding: ${space(6)} ${space(3)};
+    padding: ${space(3)} ${space(3)};
 
     background: linear-gradient(
       to right,
