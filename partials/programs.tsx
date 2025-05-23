@@ -244,6 +244,8 @@ const styles = css`
       max-width: 500px;
       width: 100%;
       height: 100%;
+      display: flex;
+      align-items: center;
 
       ${desktop(css`
         height: auto;
@@ -267,28 +269,27 @@ const styles = css`
         }
       }
 
-      .modal-scroll {
+      .modal-scroll-wrapper {
         width: 100%;
-        height: 100%;
         background-color: var(--white-color);
-        display: flex;
-        flex-direction: column;
-        gap: ${space(3)};
+        color: var(--background-color);
+        font-family: var(--font-jost);
+        max-height: 100%;
         overflow-y: auto;
         touch-action: auto;
         overscroll-behavior: contain;
-        position: relative;
-        color: var(--background-color);
-        font-family: var(--font-jost);
+        height: 100%;
 
         ${desktop(css`
+          height: auto;
           border-radius: ${space(1)};
           max-height: 862px;
           height: 100%;
         `)}
 
         .content {
-          height: 100%;
+          max-height: 100vh;
+          height: max-content;
 
           .content-header {
             .video {
@@ -375,7 +376,6 @@ const styles = css`
                   }
 
                   .payment-action {
-                    margin-bottom: ${space(2)};
                     display: flex;
                     flex-direction: column;
                     gap: ${space(1)};
@@ -417,12 +417,6 @@ const styles = css`
               }
             }
 
-            .back-button,
-            .start-button {
-              width: max-content;
-              display: inline-block;
-            }
-
             .phrase-text {
               ${fontSize4};
               font-family: var(--font-nunito-sans);
@@ -453,10 +447,11 @@ const styles = css`
           .content-footer {
             display: flex;
             flex-direction: column;
-            padding: ${space(3)} ${space(3)};
+            padding: 0 ${space(3)} ${space(3)};
 
-            .start-button {
-              align-self: flex-end;
+            .back-button {
+              width: max-content;
+              display: inline-block;
             }
           }
         }
@@ -620,6 +615,7 @@ const Programs = () => {
       });
     } else {
       const searchParams = new URLSearchParams(window.location.search);
+      if (!searchParams.get("modal")) setModalPage(MODAL_PROGRAMS);
       searchParams.delete("modal");
       router.push(`/?${searchParams.toString()}`);
       body?.classList.remove("modal-open");
@@ -867,7 +863,7 @@ const Programs = () => {
       <div className={classNames(["modal", { open: isOpen }])}>
         <div className="modal-content">
           <CloseIcon className="modal-close-button" onClick={handleClose} />
-          <div className="modal-scroll">
+          <div className="modal-scroll-wrapper">
             {modalPage === MODAL_PROGRAMS && (
               <div className="content">
                 <div className="content-header">
@@ -1153,10 +1149,10 @@ const Programs = () => {
 
                 <div className="content-body">
                   <p className="title">¡Te doy la bienvenida!</p>
-                  <p className="success-text">
+                  <p>
                     Gracias por unirte al <strong>Team ECNU</strong>.
                   </p>
-                  <p className="success-text">
+                  <p>
                     Dentro de las <strong>proximas 24hs</strong> me pondre en
                     contacto contigo por WhatsApp.
                   </p>
@@ -1166,14 +1162,14 @@ const Programs = () => {
                     </span>{" "}
                     <small className="phrase-author">Muhammad Alí</small>
                   </p>
-                  <p className="success-text">
+                  <p>
                     Recuerda que no obtendrás resultados si no das el primer
                     paso.
                   </p>
                 </div>
 
                 <div className="content-footer">
-                  <p className="success-text">
+                  <p>
                     <strong>¡Comencemos!</strong>
                   </p>
                 </div>
@@ -1184,9 +1180,11 @@ const Programs = () => {
                 <div className="content-header"></div>
                 <div className="content-body">
                   <p className="title">Ups... hubo un problema</p>
-                  <p className="success-text">
+                  <p>
                     No se pudo acreditar tu pago. Volve a intentarlo nuevamente.
                   </p>
+                </div>
+                <div className="content-footer">
                   <Button
                     className="back-button"
                     variant="outlined"
