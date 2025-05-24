@@ -268,7 +268,7 @@ const Contact = () => {
             <WhatsAppIcon className="icon" />
           </a>
           <a
-            href="https://www.instagram.com/elcambionaceenuno"
+            href="https://www.instagram.com/lucasc.pallotta"
             target="_blank"
             rel="noopener noreferrer"
             className="social instagram"
