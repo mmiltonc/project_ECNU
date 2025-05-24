@@ -169,7 +169,10 @@ const Home = () => {
           <a
             href="#gym-virtual"
             onClick={() =>
-              sendGTMEvent({ event: "buttonClicked", value: "xyz" })
+              sendGTMEvent({
+                event: "buttonClicked",
+                value: "quiero-mi-transformacion",
+              })
             }
             className="cta-button"
           >
