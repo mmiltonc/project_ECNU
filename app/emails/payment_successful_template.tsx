@@ -45,7 +45,11 @@ export const PaymentSuccessfulTemplate = ({
       {/* Vista previa en clientes de correo */}
       <Body style={styles.body}>
         <Container style={styles.header}>
-          <Img src="/images/new-logo.png" alt="ECNU Logo" style={styles.logo} />
+          <Img
+            src="https://ecnuteam.com/images/new-logo.png"
+            alt="ECNU Logo"
+            style={styles.logo}
+          />
         </Container>
         <Container style={styles.main}>
           <Text style={styles.text}>¡Bienvenido {name}!</Text>
@@ -64,7 +68,7 @@ export const PaymentSuccessfulTemplate = ({
         </Container>
         <Container style={styles.footer}>
           <Img
-            src="/images/emails/payment-successful-footer-image.jpg"
+            src="https://ecnuteam.com/images/emails/payment-successful-footer-image.jpg"
             alt="ECNU Logo"
             style={styles.footerImage}
           />

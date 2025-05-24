@@ -17,7 +17,7 @@ const styles = css`
   overflow-x: hidden;
   width: 100%;
 
-  background-image: url(images/bgbw.jpeg);
+  background-image: url(images/bgbw.jpg);
   background-position: bottom center;
   background-size: auto 120%;
   height: 100svh;

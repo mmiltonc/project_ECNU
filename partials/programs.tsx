@@ -466,14 +466,14 @@ const planificationCards = [
     plan: PlansTypes.OnlinePlanification,
     type: "plani",
     typeVideo: "plani",
-    imagen: "/images/planificaciones_online.jpeg",
+    imagen: "/images/planificaciones_online.jpg",
   },
   {
     main: false,
     plan: PlansTypes.OnlinePlanification,
     type: "plan",
     typeVideo: "plani",
-    imagen: "/images/plan_plani_online.jpeg",
+    imagen: "/images/plan_plani_online.jpg",
   },
 ];
 
@@ -483,14 +483,14 @@ const virtualGymCards = [
     plan: PlansTypes.VirtualGym,
     type: "gym",
     typeVideo: "gym",
-    imagen: "/images/gym_virtual.jpeg",
+    imagen: "/images/gym_virtual.jpg",
   },
   {
     main: false,
     plan: PlansTypes.VirtualGym,
     type: "plan",
     typeVideo: "gym",
-    imagen: "/images/plan_gym_test.jpeg",
+    imagen: "/images/plan_gym_test.jpg",
   },
 ];
 
