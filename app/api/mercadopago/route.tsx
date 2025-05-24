@@ -59,20 +59,15 @@ const createPreference = async (
     binary_mode: true,
     payment_methods: {
       excluded_payment_types: [
-        { id: "ticket" }, // Excluye pagos en efectivo
-        { id: "debit_card" }, // Excluye tarjetas de débito
+        { id: "ticket" }, // excluye efectivo (Pago Fácil, Rapipago, etc.)
+        { id: "atm" }, // excluye pagos por cajero
       ],
       installments: 3, // Permite hasta 3 cuotas
       default_installments: 3, // Establece 3 cuotas como la opción por defecto
-      excluded_payment_methods: [
-        { id: "debit_card" }, // Excluye tarjetas de débito
-        { id: "atm" }, // Excluye pagos por cajero
-      ],
     },
     external_reference: userId,
   } as PreferenceRequest;
 
-  console.log()
   try {
     const preference = (await new Preference(mercadopago).create({
       body,
