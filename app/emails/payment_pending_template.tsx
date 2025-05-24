@@ -40,18 +40,22 @@ export const PaymentPendingTemplate = ({
 }: Readonly<PaymentPendingEmailType>) => {
   return (
     <Html>
-      <Head />
-      <Preview>
-        ¡Tu pago {plan} se encuentra pendiente de aprobación!
-      </Preview>{" "}
+      <Head>
+        <meta name="color-scheme" content="light" />
+        <meta name="supported-color-schemes" content="light" />
+      </Head>
+      <Preview>¡Tu pago {plan} se encuentra pendiente de aprobación!</Preview>{" "}
       {/* Vista previa en clientes de correo */}
       <Body style={styles.body}>
         <Container style={styles.header}>
-          <Img
-            src="https://ecnuteam.com/images/new-logo.png"
-            alt="ECNU Logo"
-            style={styles.logo}
-          />
+          <a href="https://ecnuteam.com">
+            <Img
+              width="180px"
+              src="https://ecnuteam.com/images/new-logo.png"
+              alt="ECNU Logo"
+              style={styles.logo}
+            />
+          </a>
         </Container>
         <Container style={styles.main}>
           <Text style={styles.text}>
@@ -67,6 +71,7 @@ export const PaymentPendingTemplate = ({
         </Container>
         <Container style={styles.footer}>
           <Img
+            width="100%"
             src="https://ecnuteam.com/images/emails/payment-pending-footer-image.jpg"
             alt="ECNU Logo"
             style={styles.footerImage}

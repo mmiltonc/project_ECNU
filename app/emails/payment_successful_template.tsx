@@ -40,16 +40,22 @@ export const PaymentSuccessfulTemplate = ({
 }: Readonly<PaymentSuccessfulEmailType>) => {
   return (
     <Html>
-      <Head />
+      <Head>
+        <meta name="color-scheme" content="light" />
+        <meta name="supported-color-schemes" content="light" />
+      </Head>
       <Preview>El pago de tu {plan} fue aprobado con éxito!</Preview>
       {/* Vista previa en clientes de correo */}
       <Body style={styles.body}>
         <Container style={styles.header}>
-          <Img
-            src="https://ecnuteam.com/images/new-logo.png"
-            alt="ECNU Logo"
-            style={styles.logo}
-          />
+          <a href="https://ecnuteam.com">
+            <Img
+              width="180px"
+              src="https://ecnuteam.com/images/new-logo.png"
+              alt="ECNU Logo"
+              style={styles.logo}
+            />
+          </a>
         </Container>
         <Container style={styles.main}>
           <Text style={styles.text}>¡Bienvenido {name}!</Text>
@@ -68,6 +74,7 @@ export const PaymentSuccessfulTemplate = ({
         </Container>
         <Container style={styles.footer}>
           <Img
+            width="100%"
             src="https://ecnuteam.com/images/emails/payment-successful-footer-image.jpg"
             alt="ECNU Logo"
             style={styles.footerImage}
