@@ -47,9 +47,9 @@ const createPreference = async (
   const description = name;
   const unit_price = price.ars;
 
-  const failure = `${BASE_URL}/?modal=3`;
-  const pending = `${BASE_URL}/?modal=2`;
-  const success = `${BASE_URL}/?modal=1`;
+  const failure = `${BASE_URL}/?modal=purchaseFailed`;
+  const pending = `${BASE_URL}/?modal=purchasePending`;
+  const success = `${BASE_URL}/?modal=purchaseSuccess`;
 
   const body = {
     items: [{ id, unit_price, quantity, title, description }],
