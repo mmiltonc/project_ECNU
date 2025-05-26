@@ -73,14 +73,6 @@ export const OwnerPaymentSuccessfulTemplate = ({
           <Text style={styles.text}>Email: {email}</Text>
           <Text style={styles.text}>Fecha: {date}</Text>
         </Container>
-        <Container style={styles.footer}>
-          <Img
-            width="100%"
-            src="https://ecnuteam.com/images/emails/payment-successful-footer-image.jpg"
-            alt="ECNU Logo"
-            style={styles.footerImage}
-          />
-        </Container>
       </Body>
     </Html>
   );
@@ -89,6 +81,9 @@ export const OwnerPaymentSuccessfulTemplate = ({
 OwnerPaymentSuccessfulTemplate.PreviewProps = {
   name: "John Doe",
   plan: "Plan Plus - Gym Virtual",
+  email: "jdoe@example.com",
+  phone: "11111111",
+  date: new Date().toDateString(),
 } as OwnerPaymentSuccessfulEmailType;
 
 export default OwnerPaymentSuccessfulTemplate;

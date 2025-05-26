@@ -45,7 +45,7 @@ export const UpdateUserErrorTemplate = (
         <meta name="color-scheme" content="light" />
         <meta name="supported-color-schemes" content="light" />
       </Head>
-      <Preview>Error guardando en la base de datos a {user.name}</Preview>
+      <Preview>Error guardando en la base de datos a {user.id}</Preview>
       {/* Vista previa en clientes de correo */}
       <Body style={styles.body}>
         <Container style={styles.header}>
@@ -68,22 +68,15 @@ export const UpdateUserErrorTemplate = (
           <Text style={styles.text}>Estado del pago: {user.paymentStatus}</Text>
           <Text style={styles.text}>Fecha de pago: {user.paymentDate}</Text>
         </Container>
-        <Container style={styles.footer}>
-          <Img
-            width="100%"
-            src="https://ecnuteam.com/images/emails/payment-successful-footer-image.jpg"
-            alt="ECNU Logo"
-            style={styles.footerImage}
-          />
-        </Container>
       </Body>
     </Html>
   );
 };
 
 UpdateUserErrorTemplate.PreviewProps = {
-  name: "John Doe",
-  plan: "Plan Plus - Gym Virtual",
+  id: "ABC1234",
+  paymentStatus: "APPROVED",
+  paymentDate: new Date().toDateString(),
 } as UpdateErrorUserType;
 
 export default UpdateUserErrorTemplate;

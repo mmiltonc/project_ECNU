@@ -98,22 +98,27 @@ export const CreateUserErrorTemplate = (
             Si el pago fue exitoso llegará un email con el id {user.id}
           </Text>
         </Container>
-        <Container style={styles.footer}>
-          <Img
-            width="100%"
-            src="https://ecnuteam.com/images/emails/payment-successful-footer-image.jpg"
-            alt="ECNU Logo"
-            style={styles.footerImage}
-          />
-        </Container>
       </Body>
     </Html>
   );
 };
 
 CreateUserErrorTemplate.PreviewProps = {
+  id: "ABC1234",
+  city: "Buenos Aires",
+  country: "Argentina",
+  countryCode: "ARG",
+  email: "jdoe@example.com",
+  gatewayId: "mercadopago",
+  goals: "Be the best",
   name: "John Doe",
-  plan: "Plan Plus - Gym Virtual",
+  paymentCurrency: "ARS",
+  orderDate: new Date().toDateString(),
+  paymentStatus: "PENDING",
+  paymentValue: 1,
+  phone: "11111111",
+  plan: "Plan A",
+  planSKU: "plan-a",
 } as CreateErrorUserType;
 
 export default CreateUserErrorTemplate;

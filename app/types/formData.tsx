@@ -23,7 +23,7 @@ export const PHONE_CODES = {
 };
 
 export type CountryCode = (typeof COUNTRIES)[number]["code"];
-export type CountryNames = (typeof COUNTRIES)[name]["code"];
+export type CountryNames = (typeof COUNTRIES)[number]["name"];
 
 export enum PlansTypes {
   VirtualGym = "plan-plus-gym-virtual",
