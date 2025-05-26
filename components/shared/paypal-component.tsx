@@ -44,10 +44,12 @@ export default function PayPalComponent(props: Props) {
     const order = await actions.order.capture();
 
     if (order.status === "COMPLETED") {
-      if (window) window.location.href = "ecnuteam.com/?modal=purchaseSuccess";
+      if (window)
+        window.location.href = "https://ecnuteam.com/?modal=purchaseSuccess";
       console.log("aprobado: ", data);
     } else if (order.status === "PENDING") {
-      if (window) window.location.href = "ecnuteam.com/?modal=purchasePending";
+      if (window)
+        window.location.href = "https://ecnuteam.com/?modal=purchasePending";
       console.log("pendiente: ", data);
     }
   };
@@ -57,7 +59,8 @@ export default function PayPalComponent(props: Props) {
   };
 
   const onError = (data: any) => {
-    if (window) window.location.href = "ecnuteam.com/?modal=purchaseFailed";
+    if (window)
+      window.location.href = "https://ecnuteam.com/?modal=purchaseFailed";
     console.log("error: ", data);
   };
 
