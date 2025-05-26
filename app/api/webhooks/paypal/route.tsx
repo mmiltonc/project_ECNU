@@ -4,6 +4,8 @@ import { db } from "@/app/lib/firebaseAdmin";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { getStatus, PaymentStatus } from "../helpers";
+import OwnerPaymentSuccessfulTemplate from "@/app/emails/owner_payment_successful_template";
+import UpdateUserErrorTemplate from "@/app/emails/update_user_error_template";
 
 const apiKey = process.env.RESEND_API_KEY;
 
@@ -43,7 +45,39 @@ interface PayerInterface {
   email: string;
   name: string;
   plan: string;
+  phone: string;
+  date: string;
 }
+
+const sendBackupEmail = async (userId: string, status: string) => {
+  const paymentDate = new Date();
+
+  const paymentData = {
+    paymentStatus: status || "",
+    paymentDate:
+      status === PaymentStatus.APPROVED
+        ? paymentDate.toLocaleString("es-AR", dateConfig)
+        : "",
+    id: userId,
+  };
+  const apiKey = process.env.RESEND_API_KEY;
+  const resend = new Resend(apiKey);
+  await resend.emails.send({
+    from: `E.C.N.U. <onboarding@resend.dev>`,
+    to: "facundopereztomasek@gmail.com",
+    subject: `Intento de pago de alumno ${userId}`,
+    react: UpdateUserErrorTemplate(paymentData),
+  });
+};
+
+const sendOwnerPaymentSuccessfulEmail = async (payer: PayerInterface) => {
+  await resend.emails.send({
+    from: `E.C.N.U. <onboarding@resend.dev>`,
+    to: "facundopereztomasek@gmail.com",
+    subject: `Un nuevo alumno: ${payer.name} suscripto a ${payer.plan}!`,
+    react: OwnerPaymentSuccessfulTemplate(payer),
+  });
+};
 
 const sendPaymentSuccessfulEmail = async (payer: PayerInterface) => {
   await resend.emails.send({
@@ -73,13 +107,13 @@ const sendPaymentRejectedEmail = async (payer: PayerInterface) => {
 };
 
 const handlePaymentWebhook = async (body: any) => {
+  const paymentId = body.resource.id;
+  if (!paymentId) throw new Error("Invalid request.");
+
+  const userId = body.resource.custom_id;
+  const status = getStatus(body.resource.status, "paypal") as string;
+
   try {
-    const paymentId = body.resource.id;
-    if (!paymentId) throw new Error("Invalid request.");
-
-    const userId = body.resource.custom_id;
-    const status = getStatus(body.resource.status, "paypal");
-
     const document = db.collection("users").doc(userId);
     const documentRef = await document.get();
     const user = documentRef.data() as FirestoreUser | undefined;
@@ -87,44 +121,49 @@ const handlePaymentWebhook = async (body: any) => {
     if (!user) throw new Error("User not found in DB");
 
     const payerData: PayerInterface = {
-      name: user.name,
-      email: user.email,
-      plan: user.plan,
+      name: user?.name,
+      email: user?.email,
+      plan: user?.plan,
+      phone: user?.phone,
+      date: user?.paymentDate,
     };
 
-    if (status === PaymentStatus.APPROVED)
+    if (status === PaymentStatus.APPROVED) {
       await sendPaymentSuccessfulEmail(payerData);
-    if (status === PaymentStatus.REJECTED)
-      await sendPaymentRejectedEmail(payerData);
-    if (status === PaymentStatus.PENDING)
-      await sendPaymentPendingEmail(payerData);
-
-    try {
-      const planInfo = plansData.plans.find(
-        (plan: any) => plan.sku === user.planSKU
-      );
-
-      if (!planInfo) throw new Error("Plan not found.");
-
-      const paymentDate = new Date();
-      const paymentExpirationDate = new Date(paymentDate);
-      paymentExpirationDate.setDate(paymentDate.getDate() + planInfo.duration);
-
-      document.update({
-        paymentStatus: status,
-        paymentDate:
-          status === PaymentStatus.APPROVED
-            ? paymentDate.toLocaleString("es-AR", dateConfig)
-            : null,
-        paymentExpirationDate:
-          status === PaymentStatus.APPROVED
-            ? paymentExpirationDate.toLocaleString("es-AR", dateConfig)
-            : null,
-      });
-    } catch (error) {
-      console.error("Error updating user document: ", error);
+      await sendOwnerPaymentSuccessfulEmail(payerData);
     }
+    if (status === PaymentStatus.REJECTED) {
+      await sendPaymentRejectedEmail(payerData);
+    }
+    if (status === PaymentStatus.PENDING) {
+      await sendPaymentPendingEmail(payerData);
+    }
+
+    const planInfo = plansData.plans.find(
+      (plan: any) => plan.sku === user.planSKU
+    );
+
+    if (!planInfo) throw new Error("Plan not found.");
+
+    const paymentDate = new Date();
+    const paymentExpirationDate = new Date(paymentDate);
+    paymentExpirationDate.setDate(paymentDate.getDate() + planInfo.duration);
+
+    const paymentData = {
+      paymentStatus: status || "",
+      paymentDate:
+        status === PaymentStatus.APPROVED
+          ? paymentDate.toLocaleString("es-AR", dateConfig)
+          : "",
+      paymentExpirationDate:
+        status === PaymentStatus.APPROVED
+          ? paymentExpirationDate.toLocaleString("es-AR", dateConfig)
+          : "",
+    };
+
+    document.update(paymentData);
   } catch (error) {
+    await sendBackupEmail(userId, status);
     console.error("Error updating getting user document: ", error);
   }
 };

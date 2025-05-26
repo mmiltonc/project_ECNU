@@ -14,13 +14,15 @@ import {
 import { NextResponse } from "next/server";
 import { PHONE_CODES } from "@/app/types/formData";
 import { db } from "@/app/lib/firebaseAdmin";
+import { Resend } from "resend";
+import CreateUserErrorTemplate from "@/app/emails/create_user_error_template";
 
 interface OrderResponse {
   body: string;
   statusCode: number;
 }
 
-const dateConfig = { timeZone: "America/Argentina/Buenos_Aires" }
+const dateConfig = { timeZone: "America/Argentina/Buenos_Aires" };
 
 const oAuthClientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "";
 const oAuthClientSecret = process.env.PAYPAL_CLIENT_SECRET || "";
@@ -38,7 +40,11 @@ const client = new Client({
 
 const ordersController = new OrdersController(client);
 
-const createOrder = async (formData: FormDataType, planInfo: PlanType, userId: UUIDTypes) => {
+const createOrder = async (
+  formData: FormDataType,
+  planInfo: PlanType,
+  userId: UUIDTypes
+) => {
   const { name, price, sku } = planInfo;
 
   const currencyCode = "USD";
@@ -95,7 +101,8 @@ const createOrder = async (formData: FormDataType, planInfo: PlanType, userId: U
     const body = result?.body;
     const httpStatusCode = result?.statusCode;
 
-    if (httpStatusCode !== 201) throw new Error(`Error creating order (HTTP code ${httpStatusCode})`);
+    if (httpStatusCode !== 201)
+      throw new Error(`Error creating order (HTTP code ${httpStatusCode})`);
 
     const id = JSON.parse(body)?.id;
 
@@ -120,7 +127,8 @@ export async function POST(request: Request) {
     if (!formData.pais) throw new Error("Country is required.");
     if (!formData.plan) throw new Error("Plan is required.");
 
-    if (formData.pais === "ARG") throw new Error("Payment method not allowed in Argentina.");
+    if (formData.pais === "ARG")
+      throw new Error("Payment method not allowed in Argentina.");
 
     const planInfo = plansData.plans.find(
       (plan: any) => plan.sku === formData.plan
@@ -130,7 +138,8 @@ export async function POST(request: Request) {
 
     const orderDate = new Date().toLocaleString("es-AR", dateConfig);
     const userId = uuidv4();
-    const country = COUNTRIES.find(({code}) => code === formData.pais)?.name;
+    const country = COUNTRIES.find(({ code }) => code === formData.pais)
+      ?.name as string;
 
     /* TODO: Mandar todo esto a una función */
     const user = {
@@ -148,7 +157,7 @@ export async function POST(request: Request) {
       // paymentExpirationDays:,
       // paymentId:,
       paymentStatus: "STARTED",
-      paymentValue: planInfo.price.usd,
+      paymentValue: Number(planInfo.price.usd),
       phone: formData.celular,
       plan: planInfo.name,
       planSKU: planInfo.sku,
@@ -157,37 +166,47 @@ export async function POST(request: Request) {
     const document = db.collection("users").doc(userId);
 
     try {
-      /* Be aware of race conditions */
-      console.log("-------------- Creating user at db")
-      document.set(user);
+      console.log("-------------- Creating user at db");
+      await document.set(user);
     } catch (error) {
+      const apiKey = process.env.RESEND_API_KEY;
+      const resend = new Resend(apiKey);
+      await resend.emails.send({
+        from: `E.C.N.U. <onboarding@resend.dev>`,
+        to: "facundopereztomasek@gmail.com",
+        subject: `No se pudo guardar el nuevo alumno ${user.name}`,
+        react: CreateUserErrorTemplate(user),
+      });
       /* Here we can send an email with the user data */
       console.error("Error creating user document: ", error);
     }
 
     const result = await createOrder(formData, planInfo, userId);
 
-    const paymentDate = new Date()
+    const paymentDate = new Date();
 
-    const paymentExpirationDate = new Date(paymentDate)
-    paymentExpirationDate.setDate(paymentDate.getDate() + planInfo.duration)
+    const paymentExpirationDate = new Date(paymentDate);
+    paymentExpirationDate.setDate(paymentDate.getDate() + planInfo.duration);
 
     if (!result)
       throw new Error(
         "Error creating order (no result found from createOrder)"
       );
 
-      try {
-        console.log("-------------- Updating user at db")
-        document.update({
-          paymentStatus: 'CREATED',
-          paymentDate: paymentDate.toLocaleString("es-AR", dateConfig),
-          paymentExpirationDate: paymentExpirationDate.toLocaleString("es-AR", dateConfig),
-          paymentId: result.id,
-        });
-      } catch (error) {
-        console.error("Error updating user document: ", error);
-      }
+    try {
+      console.log("-------------- Updating user at db");
+      document.update({
+        paymentStatus: "CREATED",
+        paymentDate: paymentDate.toLocaleString("es-AR", dateConfig),
+        paymentExpirationDate: paymentExpirationDate.toLocaleString(
+          "es-AR",
+          dateConfig
+        ),
+        paymentId: result.id,
+      });
+    } catch (error) {
+      console.error("Error updating user document: ", error);
+    }
 
     /* TODO: Remember to update payment status on paypal webhooks */
 

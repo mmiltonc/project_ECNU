@@ -13,6 +13,8 @@ import {
   PreferenceResponse,
 } from "mercadopago/dist/clients/preference/commonTypes";
 import { db } from "@/app/lib/firebaseAdmin";
+import CreateUserErrorTemplate from "@/app/emails/create_user_error_template";
+import { Resend } from "resend";
 const accessToken = process.env.MERCADO_PAGO_ACCESS_TOKEN;
 
 if (!accessToken) throw new Error("MERCADO_PAGO_ACCESS_TOKEN is not defined.");
@@ -109,7 +111,8 @@ export async function POST(request: Request) {
 
     const orderDate = new Date().toLocaleString("es-AR", dateConfig);
     const userId = uuidv4();
-    const country = COUNTRIES.find(({ code }) => code === formData.pais)?.name;
+    const country = COUNTRIES.find(({ code }) => code === formData.pais)
+      ?.name as string;
 
     /* TODO: Mandar todo esto a una función */
     const user = {
@@ -127,7 +130,7 @@ export async function POST(request: Request) {
       // paymentExpirationDays:,
       // paymentId:,
       paymentStatus: "STARTED",
-      paymentValue: planInfo.price.usd,
+      paymentValue: Number(planInfo.price.usd),
       phone: formData.celular,
       plan: planInfo.name,
       planSKU: planInfo.sku,
@@ -136,10 +139,17 @@ export async function POST(request: Request) {
     const document = db.collection("users").doc(userId);
 
     try {
-      /* Be aware of race conditions */
       console.log("-------------- Creating user at db");
-      document.set(user);
+      await document.set(user);
     } catch (error) {
+      const apiKey = process.env.RESEND_API_KEY;
+      const resend = new Resend(apiKey);
+      await resend.emails.send({
+        from: `E.C.N.U. <onboarding@resend.dev>`,
+        to: "facundopereztomasek@gmail.com",
+        subject: `No se pudo guardar el nuevo alumno ${user.name}`,
+        react: CreateUserErrorTemplate(user),
+      });
       /* Here we can send an email with the user data */
       console.error("Error creating user document: ", error);
     }

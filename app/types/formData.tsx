@@ -22,7 +22,8 @@ export const PHONE_CODES = {
   VEN: "+58",
 };
 
-export type CountryCode = typeof COUNTRIES[number]['code'];
+export type CountryCode = (typeof COUNTRIES)[number]["code"];
+export type CountryNames = (typeof COUNTRIES)[name]["code"];
 
 export enum PlansTypes {
   VirtualGym = "plan-plus-gym-virtual",
