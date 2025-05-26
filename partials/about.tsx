@@ -194,7 +194,7 @@ const About = () => {
             <Image
               width={628}
               height={1118}
-              src="/images/truck_flag.jpg"
+              src="/images/about.jpg"
               alt="lucas antes"
               className="image"
             />
