@@ -32,6 +32,7 @@ import { Button, MenuItem, SelectProps, TextField } from "@mui/material";
 import classNames from "classnames";
 import CloseIcon from "@mui/icons-material/Close";
 export const dynamic = "force-static";
+import Joi from "joi";
 
 const MODAL_PURCHASE_SUCCESS = "purchaseSuccess";
 const MODAL_PURCHASE_FAILED = "purchaseFailed";
@@ -508,21 +509,78 @@ const Programs = () => {
   const cardContainerPlanificationRef = useRef(null);
   const router = useRouter();
 
-  const loadVideo = async (src: string) => {
-    const video = document.createElement("video");
-    video.preload = "auto";
-    video.src = src;
-  };
+  const [formData, setFormData] = useState<FormDataType>({
+    plan: "",
+    nombre: "",
+    pais: "",
+    ciudad: "",
+    emailLocalPart: "",
+    celular: "",
+    objetivos: "",
+  });
 
-  const importVideos = async () => {
-    const srcs = [
-      require("@/public/videos/intro_gym.mp4"),
-      require("@/public/videos/intro_planificaciones.mp4"),
-      require("@/public/videos/agradecimiento_pago.mp4"),
-    ];
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
-    srcs.forEach(loadVideo);
-  };
+  const onlyAlphabeticalRegex = /^[A-Za-zÁÉÍÓÚÜáéíóúüñÑ\s]+$/;
+  const localPartRegex = /^(?!\.)(?!.*\.\.)[A-Za-z0-9._%+-]{1,64}(?<!\.)$/;
+  const noAtDomainRegex = /^[^@]+$/;
+
+  const formSchema = Joi.object({
+    plan: Joi.string().required().messages({
+      "string.empty": "El plan es obligatorio.",
+    }),
+    nombre: Joi.string()
+      .min(3)
+      .pattern(onlyAlphabeticalRegex)
+      .required()
+      .messages({
+        "string.empty": "El nombre es obligatorio.",
+        "string.min": "El nombre debe tener al menos 3 caracteres.",
+        "string.pattern.base":
+          "El nombre solo puede contener letras y espacios, sin números ni caracteres especiales.",
+      }),
+    pais: Joi.string().min(3).required().messages({
+      "string.empty": "El país es obligatorio.",
+      "string.min": "El país debe tener al menos 3 caracteres.",
+    }),
+    ciudad: Joi.string()
+      .min(3)
+      .pattern(onlyAlphabeticalRegex)
+      .required()
+      .messages({
+        "string.empty": "La ciudad es obligatoria.",
+        "string.min": "La ciudad debe tener al menos 3 caracteres.",
+        "string.pattern.base":
+          "La ciudad solo puede contener letras y espacios, sin números ni caracteres especiales.",
+      }),
+    emailLocalPart: Joi.string()
+      .required()
+      .custom((value, helpers) => {
+        if (!noAtDomainRegex.test(value)) {
+          return helpers.error("noAtDomainRegex.invalid");
+        }
+        if (!localPartRegex.test(value)) {
+          return helpers.error("localPart.invalid");
+        }
+        return value;
+      })
+      .messages({
+        "string.empty": "El campo de email es obligatorio.",
+        "localPart.invalid":
+          "El campo sólo debe contener letras, números y caracteres permitidos.",
+        "noAtDomainRegex.invalid":
+          "Sólo emails de gmail están permitidos. No incluyas ni el arroba ni lo que sigue despues del arroba.",
+      }),
+    celular: Joi.string().pattern(/^\d+$/).min(6).required().messages({
+      "string.empty": "El celular es obligatorio.",
+      "string.pattern.base": "El celular solo debe contener números.",
+      "string.min": "El celular debe tener al menos 6 dígitos.",
+    }),
+    objetivos: Joi.string().min(10).required().messages({
+      "string.empty": "Los objetivos son obligatorios.",
+      "string.min": "Los objetivos deben tener al menos 10 caracteres.",
+    }),
+  });
 
   useEffect(() => {
     if (!lenis) return;
@@ -545,16 +603,6 @@ const Programs = () => {
     openModal();
     lenis?.stop();
   };
-
-  const [formData, setFormData] = useState<FormDataType>({
-    plan: "",
-    nombre: "",
-    pais: "",
-    ciudad: "",
-    emailLocalPart: "",
-    celular: "",
-    objetivos: "",
-  });
 
   const handleClose = () => {
     setCamposVisibles(false);
@@ -580,6 +628,27 @@ const Programs = () => {
     }));
   };
 
+  const handleFormValidation = () => {
+    const { error, value } = formSchema.validate(formData, {
+      abortEarly: false,
+    });
+
+    if (error) {
+      console.log(error);
+      const errores: Record<string, string> = {};
+      error.details.forEach((err) => {
+        if (err.context?.key) {
+          errores[err.context.key] = err.message;
+        }
+      });
+      setFormErrors(errores); // Guardamos los errores
+    } else {
+      setFormErrors({}); // Limpiamos errores si pasa la validación
+      console.log("Datos validados:", value);
+      setStepForm(2);
+    }
+  };
+
   useEffect(() => {
     if (formData.nombre?.trim() && formData.pais?.trim()) {
       setCamposVisibles(true);
@@ -590,7 +659,6 @@ const Programs = () => {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    importVideos();
     const searchParams = new URLSearchParams(window.location.search);
     const modalName = [MODAL_PURCHASE_SUCCESS, MODAL_PURCHASE_FAILED].find(
       (name) => name === searchParams.get("modal")
@@ -678,7 +746,6 @@ const Programs = () => {
     fontFamily: "var(--font-jost)",
     "&:hover": {
       borderColor: "var(--secondary-color)",
-      // backgroundColor: "var(--secondary-color)",
     },
   };
 
@@ -911,6 +978,11 @@ const Programs = () => {
                               sx={textInputStyles}
                               required
                             />
+                            {formErrors.nombre && (
+                              <p style={{ color: "red" }}>
+                                {formErrors.nombre}
+                              </p>
+                            )}
                           </div>
                           <div className="field">
                             <label className="" htmlFor="pais">
@@ -939,6 +1011,9 @@ const Programs = () => {
                                 </MenuItem>
                               ))}
                             </TextField>
+                            {formErrors.pais && (
+                              <p style={{ color: "red" }}>{formErrors.pais}</p>
+                            )}
                           </div>
                           {camposVisibles && (
                             <>
@@ -956,6 +1031,11 @@ const Programs = () => {
                                   sx={textInputStyles}
                                   required
                                 />
+                                {formErrors.ciudad && (
+                                  <p style={{ color: "red" }}>
+                                    {formErrors.ciudad}
+                                  </p>
+                                )}
                               </div>
                               <div className="field">
                                 <label className="" htmlFor="emailLocalPart">
@@ -980,6 +1060,11 @@ const Programs = () => {
                                     },
                                   }}
                                 />
+                                {formErrors.emailLocalPart && (
+                                  <p style={{ color: "red" }}>
+                                    {formErrors.emailLocalPart}
+                                  </p>
+                                )}
                               </div>
                               <div className="field">
                                 <label className="" htmlFor="celular">
@@ -1008,6 +1093,11 @@ const Programs = () => {
                                     },
                                   }}
                                 />
+                                {formErrors.celular && (
+                                  <p style={{ color: "red" }}>
+                                    {formErrors.celular}
+                                  </p>
+                                )}
                               </div>
                               <div className="field">
                                 <label className="" htmlFor="objetivos">
@@ -1025,6 +1115,11 @@ const Programs = () => {
                                   maxRows={4}
                                   required
                                 />
+                                {formErrors.objetivos && (
+                                  <p style={{ color: "red" }}>
+                                    {formErrors.objetivos}
+                                  </p>
+                                )}
                               </div>
                               <div className="submit">
                                 <Button
@@ -1036,7 +1131,7 @@ const Programs = () => {
                                 </Button>
                                 <Button
                                   variant="contained"
-                                  onClick={() => setStepForm(2)}
+                                  onClick={handleFormValidation}
                                   sx={nextButtonStyles}
                                 >
                                   Siguiente
