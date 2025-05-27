@@ -83,6 +83,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className="scroll-smooth">
+      <head>
+        <meta
+          name="facebook-domain-verification"
+          content="2wa2kjhh9ncgam0q7xic4t4k9o1wdq"
+        />
+      </head>
       <body
         className={classNames([
           jost.variable,
