@@ -99,8 +99,8 @@ const Introduction = () => {
               el entrenamiento? Te voy a mostrar de que manera optimizar las
               semanas para que no sean una carga en tu vida, mas bien un
               potenciador a la hora de ir en busca de tus objetivos. Elegí entre
-              Gym virtual o Calistenia Online y da el paso que cambiara tu vida
-              para siempre.
+              <strong>Gym virtual</strong> o <strong>Calistenia Online</strong>{" "}
+              y da el paso que cambiara tu vida para siempre.
             </p>
           </div>
         </article>
