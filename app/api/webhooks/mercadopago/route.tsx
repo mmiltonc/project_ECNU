@@ -4,6 +4,8 @@ import { db } from "@/app/lib/firebaseAdmin";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { getStatus, PaymentStatus } from "../helpers";
+import OwnerPaymentSuccessfulTemplate from "@/app/emails/owner_payment_successful_template";
+import UpdateUserErrorTemplate from "@/app/emails/update_user_error_template";
 
 const apiKey = process.env.RESEND_API_KEY;
 
@@ -43,7 +45,39 @@ interface PayerInterface {
   email: string;
   name: string;
   plan: string;
+  phone: string;
+  date: string;
 }
+
+const sendBackupEmail = async (userId: string, status: string) => {
+  const paymentDate = new Date();
+
+  const paymentData = {
+    paymentStatus: status || "",
+    paymentDate:
+      status === PaymentStatus.APPROVED
+        ? paymentDate.toLocaleString("es-AR", dateConfig)
+        : "",
+    id: userId,
+  };
+  const apiKey = process.env.RESEND_API_KEY;
+  const resend = new Resend(apiKey);
+  await resend.emails.send({
+    from: `E.C.N.U. <onboarding@resend.dev>`,
+    to: "facundopereztomasek@gmail.com",
+    subject: `Intento de pago de alumno ${userId}`,
+    react: UpdateUserErrorTemplate(paymentData),
+  });
+};
+
+const sendOwnerPaymentSuccessfulEmail = async (payer: PayerInterface) => {
+  await resend.emails.send({
+    from: `E.C.N.U. <onboarding@resend.dev>`,
+    to: "facundopereztomasek@gmail.com",
+    subject: `Un nuevo alumno: ${payer.name} suscripto a ${payer.plan}!`,
+    react: OwnerPaymentSuccessfulTemplate(payer),
+  });
+};
 
 const sendPaymentSuccessfulEmail = async (payer: PayerInterface) => {
   await resend.emails.send({
@@ -92,26 +126,32 @@ const handlePaymentWebhook = async (paymentId: string) => {
     external_reference: userId,
   } = jsonResponse;
 
-  const status = getStatus(jsonResponse.status, "mercadopago");
-
-  const document = db.collection("users").doc(userId);
-  const documentRef = await document.get();
-  const user = documentRef.data() as FirestoreUser | undefined;
-
-  const payerData = {
-    name: user?.name || metadata.name || payer.first_name,
-    email: user?.email || metadata.email || payer.email,
-    plan: description,
-  };
-
-  if (status === PaymentStatus.APPROVED)
-    await sendPaymentSuccessfulEmail(payerData);
-  if (status === PaymentStatus.REJECTED)
-    await sendPaymentRejectedEmail(payerData);
-  if (status === PaymentStatus.PENDING)
-    await sendPaymentPendingEmail(payerData);
+  const status = getStatus(jsonResponse.status, "mercadopago") as string;
 
   try {
+    const document = db.collection("users").doc(userId);
+    const documentRef = await document.get();
+    const user = documentRef.data() as FirestoreUser | undefined;
+
+    const payerData: PayerInterface = {
+      name: user?.name || metadata.name || payer.first_name,
+      email: user?.email || metadata.email || payer.email,
+      plan: user?.plan || description,
+      phone: user?.phone || "",
+      date: user?.paymentDate || "",
+    };
+
+    if (status === PaymentStatus.APPROVED) {
+      await sendPaymentSuccessfulEmail(payerData);
+      await sendOwnerPaymentSuccessfulEmail(payerData);
+    }
+    if (status === PaymentStatus.REJECTED) {
+      await sendPaymentRejectedEmail(payerData);
+    }
+    if (status === PaymentStatus.PENDING) {
+      await sendPaymentPendingEmail(payerData);
+    }
+
     const planInfo = plansData.plans.find(
       (plan: any) => plan.sku === metadata.plan
     );
@@ -122,7 +162,7 @@ const handlePaymentWebhook = async (paymentId: string) => {
     const paymentExpirationDate = new Date(paymentDate);
     paymentExpirationDate.setDate(paymentDate.getDate() + planInfo.duration);
 
-    document.update({
+    const paymentData = {
       paymentStatus: status,
       paymentDate:
         status === PaymentStatus.APPROVED
@@ -133,9 +173,12 @@ const handlePaymentWebhook = async (paymentId: string) => {
           ? paymentExpirationDate.toLocaleString("es-AR", dateConfig)
           : null,
       orderId: order.id,
-    });
+    };
+
+    document.update(paymentData);
   } catch (error) {
-    console.error("Error updating user document: ", error);
+    await sendBackupEmail(userId, status);
+    console.error("Error updating getting user document: ", error);
   }
 };
 

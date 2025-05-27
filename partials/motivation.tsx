@@ -30,7 +30,7 @@ const animateWithScroll = (steps: ScrollAnimation | ScrollAnimation[]) => {
       range,
       scrub = true,
       ease,
-      proportional = 0.9,
+      proportional = 0.95,
     }) => {
       const [from, to] = states;
       const [start, end] = range;
@@ -50,11 +50,8 @@ const animateWithScroll = (steps: ScrollAnimation | ScrollAnimation[]) => {
 };
 
 const styles = css`
-  height: 5000svh;
-  /* height: 10svh; */
+  height: 5000vh;
   top: 0;
-
-  /* ${desktop(css``)} */
 
   i {
     font-style: normal;
@@ -67,9 +64,8 @@ const styles = css`
   }
 
   .slide {
-    height: 100svh;
+    height: 100vh;
     position: sticky;
-    /* padding: 160px 80px; */
     top: 0;
     width: 100%;
 
@@ -80,7 +76,7 @@ const styles = css`
       top: 0;
       position: absolute;
       width: 100%;
-      height: 100svh;
+      height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -102,12 +98,12 @@ const styles = css`
       display: block;
       background-image: url(images/motivation.jpg);
       background-repeat: no-repeat;
-      background-size: auto 100svh;
+      background-size: auto 100vh;
       mix-blend-mode: luminosity;
       opacity: 0.3;
       top: 0;
       left: 0;
-      height: 100svh;
+      height: 100vh;
       width: 100vw;
       position: sticky;
     }
@@ -156,7 +152,7 @@ const styles = css`
       position: absolute;
       top: 0;
       left: 0;
-      height: 100svh;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -168,7 +164,7 @@ const styles = css`
       position: absolute;
       top: 0;
       left: 0;
-      height: 100svh;
+      height: 100vh;
     }
 
     p {

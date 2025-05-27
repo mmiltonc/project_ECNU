@@ -30,9 +30,9 @@ export const viewport: Viewport = {
 
 export const metadata = {
   metadataBase: new URL("https://ecnuteam.com"),
-  title: "Entrenamiento funcional en casa para bienestar | ECNU Team",
+  title: "Exprimí tu potencial físico-mental con calistenia | ECNU Team",
   description:
-    "Entrenamiento en casa con peso corporal diseñado para mejorar el rendimiento físico y mental, y fomentar hábitos sostenibles que promueven bienestar y longevidad.",
+    "Entrenamiento con peso corporal diseñado para mejorar el rendimiento físico y mental, fomentar hábitos saludables y sostenibles que promuevan bienestar y longevidad.",
   alternates: {
     canonical: "/",
     languages: {
@@ -40,16 +40,23 @@ export const metadata = {
       "es-ES": "/",
     },
   },
-  // openGraph: {
-  // authors: ['Seb', 'Josh'],
-  // description: 'The React Framework for the Web',
-  // images: [ { url: 'https://nextjs.org/og.png', width: 800, height: 600, } ],
-  // locale: 'en_US',
-  // siteName: 'Next.js',
-  // title: 'Next.js',
-  // type: 'website',
-  // url: 'https://nextjs.org',
-  // },
+  openGraph: {
+    authors: ["Lucas Pallotta"],
+    description:
+      "Entrenamiento con peso corporal diseñado para mejorar el rendimiento físico y mental, fomentar hábitos saludables y sostenibles que promuevan bienestar y longevidad.",
+    images: [
+      {
+        url: "https://ecnuteam.com/images/opengraph-image.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: "es_AR",
+    siteName: "ECNU Team",
+    title: "Exprimí tu potencial físico-mental con calistenia | ECNU Team",
+    type: "website",
+    url: "https://ecnuteam.com",
+  },
   robots: {
     index: false,
     follow: false,
@@ -62,15 +69,10 @@ export const metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
-    // icons: {
-    //   icon: '/icon.png',
-    //   shortcut: '/shortcut-icon.png',
-    //   apple: '/apple-icon.png',
-    //   other: {
-    //     rel: 'apple-touch-icon-precomposed',
-    //     url: '/apple-touch-icon-precomposed.png',
-    //   },
-    // },
+    icons: {
+      icon: "/favicon.ico",
+      apple: "/apple-icon.png",
+    },
   },
 };
 
@@ -89,7 +91,7 @@ export default function RootLayout({
         ])}
       >
         {children}
-        <GoogleTagManager gtmId="GTM-KS5H2HMS" />
+        <GoogleTagManager gtmId="GTM-KFWW9DTG" />
       </body>
     </html>
   );

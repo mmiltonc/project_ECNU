@@ -40,12 +40,22 @@ export const PaymentRejectedTemplate = ({
 }: Readonly<PaymentRejectedEmailType>) => {
   return (
     <Html>
-      <Head />
+      <Head>
+        <meta name="color-scheme" content="light" />
+        <meta name="supported-color-schemes" content="light" />
+      </Head>
       <Preview>Tu pago {plan} fue rechazado.</Preview>
       {/* Vista previa en clientes de correo */}
       <Body style={styles.body}>
         <Container style={styles.header}>
-          <Img src="/images/new-logo.png" alt="ECNU Logo" style={styles.logo} />
+          <a href="https://ecnuteam.com">
+            <Img
+              width="180px"
+              src="https://ecnuteam.com/images/new-logo.png"
+              alt="ECNU Logo"
+              style={styles.logo}
+            />
+          </a>
         </Container>
         <Container style={styles.main}>
           <Text style={styles.text}>Parece que hubo un problema...</Text>
@@ -61,7 +71,8 @@ export const PaymentRejectedTemplate = ({
         </Container>
         <Container style={styles.footer}>
           <Img
-            src="/images/emails/payment-rejected-footer-image.jpg"
+            width="100%"
+            src="https://ecnuteam.com/images/emails/payment-rejected-footer-image.jpg"
             alt="ECNU Logo"
             style={styles.footerImage}
           />

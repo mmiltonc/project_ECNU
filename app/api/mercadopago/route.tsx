@@ -13,6 +13,8 @@ import {
   PreferenceResponse,
 } from "mercadopago/dist/clients/preference/commonTypes";
 import { db } from "@/app/lib/firebaseAdmin";
+import CreateUserErrorTemplate from "@/app/emails/create_user_error_template";
+import { Resend } from "resend";
 const accessToken = process.env.MERCADO_PAGO_ACCESS_TOKEN;
 
 if (!accessToken) throw new Error("MERCADO_PAGO_ACCESS_TOKEN is not defined.");
@@ -47,9 +49,9 @@ const createPreference = async (
   const description = name;
   const unit_price = price.ars;
 
-  const failure = `${BASE_URL}/?modal=3`;
-  const pending = `${BASE_URL}/?modal=2`;
-  const success = `${BASE_URL}/?modal=1`;
+  const failure = `${BASE_URL}/?modal=purchaseFailed`;
+  const pending = `${BASE_URL}/?modal=purchasePending`;
+  const success = `${BASE_URL}/?modal=purchaseSuccess`;
 
   const body = {
     items: [{ id, unit_price, quantity, title, description }],
@@ -58,21 +60,22 @@ const createPreference = async (
     auto_return: "approved",
     binary_mode: true,
     payment_methods: {
-      excluded_payment_types: [
-        { id: "ticket" }, // Excluye pagos en efectivo
-        { id: "debit_card" }, // Excluye tarjetas de débito
-      ],
-      installments: 3, // Permite hasta 3 cuotas
-      default_installments: 3, // Establece 3 cuotas como la opción por defecto
-      excluded_payment_methods: [
-        { id: "debit_card" }, // Excluye tarjetas de débito
-        { id: "atm" }, // Excluye pagos por cajero
-      ],
+      payment_methods: {
+        excluded_payment_types: [
+          { id: "ticket" }, // Excluye pagos en efectivo
+          { id: "debit_card" }, // Excluye tarjetas de débito
+        ],
+        installments: 3, // Permite hasta 3 cuotas
+        default_installments: 3, // Establece 3 cuotas como la opción por defecto
+        excluded_payment_methods: [
+          { id: "debit_card" }, // Excluye tarjetas de débito
+          { id: "atm" }, // Excluye pagos por cajero
+        ],
+      },
     },
     external_reference: userId,
   } as PreferenceRequest;
 
-  console.log()
   try {
     const preference = (await new Preference(mercadopago).create({
       body,
@@ -108,7 +111,8 @@ export async function POST(request: Request) {
 
     const orderDate = new Date().toLocaleString("es-AR", dateConfig);
     const userId = uuidv4();
-    const country = COUNTRIES.find(({ code }) => code === formData.pais)?.name;
+    const country = COUNTRIES.find(({ code }) => code === formData.pais)
+      ?.name as string;
 
     /* TODO: Mandar todo esto a una función */
     const user = {
@@ -126,7 +130,7 @@ export async function POST(request: Request) {
       // paymentExpirationDays:,
       // paymentId:,
       paymentStatus: "STARTED",
-      paymentValue: planInfo.price.usd,
+      paymentValue: Number(planInfo.price.usd),
       phone: formData.celular,
       plan: planInfo.name,
       planSKU: planInfo.sku,
@@ -135,10 +139,17 @@ export async function POST(request: Request) {
     const document = db.collection("users").doc(userId);
 
     try {
-      /* Be aware of race conditions */
       console.log("-------------- Creating user at db");
-      document.set(user);
+      await document.set(user);
     } catch (error) {
+      const apiKey = process.env.RESEND_API_KEY;
+      const resend = new Resend(apiKey);
+      await resend.emails.send({
+        from: `E.C.N.U. <onboarding@resend.dev>`,
+        to: "facundopereztomasek@gmail.com",
+        subject: `No se pudo guardar el nuevo alumno ${user.name}`,
+        react: CreateUserErrorTemplate(user),
+      });
       /* Here we can send an email with the user data */
       console.error("Error creating user document: ", error);
     }

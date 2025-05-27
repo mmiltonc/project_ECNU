@@ -1,3 +1,4 @@
+"use client";
 import { FormDataType } from "@/app/types/formData";
 import { PayPalButtonStyle } from "@paypal/paypal-js";
 import {
@@ -40,10 +41,17 @@ export default function PayPalComponent(props: Props) {
   };
 
   const onApprove = async (data: any, actions: any) => {
-    console.log("aprobado: ", data);
     const order = await actions.order.capture();
-    console.log("order: ", order);
-    router.push("/?modal=1");
+
+    if (order.status === "COMPLETED") {
+      if (window)
+        window.location.href = "https://ecnuteam.com/?modal=purchaseSuccess";
+      console.log("aprobado: ", data);
+    } else if (order.status === "PENDING") {
+      if (window)
+        window.location.href = "https://ecnuteam.com/?modal=purchasePending";
+      console.log("pendiente: ", data);
+    }
   };
 
   const onCancel = (data: any) => {
@@ -51,6 +59,8 @@ export default function PayPalComponent(props: Props) {
   };
 
   const onError = (data: any) => {
+    if (window)
+      window.location.href = "https://ecnuteam.com/?modal=purchaseFailed";
     console.log("error: ", data);
   };
 

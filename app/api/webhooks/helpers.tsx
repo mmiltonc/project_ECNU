@@ -57,4 +57,5 @@ export const getStatus = (status: string, gatewayId: string) => {
   if (gatewayId === "paypal") return getPaypalStatus(normalizedStatus);
   if (gatewayId === "mercadopago")
     return getMercadopagoStatus(normalizedStatus);
+  return "";
 };

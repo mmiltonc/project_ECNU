@@ -10,18 +10,12 @@ import {
   PlansTypes,
   PlanType,
 } from "@/app/types/formData";
-import { Steps } from "@/components/shared/steps";
 import AnimatedText from "@/components/shared/animatedText";
-import CampaignIcon from "@mui/icons-material/Campaign";
 import CardDesktop from "@/components/shared/card-desktop";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import InfoIcon from "@mui/icons-material/Info";
 import MercadopagoComponent from "@/components/shared/marcadopago-component";
-import Modal from "@mui/material/Modal";
 import PayPalComponent from "@/components/shared/paypal-component";
-import Typography from "@mui/material/Typography";
 import plansData from "@/app/data/plans.json";
+import { useRouter } from "next/navigation";
 import {
   desktop,
   fontSize1,
@@ -39,6 +33,10 @@ import classNames from "classnames";
 import CloseIcon from "@mui/icons-material/Close";
 export const dynamic = "force-static";
 import Joi from "joi";
+
+const MODAL_PURCHASE_SUCCESS = "purchaseSuccess";
+const MODAL_PURCHASE_FAILED = "purchaseFailed";
+const MODAL_PROGRAMS = "programs";
 
 const styles = css`
   width: 100%;
@@ -243,22 +241,15 @@ const styles = css`
     }
 
     .modal-content {
-      max-width: 500px;
-      height: 100%;
-      width: 100%;
-      background-color: var(--white-color);
-      display: flex;
-      flex-direction: column;
-      gap: ${space(3)};
-      overflow-y: auto;
-      touch-action: auto;
-      overscroll-behavior: contain;
       position: relative;
+      max-width: 500px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
 
       ${desktop(css`
-        border-radius: ${space(1)};
-        max-height: 862px;
-        height: 100%;
+        height: auto;
         width: 90%;
       `)}
 
@@ -278,143 +269,190 @@ const styles = css`
           opacity: 1;
         }
       }
-    }
 
-    .step-1 {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-
-      /* ${desktop(css`
-        flex-direction: initial;
-      `)} */
-
-      .video {
+      .modal-scroll-wrapper {
         width: 100%;
-        z-index: 1007;
-        cursor: pointer;
-      }
-
-      .form {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 100%;
+        background-color: var(--white-color);
         color: var(--background-color);
-        padding: ${space(3)} ${space(3)};
         font-family: var(--font-jost);
+        max-height: 100%;
+        overflow-y: auto;
+        touch-action: auto;
+        overscroll-behavior: contain;
+        height: 100%;
 
-        .title {
-          ${fontSize3};
-          font-family: var(--font-jost);
-          font-weight: 600;
-          margin-bottom: ${space(2)};
-        }
+        ${desktop(css`
+          height: auto;
+          border-radius: ${space(1)};
+          max-height: 862px;
+          height: 100%;
+        `)}
 
-        .fields {
-          display: flex;
-          flex-direction: column;
-          gap: ${space(2)};
+        .content {
+          max-height: 100vh;
+          height: max-content;
 
-          .field {
+          .content-header {
+            .video {
+              width: 100%;
+              z-index: 1007;
+              cursor: pointer;
+            }
+          }
+
+          .content-body {
+            ${fontSize4};
             display: flex;
             flex-direction: column;
-            gap: ${space(1)};
+            padding: ${space(3)} ${space(3)};
+            height: 100%;
+            gap: ${space(2)};
 
-            .select-option {
+            .title {
+              ${fontSize3};
               font-family: var(--font-jost);
+              font-weight: 600;
             }
 
-            em {
-              font-family: var(--font-jost);
-              opacity: 0.6;
-            }
+            .form {
+              display: contents;
 
-            .field-adornment {
-              font-family: var(--font-jost);
-              margin-right: ${space(1)};
-            }
-          }
-
-          .submit {
-            display: flex;
-            gap: ${space(1)};
-            justify-content: flex-end;
-          }
-        }
-
-        .payment-form {
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          .header {
-            .payment-details {
-              margin-bottom: ${space(2)};
-              .payment-details-partial {
-                padding: ${space(1)} 0;
-                display: flex;
-                justify-content: space-between;
-              }
-
-              span {
-                display: flex;
-                align-items: flex-start;
-                gap: ${space(0.5)};
-
-                small {
-                  padding-top: 2px;
-                  text-decoration: underline;
-                }
-              }
-            }
-
-            .payment-action {
-              margin-bottom: ${space(2)};
-              display: flex;
-              flex-direction: column;
-              gap: ${space(1)};
-
-              ${desktop(css`
-                flex-direction: initial;
-                justify-content: space-between;
-                align-items: center;
-              `)}
-
-              .payment-info {
-                width: 100%;
+              .fields {
                 ${fontSize5};
+                display: flex;
+                flex-direction: column;
+                gap: ${space(2)};
+
+                .field {
+                  display: flex;
+                  flex-direction: column;
+                  gap: ${space(1)};
+
+                  .select-option {
+                    font-family: var(--font-jost);
+                  }
+
+                  em {
+                    font-family: var(--font-jost);
+                    opacity: 0.6;
+                  }
+
+                  .field-adornment {
+                    font-family: var(--font-jost);
+                    margin-right: ${space(1)};
+                  }
+                }
+
+                .submit {
+                  display: flex;
+                  gap: ${space(1)};
+                  justify-content: flex-end;
+                }
               }
 
-              .payment-button {
-                width: 100%;
+              .payment-form {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                .header {
+                  .payment-details {
+                    margin-bottom: ${space(2)};
+                    .payment-details-partial {
+                      padding: ${space(1)} 0;
+                      display: flex;
+                      justify-content: space-between;
+                    }
 
-                ${desktop(css`
-                  text-align: right;
-                `)}
-                .paypal-button {
-                  display: flex;
-                  justify-content: center;
-                }
-                .mercadopago-button {
-                  height: 50px;
-                  background-color: #ffe700;
-                  border-radius: ${space(1)};
+                    span {
+                      display: flex;
+                      align-items: flex-start;
+                      gap: ${space(0.5)};
 
-                  img {
-                    height: 100%;
-                    object-fit: contain;
+                      small {
+                        padding-top: 2px;
+                        text-decoration: underline;
+                      }
+                    }
+                  }
+
+                  .payment-action {
+                    display: flex;
+                    flex-direction: column;
+                    gap: ${space(1)};
+
+                    ${desktop(css`
+                      flex-direction: initial;
+                      justify-content: space-between;
+                      align-items: center;
+                    `)}
+
+                    .payment-info {
+                      width: 100%;
+                      ${fontSize5};
+                    }
+
+                    .payment-button {
+                      width: 100%;
+
+                      ${desktop(css`
+                        text-align: right;
+                      `)}
+                      .paypal-button {
+                        display: flex;
+                        justify-content: center;
+                      }
+                      .mercadopago-button {
+                        height: 50px;
+                        background-color: #ffe700;
+                        border-radius: ${space(1)};
+
+                        img {
+                          height: 100%;
+                          object-fit: contain;
+                        }
+                      }
+                    }
                   }
                 }
               }
             }
+
+            .phrase-text {
+              ${fontSize4};
+              font-family: var(--font-nunito-sans);
+              padding: ${space(2)} ${space(2)} ${space(2)} ${space(6)};
+              background-color: var(--light-color);
+              position: relative;
+
+              &:before {
+                ${fontSize1};
+                position: absolute;
+                content: "“";
+                display: block;
+                top: 13px;
+                left: 13px;
+              }
+
+              .phrase-quote {
+                display: block;
+              }
+
+              .phrase-author {
+                ${fontSize5};
+                font-weight: 400;
+              }
+            }
           }
 
-          .footer {
-            .payment-back {
-              .back-button {
-                display: inline-block;
-              }
+          .content-footer {
+            display: flex;
+            flex-direction: column;
+            padding: 0 ${space(3)} ${space(3)};
+
+            .back-button {
+              width: max-content;
+              display: inline-block;
             }
           }
         }
@@ -429,14 +467,14 @@ const planificationCards = [
     plan: PlansTypes.OnlinePlanification,
     type: "plani",
     typeVideo: "plani",
-    imagen: "/images/planificaciones_online.jpeg",
+    imagen: "/images/planificaciones_online.jpg",
   },
   {
     main: false,
     plan: PlansTypes.OnlinePlanification,
     type: "plan",
     typeVideo: "plani",
-    imagen: "/images/plan_plani_online.jpeg",
+    imagen: "/images/plan_plani_online.jpg",
   },
 ];
 
@@ -446,14 +484,14 @@ const virtualGymCards = [
     plan: PlansTypes.VirtualGym,
     type: "gym",
     typeVideo: "gym",
-    imagen: "/images/gym_virtual.jpeg",
+    imagen: "/images/gym_virtual.jpg",
   },
   {
     main: false,
     plan: PlansTypes.VirtualGym,
     type: "plan",
     typeVideo: "gym",
-    imagen: "/images/plan_gym_test.jpeg",
+    imagen: "/images/plan_gym_test.jpg",
   },
 ];
 
@@ -465,10 +503,12 @@ const Programs = () => {
   const { isOpen, openModal, closeModal } = useModal();
   const [camposVisibles, setCamposVisibles] = useState(false);
   const [stepForm, setStepForm] = useState(1);
-  const [modalPage, setModalPage] = useState(1);
+  const [modalPage, setModalPage] = useState(MODAL_PROGRAMS);
   const [planInfo, setPlanInfo] = useState({} as PlanType);
   const cardContainerGymRef = useRef(null);
   const cardContainerPlanificationRef = useRef(null);
+  const router = useRouter();
+
   const [formData, setFormData] = useState<FormDataType>({
     plan: "",
     nombre: "",
@@ -478,6 +518,7 @@ const Programs = () => {
     celular: "",
     objetivos: "",
   });
+
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const onlyAlphabeticalRegex = /^[A-Za-zÁÉÍÓÚÜáéíóúüñÑ\s]+$/;
@@ -528,7 +569,7 @@ const Programs = () => {
         "localPart.invalid":
           "El campo sólo debe contener letras, números y caracteres permitidos.",
         "noAtDomainRegex.invalid":
-          "Sólo emails de gmail están permitidos. No incluyas nada después del arroba.",
+          "Sólo emails de gmail están permitidos. No incluyas ni el arroba ni lo que sigue despues del arroba.",
       }),
     celular: Joi.string().pattern(/^\d+$/).min(6).required().messages({
       "string.empty": "El celular es obligatorio.",
@@ -550,60 +591,6 @@ const Programs = () => {
       lenis.start(); // Reactiva el scroll
     }
   }, [isOpen, lenis]);
-
-  useEffect(() => {
-    if (formData.nombre?.trim() && formData.pais?.trim()) {
-      setCamposVisibles(true);
-    } else {
-      setCamposVisibles(false);
-    }
-  }, [formData.nombre, formData.pais]);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const searchParams = new URLSearchParams(window.location.search);
-      if (searchParams.get("modal") === "1") {
-        setModalPage(2);
-        openModal();
-      }
-      if (searchParams.get("modal") === "3") {
-        setModalPage(3);
-        openModal();
-      }
-    }
-  }, [openModal]);
-
-  useEffect(() => {
-    const modal = document.querySelector(".modal-content");
-    const body = document.querySelector("body");
-    if (!modal) return;
-    const stopScrollPropagation = (e: Event) => e.stopPropagation();
-    if (isOpen) {
-      body?.classList.add("modal-open");
-      modal.addEventListener("wheel", stopScrollPropagation, {
-        passive: false,
-      });
-      modal.addEventListener("touchmove", stopScrollPropagation, {
-        passive: false,
-      });
-    } else {
-      body?.classList.remove("modal-open");
-      modal.removeEventListener("wheel", stopScrollPropagation);
-      modal.removeEventListener("touchmove", stopScrollPropagation);
-    }
-    return () => {
-      modal.removeEventListener("wheel", stopScrollPropagation);
-      modal.removeEventListener("touchmove", stopScrollPropagation);
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
-    const info = plansData.plans.find(
-      (plan: any) => plan.sku === formData.plan
-    ) as PlanType;
-
-    setPlanInfo(info);
-  }, [formData.plan]);
 
   const handleVirtualGymCTA = () => {
     setFormData({ ...formData, plan: virtualGymCards[0].plan });
@@ -629,7 +616,7 @@ const Programs = () => {
       objetivos: "",
     });
     closeModal();
-    setModalPage(1);
+    setModalPage(MODAL_PROGRAMS);
     setStepForm(1);
   };
 
@@ -661,6 +648,61 @@ const Programs = () => {
       setStepForm(2);
     }
   };
+
+  useEffect(() => {
+    if (formData.nombre?.trim() && formData.pais?.trim()) {
+      setCamposVisibles(true);
+    } else {
+      setCamposVisibles(false);
+    }
+  }, [formData.nombre, formData.pais]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const searchParams = new URLSearchParams(window.location.search);
+    const modalName = [MODAL_PURCHASE_SUCCESS, MODAL_PURCHASE_FAILED].find(
+      (name) => name === searchParams.get("modal")
+    );
+    if (!modalName) return;
+    setModalPage(modalName);
+    openModal();
+  }, []);
+
+  useEffect(() => {
+    const modal = document.querySelector(".modal-content");
+    const body = document.querySelector("body");
+    if (!modal) return;
+    const stopScrollPropagation = (e: Event) => e.stopPropagation();
+    if (isOpen) {
+      body?.classList.add("modal-open");
+      modal.addEventListener("wheel", stopScrollPropagation, {
+        passive: false,
+      });
+      modal.addEventListener("touchmove", stopScrollPropagation, {
+        passive: false,
+      });
+    } else {
+      const searchParams = new URLSearchParams(window.location.search);
+      if (!searchParams.get("modal")) setModalPage(MODAL_PROGRAMS);
+      searchParams.delete("modal");
+      router.push(`/?${searchParams.toString()}`);
+      body?.classList.remove("modal-open");
+      modal.removeEventListener("wheel", stopScrollPropagation);
+      modal.removeEventListener("touchmove", stopScrollPropagation);
+    }
+    return () => {
+      modal.removeEventListener("wheel", stopScrollPropagation);
+      modal.removeEventListener("touchmove", stopScrollPropagation);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    const info = plansData.plans.find(
+      (plan: any) => plan.sku === formData.plan
+    ) as PlanType;
+
+    setPlanInfo(info);
+  }, [formData.plan]);
 
   const textInputStyles = {
     "& .MuiInputBase-input": {
@@ -704,7 +746,6 @@ const Programs = () => {
     fontFamily: "var(--font-jost)",
     "&:hover": {
       borderColor: "var(--secondary-color)",
-      // backgroundColor: "var(--secondary-color)",
     },
   };
 
@@ -889,360 +930,368 @@ const Programs = () => {
       <div className={classNames(["modal", { open: isOpen }])}>
         <div className="modal-content">
           <CloseIcon className="modal-close-button" onClick={handleClose} />
+          <div className="modal-scroll-wrapper">
+            {modalPage === MODAL_PROGRAMS && (
+              <div className="content">
+                <div className="content-header">
+                  {isOpen && (
+                    <video
+                      preload="auto"
+                      autoPlay
+                      controls={false}
+                      disablePictureInPicture
+                      controlsList="nodownload noremoteplayback noplaybackrate nofullscreen"
+                      className="video"
+                      onClick={(evt: any) => {
+                        evt.target?.paused
+                          ? evt.target?.play()
+                          : evt.target?.pause();
+                      }}
+                      src={
+                        formData.plan === PlansTypes.VirtualGym
+                          ? require("../public/videos/intro_gym.mp4")
+                          : require("../public/videos/intro_planificaciones.mp4")
+                      }
+                    />
+                  )}
+                </div>
 
-          {modalPage === 1 && (
-            <div className="step-1">
-              {isOpen && (
-                <video
-                  autoPlay
-                  controls={false}
-                  disablePictureInPicture
-                  controlsList="nodownload noremoteplayback noplaybackrate nofullscreen"
-                  className="video"
-                  onClick={(evt: any) => {
-                    evt.target?.paused
-                      ? evt.target?.play()
-                      : evt.target?.pause();
-                  }}
-                  src={
-                    formData.plan === PlansTypes.VirtualGym
-                      ? require("../public/videos/intro_gym.mp4")
-                      : require("../public/videos/intro_planificaciones.mp4")
-                  }
-                />
-              )}
-              <form className="form">
-                {stepForm === 1 && (
-                  <>
-                    <p className="title">
-                      Regístrate y planifica tus objetivos
-                    </p>
-                    <div className="fields">
-                      <div className="field">
-                        <label className="" htmlFor="nombre">
-                          Nombre y Apellido
-                        </label>
-                        <TextField
-                          variant="outlined"
-                          id="nombre"
-                          name="nombre"
-                          value={formData.nombre}
-                          onChange={handleInputChange}
-                          placeholder="Juan Pérez"
-                          sx={textInputStyles}
-                          required
-                        />
-                        {formErrors.nombre && (
-                          <p style={{ color: "red" }}>{formErrors.nombre}</p>
-                        )}
-                      </div>
-                      <div className="field">
-                        <label className="" htmlFor="pais">
-                          País
-                        </label>
-                        <TextField
-                          variant="outlined"
-                          id="pais"
-                          select
-                          name="pais"
-                          defaultValue=""
-                          value={formData.pais}
-                          onChange={handleInputChange}
-                          required
-                          SelectProps={selectedProps as SelectProps}
-                        >
-                          {COUNTRIES.map((country) => (
-                            <MenuItem
-                              key={country.code}
-                              value={country.code}
-                              sx={selectInputStyles}
+                <div className="content-body">
+                  <form className="form">
+                    {stepForm === 1 && (
+                      <>
+                        <p className="title">
+                          Regístrate y planifica tus objetivos
+                        </p>
+                        <div className="fields">
+                          <div className="field">
+                            <label className="" htmlFor="nombre">
+                              Nombre y Apellido
+                            </label>
+                            <TextField
+                              variant="outlined"
+                              id="nombre"
+                              name="nombre"
+                              value={formData.nombre}
+                              onChange={handleInputChange}
+                              placeholder="Juan Pérez"
+                              sx={textInputStyles}
+                              required
+                            />
+                            {formErrors.nombre && (
+                              <p style={{ color: "red" }}>
+                                {formErrors.nombre}
+                              </p>
+                            )}
+                          </div>
+                          <div className="field">
+                            <label className="" htmlFor="pais">
+                              País
+                            </label>
+                            <TextField
+                              variant="outlined"
+                              id="pais"
+                              select
+                              name="pais"
+                              defaultValue=""
+                              value={formData.pais}
+                              onChange={handleInputChange}
+                              required
+                              SelectProps={selectedProps as SelectProps}
                             >
-                              <span className="select-option">
-                                {country.flag} {country.name}
+                              {COUNTRIES.map((country) => (
+                                <MenuItem
+                                  key={country.code}
+                                  value={country.code}
+                                  sx={selectInputStyles}
+                                >
+                                  <span className="select-option">
+                                    {country.flag} {country.name}
+                                  </span>
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                            {formErrors.pais && (
+                              <p style={{ color: "red" }}>{formErrors.pais}</p>
+                            )}
+                          </div>
+                          {camposVisibles && (
+                            <>
+                              <div className="field">
+                                <label className="" htmlFor="ciudad">
+                                  Ciudad
+                                </label>
+                                <TextField
+                                  variant="outlined"
+                                  id="ciudad"
+                                  name="ciudad"
+                                  value={formData.ciudad}
+                                  onChange={handleInputChange}
+                                  placeholder="Ingresá tu ciudad"
+                                  sx={textInputStyles}
+                                  required
+                                />
+                                {formErrors.ciudad && (
+                                  <p style={{ color: "red" }}>
+                                    {formErrors.ciudad}
+                                  </p>
+                                )}
+                              </div>
+                              <div className="field">
+                                <label className="" htmlFor="emailLocalPart">
+                                  Correo Electrónico
+                                </label>
+                                <TextField
+                                  variant="outlined"
+                                  id="emailLocalPart"
+                                  name="emailLocalPart"
+                                  value={formData.emailLocalPart}
+                                  onChange={handleInputChange}
+                                  placeholder="Solo correos gmail"
+                                  sx={textInputStyles}
+                                  required
+                                  slotProps={{
+                                    input: {
+                                      endAdornment: (
+                                        <span className="field-adornment">
+                                          @gmail.com
+                                        </span>
+                                      ),
+                                    },
+                                  }}
+                                />
+                                {formErrors.emailLocalPart && (
+                                  <p style={{ color: "red" }}>
+                                    {formErrors.emailLocalPart}
+                                  </p>
+                                )}
+                              </div>
+                              <div className="field">
+                                <label className="" htmlFor="celular">
+                                  Celular
+                                </label>
+                                <TextField
+                                  variant="outlined"
+                                  id="celular"
+                                  name="celular"
+                                  value={formData.celular}
+                                  onChange={handleInputChange}
+                                  placeholder="0123456789"
+                                  sx={textInputStyles}
+                                  required
+                                  slotProps={{
+                                    input: {
+                                      startAdornment: (
+                                        <span className="field-adornment">
+                                          {
+                                            PHONE_CODES[
+                                              formData.pais as keyof typeof PHONE_CODES
+                                            ]
+                                          }
+                                        </span>
+                                      ),
+                                    },
+                                  }}
+                                />
+                                {formErrors.celular && (
+                                  <p style={{ color: "red" }}>
+                                    {formErrors.celular}
+                                  </p>
+                                )}
+                              </div>
+                              <div className="field">
+                                <label className="" htmlFor="objetivos">
+                                  Objetivos
+                                </label>
+                                <TextField
+                                  variant="outlined"
+                                  id="objetivos"
+                                  name="objetivos"
+                                  value={formData.objetivos}
+                                  onChange={handleInputChange}
+                                  placeholder="Contame tus objetivos"
+                                  sx={textInputStyles}
+                                  multiline
+                                  maxRows={4}
+                                  required
+                                />
+                                {formErrors.objetivos && (
+                                  <p style={{ color: "red" }}>
+                                    {formErrors.objetivos}
+                                  </p>
+                                )}
+                              </div>
+                              <div className="submit">
+                                <Button
+                                  variant="text"
+                                  onClick={handleClose}
+                                  sx={cancelButtonStyles}
+                                >
+                                  Cancelar
+                                </Button>
+                                <Button
+                                  variant="contained"
+                                  onClick={handleFormValidation}
+                                  sx={nextButtonStyles}
+                                >
+                                  Siguiente
+                                </Button>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </>
+                    )}
+                    {stepForm === 2 && (
+                      <div className="payment-form">
+                        <div className="header">
+                          <p className="title">Pago</p>
+                          <div className="payment-details">
+                            <div className="payment-details-partial">
+                              <span>{planInfo.name}</span>
+                              {formData.pais === "ARG" && (
+                                <span>
+                                  {Number(planInfo?.price.ars)}{" "}
+                                  <small>00</small> ARS
+                                </span>
+                              )}
+                              {formData.pais !== "ARG" && (
+                                <span>
+                                  {Number(planInfo?.price.usd)}{" "}
+                                  <small>00</small> USD
+                                </span>
+                              )}
+                            </div>
+                            <hr />
+                            <div className="payment-details-partial">
+                              <strong>Total</strong>
+                              {formData.pais === "ARG" && (
+                                <span>
+                                  {Number(planInfo?.price.ars)}{" "}
+                                  <small>00</small> ARS
+                                </span>
+                              )}
+                              {formData.pais !== "ARG" && (
+                                <span>
+                                  {Number(planInfo?.price.usd)}{" "}
+                                  <small>00</small> USD
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="payment-action">
+                            <div className="payment-info">
+                              <span className="">
+                                Opciones de pago en tu país:
                               </span>
-                            </MenuItem>
-                          ))}
-                        </TextField>
-                        {formErrors.pais && (
-                          <p style={{ color: "red" }}>{formErrors.pais}</p>
-                        )}
+                            </div>
+                            <div className="payment-button">
+                              {formData.pais !== "ARG" && (
+                                <PayPalComponent
+                                  className="paypal-button"
+                                  formData={formData}
+                                />
+                              )}
+                              {formData.pais === "ARG" && (
+                                <MercadopagoComponent
+                                  className="mercadopago-button"
+                                  formData={formData}
+                                />
+                              )}
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      {camposVisibles && (
-                        <>
-                          <div className="field">
-                            <label className="" htmlFor="ciudad">
-                              Ciudad
-                            </label>
-                            <TextField
-                              variant="outlined"
-                              id="ciudad"
-                              name="ciudad"
-                              value={formData.ciudad}
-                              onChange={handleInputChange}
-                              placeholder="Ingresá tu ciudad"
-                              sx={textInputStyles}
-                              required
-                            />
-                            {formErrors.ciudad && (
-                              <p style={{ color: "red" }}>
-                                {formErrors.ciudad}
-                              </p>
-                            )}
-                          </div>
-                          <div className="field">
-                            <label className="" htmlFor="emailLocalPart">
-                              Correo Electrónico
-                            </label>
-                            <TextField
-                              variant="outlined"
-                              id="emailLocalPart"
-                              name="emailLocalPart"
-                              value={formData.emailLocalPart}
-                              onChange={handleInputChange}
-                              placeholder="Solo correos gmail"
-                              sx={textInputStyles}
-                              required
-                              slotProps={{
-                                input: {
-                                  endAdornment: (
-                                    <span className="field-adornment">
-                                      @gmail.com
-                                    </span>
-                                  ),
-                                },
-                              }}
-                            />
-                            {formErrors.emailLocalPart && (
-                              <p style={{ color: "red" }}>
-                                {formErrors.emailLocalPart}
-                              </p>
-                            )}
-                          </div>
-                          <div className="field">
-                            <label className="" htmlFor="celular">
-                              Celular
-                            </label>
-                            <TextField
-                              variant="outlined"
-                              id="celular"
-                              name="celular"
-                              value={formData.celular}
-                              onChange={handleInputChange}
-                              placeholder="0123456789"
-                              sx={textInputStyles}
-                              required
-                              slotProps={{
-                                input: {
-                                  startAdornment: (
-                                    <span className="field-adornment">
-                                      {
-                                        PHONE_CODES[
-                                          formData.pais as keyof typeof PHONE_CODES
-                                        ]
-                                      }
-                                    </span>
-                                  ),
-                                },
-                              }}
-                            />
-                            {formErrors.celular && (
-                              <p style={{ color: "red" }}>
-                                {formErrors.celular}
-                              </p>
-                            )}
-                          </div>
-                          <div className="field">
-                            <label className="" htmlFor="objetivos">
-                              Objetivos
-                            </label>
-                            <TextField
-                              variant="outlined"
-                              id="objetivos"
-                              name="objetivos"
-                              value={formData.objetivos}
-                              onChange={handleInputChange}
-                              placeholder="Contame tus objetivos"
-                              sx={textInputStyles}
-                              multiline
-                              maxRows={4}
-                              required
-                            />
-                            {formErrors.objetivos && (
-                              <p style={{ color: "red" }}>
-                                {formErrors.objetivos}
-                              </p>
-                            )}
-                          </div>
-                          <div className="submit">
-                            <Button
-                              variant="text"
-                              onClick={handleClose}
-                              sx={cancelButtonStyles}
-                            >
-                              Cancelar
-                            </Button>
-                            <Button
-                              variant="contained"
-                              onClick={handleFormValidation}
-                              sx={nextButtonStyles}
-                            >
-                              Siguiente
-                            </Button>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </>
-                )}
+                    )}
+                  </form>
+                </div>
+
                 {stepForm === 2 && (
-                  <div className="payment-form">
-                    <div className="header">
-                      <p className="title">Pago</p>
-                      <div className="payment-details">
-                        <div className="payment-details-partial">
-                          <span>{planInfo.name}</span>
-                          {formData.pais === "ARG" && (
-                            <span>
-                              {Number(planInfo?.price.ars)} <small>00</small>{" "}
-                              ARS
-                            </span>
-                          )}
-                          {formData.pais !== "ARG" && (
-                            <span>
-                              {Number(planInfo?.price.usd)} <small>00</small>{" "}
-                              USD
-                            </span>
-                          )}
-                        </div>
-                        <hr />
-                        <div className="payment-details-partial">
-                          <strong>Total</strong>
-                          {formData.pais === "ARG" && (
-                            <span>
-                              {Number(planInfo?.price.ars)} <small>00</small>{" "}
-                              ARS
-                            </span>
-                          )}
-                          {formData.pais !== "ARG" && (
-                            <span>
-                              {Number(planInfo?.price.usd)} <small>00</small>{" "}
-                              USD
-                            </span>
-                          )}
-                        </div>
-                        {/* <span className="">
-                        Desarrollar tu mejor físico está a solo unos pasos más
-                        de distancia. Un gran hombre dijo una vez: "No cuentes
-                        los días, haz que los días cuenten". —Muhammad Alí.
-                        Recuerde que los resultados no se obtienen a menos que
-                        comiences, ¡Así que comencemos HOY!
-                      </span> */}
-                      </div>
-                      <div className="payment-action">
-                        <div className="payment-info">
-                          <span className="">Opciones de pago en tu país:</span>
-                        </div>
-                        <div className="payment-button">
-                          {formData.pais !== "ARG" && (
-                            <PayPalComponent
-                              className="paypal-button"
-                              formData={formData}
-                            />
-                          )}
-                          {formData.pais === "ARG" && (
-                            <MercadopagoComponent
-                              className="mercadopago-button"
-                              formData={formData}
-                            />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="footer">
-                      <div className="payment-back"></div>
-                      <Button
-                        className="back-button"
-                        variant="outlined"
-                        onClick={() => setStepForm(1)}
-                        sx={cancelButtonStyles}
-                      >
-                        Volver
-                      </Button>
-                    </div>
+                  <div className="content-footer">
+                    <Button
+                      className="back-button"
+                      variant="outlined"
+                      onClick={() => setStepForm(1)}
+                      sx={cancelButtonStyles}
+                    >
+                      Volver
+                    </Button>
                   </div>
                 )}
-              </form>
-            </div>
-          )}
-          {modalPage === 2 && (
-            <>
-              <button className="" onClick={handleClose}>
-                X
-              </button>
-              <div className="">
-                <div className="">
-                  <Typography
-                    id="modal-modal-title"
-                    variant="h6"
-                    component="h2"
+              </div>
+            )}
+            {modalPage === MODAL_PURCHASE_SUCCESS && (
+              <div className="content">
+                <div className="content-header">
+                  {isOpen && (
+                    <video
+                      muted
+                      preload="auto"
+                      autoPlay
+                      controls={true}
+                      disablePictureInPicture
+                      controlsList="nodownload noremoteplayback noplaybackrate nofullscreen"
+                      className="video"
+                      onClick={(evt: any) => {
+                        evt.target?.paused
+                          ? evt.target?.play()
+                          : evt.target?.pause();
+                      }}
+                      src={require("../public/videos/agradecimiento_pago.mp4")}
+                    />
+                  )}
+                </div>
+
+                <div className="content-body">
+                  <p className="title">¡Te doy la bienvenida!</p>
+                  <p>
+                    Gracias por unirte al <strong>Team ECNU</strong>.
+                  </p>
+                  <p>
+                    Dentro de las <strong>proximas 24hs</strong> me pondre en
+                    contacto contigo por WhatsApp.
+                  </p>
+                  <p className="phrase-text">
+                    <span className="phrase-quote">
+                      No cuentes los días, haz que los días cuenten.
+                    </span>{" "}
+                    <small className="phrase-author">Muhammad Alí</small>
+                  </p>
+                  <p>
+                    Recuerda que no obtendrás resultados si no das el primer
+                    paso.
+                  </p>
+                </div>
+
+                <div className="content-footer">
+                  <p>
+                    <strong>¡Comencemos!</strong>
+                  </p>
+                </div>
+              </div>
+            )}
+            {modalPage === MODAL_PURCHASE_FAILED && (
+              <div className="content">
+                <div className="content-header"></div>
+                <div className="content-body">
+                  <p className="title">Ups... hubo un problema</p>
+                  <p>
+                    No se pudo acreditar tu pago. Volve a intentarlo nuevamente.
+                  </p>
+                </div>
+                <div className="content-footer">
+                  <Button
+                    className="back-button"
+                    variant="outlined"
+                    onClick={() => closeModal()}
+                    sx={cancelButtonStyles}
                   >
-                    ¡Bienvenid@!
-                  </Typography>
-                  <span className="">
-                    Gracias por unirte al team ECNU. Acontinuacion te informo
-                    como continuamos!
-                  </span>
-                </div>
-                <div className="">
-                  <CheckCircleIcon className="" />
-                  <span className="">PAGO APROBADO</span>
+                    Volver
+                  </Button>
                 </div>
               </div>
-              <div className="">
-                <video
-                  autoPlay
-                  controls
-                  disablePictureInPicture
-                  controlsList="nodownload noremoteplayback noplaybackrate nofullscreen"
-                  className="rounded-md"
-                  src={require("../public/videos/agradecimiento_pago.mp4")}
-                />
-              </div>
-              <Steps step={stepForm} modal={modalPage} />
-              <div className="">
-                <InfoIcon className="" />
-                <span className="">
-                  En las proximas 24hs me pondre en contacto contigo por
-                  WhatsApp al numero anunciado en el formulario.
-                </span>
-              </div>
-            </>
-          )}
-          {modalPage === 3 && (
-            <>
-              <button className="" onClick={handleClose}>
-                X
-              </button>
-              <div className="">
-                <div className="">
-                  <Typography
-                    id="modal-modal-title"
-                    variant="h6"
-                    component="h2"
-                  >
-                    Ups!
-                  </Typography>
-                  <span className="">
-                    vemos que no se pudo acreditar tu pago. Volve a intentar mas
-                    tarde!
-                  </span>
-                </div>
-                <div className="">
-                  <ErrorOutlineIcon className="" />
-                </div>
-              </div>
-            </>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </section>

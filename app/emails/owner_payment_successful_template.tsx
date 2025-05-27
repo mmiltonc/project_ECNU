@@ -10,9 +10,12 @@ import {
   Img,
 } from "@react-email/components";
 
-interface PaymentPendingEmailType {
+interface OwnerPaymentSuccessfulEmailType {
   name: string;
   plan: string;
+  email: string;
+  phone: string;
+  date: string;
 }
 
 const styles = {
@@ -34,17 +37,22 @@ const styles = {
   firm: { fontSize: "14px", color: "#333", marginTop: "20px" },
   footer: { backgroundColor: "#ffffff", width: "100%" },
 };
-export const PaymentPendingTemplate = ({
+export const OwnerPaymentSuccessfulTemplate = ({
   name,
   plan,
-}: Readonly<PaymentPendingEmailType>) => {
+  email,
+  phone,
+  date,
+}: Readonly<OwnerPaymentSuccessfulEmailType>) => {
   return (
     <Html>
       <Head>
         <meta name="color-scheme" content="light" />
         <meta name="supported-color-schemes" content="light" />
       </Head>
-      <Preview>¡Tu pago {plan} se encuentra pendiente de aprobación!</Preview>{" "}
+      <Preview>
+        {name} se suscribio a {plan}!
+      </Preview>
       {/* Vista previa en clientes de correo */}
       <Body style={styles.body}>
         <Container style={styles.header}>
@@ -58,33 +66,24 @@ export const PaymentPendingTemplate = ({
           </a>
         </Container>
         <Container style={styles.main}>
-          <Text style={styles.text}>
-            ¡Tu pago <strong>{plan}</strong> se encuentra pendiente de
-            aprobación!
-          </Text>
-          <Text style={styles.text}>
-            Si no te llega un mail de confirmación en las próximas 24 horas,
-            consulta con tu medio de pago el estado del mismo.
-          </Text>
-          <Hr />
-          <Text style={styles.firm}>Equipo de E.C.N.U.</Text>
-        </Container>
-        <Container style={styles.footer}>
-          <Img
-            width="100%"
-            src="https://ecnuteam.com/images/emails/payment-pending-footer-image.jpg"
-            alt="ECNU Logo"
-            style={styles.footerImage}
-          />
+          <Text style={styles.text}>Un nuevo alumno se suscribió</Text>
+          <Text style={styles.text}>Nombre: {name}</Text>
+          <Text style={styles.text}>Plan: {plan}</Text>
+          <Text style={styles.text}>Teléfono: {phone}</Text>
+          <Text style={styles.text}>Email: {email}</Text>
+          <Text style={styles.text}>Fecha: {date}</Text>
         </Container>
       </Body>
     </Html>
   );
 };
 
-PaymentPendingTemplate.PreviewProps = {
+OwnerPaymentSuccessfulTemplate.PreviewProps = {
   name: "John Doe",
   plan: "Plan Plus - Gym Virtual",
-} as PaymentPendingEmailType;
+  email: "jdoe@example.com",
+  phone: "11111111",
+  date: new Date().toDateString(),
+} as OwnerPaymentSuccessfulEmailType;
 
-export default PaymentPendingTemplate;
+export default OwnerPaymentSuccessfulTemplate;
