@@ -207,9 +207,9 @@ const Contact = () => {
               className="contact-button secondary"
               target="_blank"
               rel="noopener noreferrer"
-              href="mailto:hola@ecnuteam.com"
+              href="mailto:support@ecnuteam.com"
             >
-              hola@ecnuteam.com
+              support@ecnuteam.com
             </a>
           </div>
         </div>
