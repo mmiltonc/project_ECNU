@@ -97,7 +97,8 @@ export default function RootLayout({
         ])}
       >
         {children}
-        <GoogleTagManager gtmId="GTM-KFWW9DTG" />
+        <GoogleTagManager gtmId="GTM-WS7SKNNL" />
+        {/* <GoogleTagManager gtmId="GTM-KFWW9DTG" /> */}
       </body>
     </html>
   );
