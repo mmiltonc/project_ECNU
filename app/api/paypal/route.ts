@@ -172,7 +172,7 @@ export async function POST(request: Request) {
       const apiKey = process.env.RESEND_API_KEY;
       const resend = new Resend(apiKey);
       await resend.emails.send({
-        from: `E.C.N.U. <onboarding@resend.dev>`,
+        from: `E.C.N.U. <noreply@ecnuteam.com>`,
         to: "facundopereztomasek@gmail.com",
         subject: `No se pudo guardar el nuevo alumno ${user.name}`,
         react: CreateUserErrorTemplate(user),

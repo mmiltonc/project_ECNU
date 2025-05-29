@@ -14,7 +14,6 @@
 - [x] Load resend key from env vars
 - [x] Email templates images should be absolute urls (should be in production to get the url)
 
-
 - [x] Chequear lo que instalo con apt para ver si el servidor tiene todo
 - [x] Chequear que usuario se loguea a ubuntu
 - [x] Ver apuntar el dominio

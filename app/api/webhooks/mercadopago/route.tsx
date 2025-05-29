@@ -63,7 +63,7 @@ const sendBackupEmail = async (userId: string, status: string) => {
   const apiKey = process.env.RESEND_API_KEY;
   const resend = new Resend(apiKey);
   await resend.emails.send({
-    from: `E.C.N.U. <onboarding@resend.dev>`,
+    from: `E.C.N.U. <noreply@ecnuteam.com>`,
     to: "facundopereztomasek@gmail.com",
     subject: `Intento de pago de alumno ${userId}`,
     react: UpdateUserErrorTemplate(paymentData),
@@ -72,7 +72,7 @@ const sendBackupEmail = async (userId: string, status: string) => {
 
 const sendOwnerPaymentSuccessfulEmail = async (payer: PayerInterface) => {
   await resend.emails.send({
-    from: `E.C.N.U. <onboarding@resend.dev>`,
+    from: `E.C.N.U. <noreply@ecnuteam.com>`,
     to: "facundopereztomasek@gmail.com",
     subject: `Un nuevo alumno: ${payer.name} suscripto a ${payer.plan}!`,
     react: OwnerPaymentSuccessfulTemplate(payer),
@@ -81,7 +81,7 @@ const sendOwnerPaymentSuccessfulEmail = async (payer: PayerInterface) => {
 
 const sendPaymentSuccessfulEmail = async (payer: PayerInterface) => {
   await resend.emails.send({
-    from: `E.C.N.U. <onboarding@resend.dev>`,
+    from: `E.C.N.U. <noreply@ecnuteam.com>`,
     to: payer.email,
     subject: `¡Bienvenido ${payer.name} a tu ${payer.plan}!`,
     react: PaymentSuccessfulTemplate(payer),
@@ -90,7 +90,7 @@ const sendPaymentSuccessfulEmail = async (payer: PayerInterface) => {
 
 const sendPaymentPendingEmail = async (payer: PayerInterface) => {
   await resend.emails.send({
-    from: "E.C.N.U. <onboarding@resend.dev>",
+    from: "E.C.N.U. <noreply@ecnuteam.com>",
     to: payer.email,
     subject: "Pago pendiente de aprobación",
     react: PaymentSuccessfulTemplate(payer),
@@ -99,7 +99,7 @@ const sendPaymentPendingEmail = async (payer: PayerInterface) => {
 
 const sendPaymentRejectedEmail = async (payer: PayerInterface) => {
   await resend.emails.send({
-    from: "E.C.N.U. <onboarding@resend.dev>",
+    from: "E.C.N.U. <noreply@ecnuteam.com>",
     to: payer.email,
     subject: "Pago rechazado",
     react: PaymentSuccessfulTemplate(payer),
