@@ -1221,7 +1221,11 @@ const Programs = () => {
               </div>
             )}
             {modalPage === MODAL_PURCHASE_SUCCESS && (
-              <div className="content">
+              <div
+                className="content"
+                data-id="purchase_success"
+                id="purchase_success"
+              >
                 <div className="content-header">
                   {isOpen && (
                     <video
