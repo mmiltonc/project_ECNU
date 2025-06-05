@@ -12,7 +12,7 @@ module.exports = {
 
   deploy: {
     production: {
-      host: "ecnuteam.com",
+      host: "77.37.40.29",
       user: "deployer",
       key: "~/.ssh/deployer-ecnuteam",
       ref: "origin/develop",
