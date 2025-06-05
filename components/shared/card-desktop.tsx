@@ -1,22 +1,29 @@
-import React, { useEffect, useRef } from "react";
+import React, { ReactNode, useEffect, useRef } from "react";
 import { FC } from "react";
 import { StaticImageData } from "next/image";
 import gsap from "gsap";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PlansTypes } from "@/app/types/formData";
+import classNames from "classnames";
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface CardProps {
-  main: boolean;
   position: "left" | "right";
   image?: string | StaticImageData;
-  plan: PlansTypes;
   parent: React.RefObject<HTMLDivElement>;
+  className?: string;
+  children?: ReactNode | ReactNode[];
 }
 
-const CardDesktop: FC<CardProps> = ({ position, image, parent }) => {
+const CardDesktop: FC<CardProps> = ({
+  position,
+  image,
+  parent,
+  className,
+  children,
+}) => {
   const cardRef = useRef(null);
   const isMobile = useMediaQuery("(max-width: 800px)");
 
@@ -46,14 +53,14 @@ const CardDesktop: FC<CardProps> = ({ position, image, parent }) => {
 
   return (
     <div
-      className="card"
+      className={classNames("card", className)}
       style={{
         backgroundImage: image ? `url(${image})` : undefined,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
       }}
       ref={cardRef}
-    />
+    >
+      {children}
+    </div>
   );
 };
 

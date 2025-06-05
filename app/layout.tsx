@@ -1,8 +1,10 @@
 import "./globals.css";
 import classNames from "classnames";
 import { Jost, Oswald, Nunito_Sans } from "next/font/google";
-import { GoogleTagManager } from "@next/third-parties/google";
 import type { Viewport } from "next";
+import Script from "next/script";
+import { GTMScript } from "@/components/shared/GTPScript";
+import { GTMNoScript } from "@/components/shared/GTPNoScript";
 const jost = Jost({
   subsets: ["latin"],
   variable: "--font-jost",
@@ -84,6 +86,11 @@ export default function RootLayout({
   return (
     <html lang="es" className="scroll-smooth">
       <head>
+        <GTMScript
+          src="https://ecnuteam.com/precision/6oicubakbvo.js"
+          gtmId="GTM-KS5H2HMS"
+          apiKey="37b098df"
+        />
         <meta
           name="facebook-domain-verification"
           content="2wa2kjhh9ncgam0q7xic4t4k9o1wdq"
@@ -96,9 +103,11 @@ export default function RootLayout({
           nunitoSans.variable,
         ])}
       >
+        <GTMNoScript
+          src="https://ecnuteam.com/precision/ns.html"
+          gtmId="GTM-KS5H2HMS"
+        />
         {children}
-        <GoogleTagManager gtmId="GTM-WS7SKNNL" />
-        {/* <GoogleTagManager gtmId="GTM-KFWW9DTG" /> */}
       </body>
     </html>
   );

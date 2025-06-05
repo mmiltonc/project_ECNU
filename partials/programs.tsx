@@ -18,6 +18,7 @@ import plansData from "@/app/data/plans.json";
 import { useRouter } from "next/navigation";
 import {
   desktop,
+  desktopLarge,
   fontSize1,
   fontSize2,
   fontSize3,
@@ -33,6 +34,7 @@ import classNames from "classnames";
 import CloseIcon from "@mui/icons-material/Close";
 export const dynamic = "force-static";
 import Joi from "joi";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
 
 const MODAL_PURCHASE_SUCCESS = "purchaseSuccess";
 const MODAL_PURCHASE_FAILED = "purchaseFailed";
@@ -164,7 +166,6 @@ const styles = css`
       justify-content: center;
       gap: 32px;
       width: 100vw;
-      min-height: 100vh;
       position: relative;
       left: ${space(-3)};
       padding: 0 ${space(3)};
@@ -174,6 +175,7 @@ const styles = css`
         #fd5f44,
         #051422
       ) !important;
+      padding-bottom: ${space(6)};
 
       ${tablet(css`
         padding: ${space(6)} 0;
@@ -189,13 +191,147 @@ const styles = css`
       .card {
         height: 570px;
         width: 100%;
-        border: 2px solid var(--primary-color);
         border-radius: ${space(1)};
-        padding: ${space(2)};
+        box-shadow: 0 -1px 1px -1px #fd5f4402, 0 -10px 30px 10px #fd5f4405,
+          0 1px 1px 0px #fd5f4422, 0 10px 30px 10px #fd5f4433;
 
         ${tablet(css`
           width: 330px;
         `)}
+
+        &.card-image {
+          filter: grayscale(0.8) brightness(0.8);
+          background-size: cover;
+          background-position: center;
+
+          &.hide {
+            ${mobile(css`
+              display: none;
+            `)}
+          }
+        }
+
+        &.card-background {
+          background-position: top left;
+        }
+
+        .card-content {
+          display: flex;
+          gap: ${space(2)};
+          flex-direction: column;
+          height: 100%;
+
+          .title {
+            ${fontSize3};
+            border-radius: ${space(1)} ${space(1)} 0 0;
+            font-family: var(--font-jost);
+            font-weight: 800;
+            background-color: var(--background-color);
+            color: var(--white-color);
+            text-transform: uppercase;
+            padding: ${space(2)};
+            text-align: center;
+            mix-blend-mode: screen;
+          }
+
+          .list {
+            ${fontSize4};
+            display: flex;
+            gap: ${space(1)};
+            flex-direction: column;
+            font-family: var(--font-jost);
+            color: var(--white-color);
+            padding: 0 ${space(2)};
+
+            ${desktopLarge(css`
+              ${fontSize5};
+            `)}
+
+            .item {
+              display: flex;
+              gap: ${space(1)};
+
+              .item-disc {
+                ${fontSize4};
+                color: var(--primary-color);
+                position: relative;
+                top: 3px;
+              }
+            }
+          }
+
+          .price {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-direction: column;
+
+            .info {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-end;
+
+              .amount {
+                display: block;
+                font-weight: 800;
+                font-family: var(--font-nunito-sans);
+                border-bottom: 1px solid #87a7cb44;
+
+                span {
+                  font-size: 60px;
+                  line-height: 1;
+                  display: flex;
+                  align-items: center;
+
+                  &:before {
+                    content: "$";
+                    width: 0;
+                    position: relative;
+                    left: -1ch;
+                    font-size: 30px;
+                  }
+                  /* &:after {
+                    content: "";
+                    display: block;
+                    height: 1px;
+                    margin: ${space(1 / 2)} 0 ${space(1)};
+                    background-color: var(--secondary-color);
+                    opacity: 0.2;
+                  } */
+
+                  ${mobile(css`
+                    font-size: 65px;
+                    line-height: 0.9;
+                  `)}
+                }
+              }
+              small {
+                font-size: 13px;
+                line-height: 1.6;
+                text-transform: uppercase;
+              }
+            }
+
+            &:before {
+              content: "";
+              border-radius: ${space(1 / 2)};
+              box-shadow: 0 -1px 1px -1px var(--white-color),
+                0 -10px 30px 10px #ffffff04, 0 1px 1px 0px #ffffff08,
+                0 10px 30px 10px #ffffff16;
+              background-color: var(--background-color);
+              transform: skew(0deg, -4deg);
+              position: absolute;
+              bottom: 0;
+              left: -10px;
+              right: -10px;
+              height: 100%;
+              z-index: -1;
+            }
+          }
+        }
       }
     }
 
@@ -827,18 +963,62 @@ const Programs = () => {
 
         <div className="cards" ref={cardContainerGymRef}>
           <CardDesktop
+            className="card-background"
             parent={cardContainerGymRef}
-            main={virtualGymCards[0].main}
             position="left"
-            image={virtualGymCards[0].imagen}
-            plan={virtualGymCards[0].plan}
-          />
+            image="images/card-background.jpg"
+          >
+            <div className="card-content">
+              <h3 className="title">Gym Virtual</h3>
+
+              <ul className="list">
+                <li className="item">
+                  <TaskAltIcon className="item-disc" /> Acceso completo a los 3
+                  desafíos y a todos sus niveles (Inicial, Intermedio y
+                  Avanzado).
+                </li>
+                <li className="item">
+                  <TaskAltIcon className="item-disc" /> Clase grupal en vivo
+                  semanal para complementar tu entrenamiento.
+                </li>
+                <li className="item">
+                  <TaskAltIcon className="item-disc" /> Seguimiento semanal
+                  personalizado por WhatsApp.
+                </li>
+                <li className="item">
+                  <TaskAltIcon className="item-disc" /> Acceso a un grupo
+                  privado para acompañamiento y comunidad.
+                </li>
+                <li className="item">
+                  <TaskAltIcon className="item-disc" /> Guía nutricional básica
+                  para tu alimentación según tu objetivo.
+                </li>
+              </ul>
+
+              <div className="price">
+                <div className="info">
+                  <div className="amount">
+                    <span>
+                      {
+                        "132"
+                        // ||
+                        //   Number(
+                        //     plansData.plans.find(
+                        //       (plan) => plan.sku === PlansTypes.VirtualGym
+                        //     )?.price.ars )
+                      }
+                    </span>
+                  </div>
+                  <small>usd / 3 meses</small>
+                </div>
+              </div>
+            </div>
+          </CardDesktop>
           <CardDesktop
+            className="card-image hide"
             parent={cardContainerGymRef}
-            main={virtualGymCards[1].main}
             position="right"
-            image={virtualGymCards[1].imagen}
-            plan={virtualGymCards[1].plan}
+            image={"/images/gym_virtual_image.jpg"}
           />
         </div>
         <button className="plan-cta" onClick={handleVirtualGymCTA}>
@@ -888,6 +1068,12 @@ const Programs = () => {
           </section>
           <section className="text-section">
             <p className="text">
+              Cada rutina dura entre 45 y 80 minutos, con un enfoque claro:
+              desarrollar fuerza y control corporal.
+            </p>
+          </section>
+          <section className="text-section">
+            <p className="text">
               Recibís{" "}
               <i>
                 <strong>dos planificaciones nuevas cada mes</strong>
@@ -908,18 +1094,67 @@ const Programs = () => {
         </div>
         <div className="cards" ref={cardContainerPlanificationRef}>
           <CardDesktop
+            className="card-background"
             parent={cardContainerPlanificationRef}
-            main={planificationCards[0].main}
             position="left"
-            image={planificationCards[0].imagen}
-            plan={planificationCards[0].plan}
-          />
+            image="images/card-background.jpg"
+          >
+            <div className="card-content">
+              <h3 className="title">Calistenia Online</h3>
+
+              <ul className="list">
+                <li className="item">
+                  <TaskAltIcon className="item-disc" /> Una rutina nueva cada 14
+                  días.
+                </li>
+                <li className="item">
+                  <TaskAltIcon className="item-disc" /> Clase grupal en vivo
+                  semanal para complementar tu entrenamiento.
+                </li>
+                <li className="item">
+                  <TaskAltIcon className="item-disc" /> Seguimiento semanal
+                  personalizado por WhatsApp.
+                </li>
+                <li className="item">
+                  <TaskAltIcon className="item-disc" /> Acceso a un grupo
+                  privado para acompañamiento y comunidad.
+                </li>
+                <li className="item">
+                  <TaskAltIcon className="item-disc" /> Guía nutricional básica
+                  para tu alimentación según tu objetivo.
+                </li>
+                <li className="item">
+                  <TaskAltIcon className="item-disc" /> Necesitas barra de
+                  dominadas y paralelas o acceso a un parque con ese
+                  equipamiento.
+                </li>
+              </ul>
+
+              <div className="price">
+                <div className="info">
+                  <div className="amount">
+                    <span>
+                      {
+                        "132"
+                        // ||
+                        //   Number(
+                        //     plansData.plans.find(
+                        //       (plan) => plan.sku === PlansTypes.VirtualGym
+                        //     )?.price.ars
+                        //   )
+                      }
+                    </span>
+                  </div>
+                  <small>usd / 3 meses</small>
+                </div>
+              </div>
+            </div>
+          </CardDesktop>
           <CardDesktop
+            className="card-image hide"
             parent={cardContainerPlanificationRef}
-            main={planificationCards[1].main}
             position="right"
-            image={planificationCards[1].imagen}
-            plan={planificationCards[1].plan}
+            image={"/images/calistenia_online.jpg"}
           />
         </div>
         <button className="plan-cta" onClick={handleOnlinePlanificationCTA}>
