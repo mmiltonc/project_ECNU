@@ -206,18 +206,24 @@ const styles = css`
 
         &.gym-virtual {
           height: 536px;
-          background-image: url(/images/gym_virtual_image.jpg);
         }
 
         &.calistenia-online {
           height: 660px;
-          background-image: url(/images/calistenia_online.jpg);
         }
 
         &.card-image {
           filter: grayscale(0.8) brightness(0.8);
           background-size: cover;
           background-position: center;
+
+          &.gym-virtual {
+            background-image: url(/images/gym_virtual_image.jpg);
+          }
+
+          &.calistenia-online {
+            background-image: url(/images/calistenia_online.jpg);
+          }
 
           &.hide {
             ${mobile(css`
@@ -992,7 +998,7 @@ const Programs = () => {
 
         <div className="cards" ref={cardContainerGymRef}>
           <CardDesktop
-            className="card-background"
+            className="card-background gym-virtual"
             parent={cardContainerGymRef}
             position="left"
           >
@@ -1121,7 +1127,7 @@ const Programs = () => {
         </div>
         <div className="cards" ref={cardContainerPlanificationRef}>
           <CardDesktop
-            className="card-background"
+            className="card-background calistenia-online"
             parent={cardContainerPlanificationRef}
             position="left"
           >
