@@ -14,12 +14,13 @@ import { css } from "@emotion/react";
 import { sendGTMEvent } from "@next/third-parties/google";
 
 const styles = css`
-  overflow-x: hidden;
+  overflow: hidden;
   width: 100%;
 
   background-image: url(images/bgbw.jpg);
   background-position: bottom center;
   background-size: auto 120%;
+  min-height: 800px;
   height: 100svh;
   position: relative;
   background-blend-mode: soft-light;

@@ -32,7 +32,7 @@ export const viewport: Viewport = {
 
 export const metadata = {
   metadataBase: new URL("https://ecnuteam.com"),
-  title: "Exprimí tu potencial físico-mental con calistenia | ECNU Team",
+  title: "Exprimí tu potencial físico y mental con calistenia | ECNU Team",
   description:
     "Entrenamiento con peso corporal diseñado para mejorar el rendimiento físico y mental, fomentar hábitos saludables y sostenibles que promuevan bienestar y longevidad.",
   alternates: {
@@ -55,7 +55,7 @@ export const metadata = {
     ],
     locale: "es_AR",
     siteName: "ECNU Team",
-    title: "Exprimí tu potencial físico-mental con calistenia | ECNU Team",
+    title: "Exprimí tu potencial físico y mental con calistenia | ECNU Team",
     type: "website",
     url: "https://ecnuteam.com",
   },

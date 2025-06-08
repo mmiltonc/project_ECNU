@@ -81,11 +81,11 @@ const Introduction = () => {
           <div className="content">
             <h3 className="subtitle">Mentalidad Ecnu</h3>
             <p className="text">
-              ¿Tus miedos te frenan o la falta de decisión te prohibe avanzar?.
+              ¿Tus miedos te frenan o la falta de decisión te prohibe avanzar?
               Con mi sistema online vas a transformar esas dudas en tu fuerza
-              interna para el cambio, Modificar tu mentalidad es clave para
-              lograr sustentarnos a mediano-largo plazo y lograr los objetivos
-              que estas buscando.
+              interna para el cambio, modificar tu mentalidad es clave para
+              lograr sustentarnos a mediano y largo plazo, y lograr los
+              objetivos que estas buscando.
             </p>
           </div>
         </article>
@@ -97,8 +97,8 @@ const Introduction = () => {
             <p className="text">
               ¿Sentis que sos una montaña rusa de motivación que sube y baja en
               el entrenamiento? Te voy a mostrar de que manera optimizar las
-              semanas para que no sean una carga en tu vida, mas bien un
-              potenciador a la hora de ir en busca de tus objetivos. Elegí entre
+              semanas para que no sean una carga en tu vida, más bien un
+              potenciador a la hora de ir en busca de tus objetivos. Elegí entre{" "}
               <strong>Gym virtual</strong> o <strong>Calistenia Online</strong>{" "}
               y da el paso que cambiara tu vida para siempre.
             </p>
