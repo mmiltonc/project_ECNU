@@ -1,13 +1,7 @@
 "use client";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import {
-  desktop,
-  fontSize2,
-  fontSize3,
-  fontSize4,
-  space,
-} from "@/styles/global";
+import { desktop, fontSize2, space } from "@/styles/global";
 import Image from "next/image";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";

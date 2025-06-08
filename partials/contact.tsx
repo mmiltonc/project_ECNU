@@ -13,6 +13,7 @@ import {
   fontSize5,
   fontSize6,
   space,
+  tablet,
 } from "@/styles/global";
 import { TikTokIcon } from "@/components/icons/tiktok";
 
@@ -22,7 +23,7 @@ const styles = css`
   flex-direction: column;
 
   ${desktop(css`
-    padding: ${space(10)};
+    padding: ${space(10)} ${space(10)} ${space(2)} ${space(10)};
   `)}
 
   .footer-top {
@@ -31,7 +32,7 @@ const styles = css`
     flex-direction: column;
     padding-bottom: ${space(2)};
 
-    ${desktop(css`
+    ${tablet(css`
       flex-direction: row;
     `)}
 
@@ -137,7 +138,7 @@ const styles = css`
 
   .footer-bottom {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     gap: ${space(1)};
     padding-top: ${space(2)};

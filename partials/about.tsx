@@ -2,6 +2,7 @@
 
 import {
   desktop,
+  desktopLarge,
   fontSize1,
   fontSize2,
   fontSize3,
@@ -17,6 +18,18 @@ const styles = css`
 
   ${desktop(css`
     margin-top: 160px;
+
+    .anchor {
+      position: relative;
+      top: -150px;
+    }
+  `)}
+
+  ${desktopLarge(css`
+    .anchor {
+      position: relative;
+      top: -200px;
+    }
   `)}
 
   &:after,

@@ -1182,7 +1182,7 @@ const Programs = () => {
                 <li className="item">
                   <TaskAltIcon className="item-disc" /> Necesitas barra de
                   dominadas y paralelas o acceso a un parque con ese
-                  equipamiento.
+                  equipamiento
                 </li>
               </ul>
             </div>
