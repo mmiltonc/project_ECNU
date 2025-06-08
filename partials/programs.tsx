@@ -1182,12 +1182,16 @@ const Programs = () => {
                           ? evt.target?.play()
                           : evt.target?.pause();
                       }}
-                      src={
-                        formData.plan === PlansTypes.VirtualGym
-                          ? require("../public/videos/intro_gym.mp4")
-                          : require("../public/videos/intro_planificaciones.mp4")
-                      }
-                    />
+                    >
+                      <source
+                        src={
+                          formData.plan === PlansTypes.VirtualGym
+                            ? require("../public/videos/intro_gym.mp4")
+                            : require("../public/videos/intro_planificaciones.mp4")
+                        }
+                        type="video/mp4"
+                      />
+                    </video>
                   )}
                 </div>
 
@@ -1477,7 +1481,12 @@ const Programs = () => {
                           : evt.target?.pause();
                       }}
                       src={require("../public/videos/agradecimiento_pago.mp4")}
-                    />
+                    >
+                      <source
+                        src={require("../public/videos/agradecimiento_pago.mp4")}
+                        type="video/mp4"
+                      />
+                    </video>
                   )}
                 </div>
 
