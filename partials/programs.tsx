@@ -168,14 +168,13 @@ const styles = css`
       width: 100vw;
       position: relative;
       left: ${space(-3)};
-      padding: 0 ${space(3)};
+      padding: ${space(6)} ${space(3)};
       margin-bottom: ${space(3)};
       background-image: radial-gradient(
         closest-side,
         #fd5f44,
         #051422
       ) !important;
-      padding-bottom: ${space(6)};
 
       ${tablet(css`
         padding: ${space(6)} 0;
@@ -189,15 +188,31 @@ const styles = css`
       `)}
 
       .card {
-        height: 570px;
         width: 100%;
         border-radius: ${space(1)};
         box-shadow: 0 -1px 1px -1px #fd5f4402, 0 -10px 30px 10px #fd5f4405,
           0 1px 1px 0px #fd5f4422, 0 10px 30px 10px #fd5f4433;
 
+        background: linear-gradient(
+          to bottom,
+          #051422dd 50%,
+          #05142255 60%,
+          #05142200 100%
+        );
+
         ${tablet(css`
           width: 330px;
         `)}
+
+        &.gym-virtual {
+          height: 536px;
+          background-image: url(/images/gym_virtual_image.jpg);
+        }
+
+        &.calistenia-online {
+          height: 660px;
+          background-image: url(/images/calistenia_online.jpg);
+        }
 
         &.card-image {
           filter: grayscale(0.8) brightness(0.8);
@@ -220,115 +235,131 @@ const styles = css`
           gap: ${space(2)};
           flex-direction: column;
           height: 100%;
+          padding: ${space(3)};
+          border: 1px solid #ffffff22;
+          border-radius: ${space(1)};
+          position: relative;
+          overflow: hidden;
+
+          &:before {
+            content: "";
+            background-image: url(/images/card-background.jpg);
+            mix-blend-mode: darken;
+            background-position: center left;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            z-index: -1;
+          }
 
           .title {
-            ${fontSize3};
-            border-radius: ${space(1)} ${space(1)} 0 0;
+            font-size: 27px;
+            line-height: 1;
             font-family: var(--font-jost);
             font-weight: 800;
-            background-color: var(--background-color);
             color: var(--white-color);
             text-transform: uppercase;
-            padding: ${space(2)};
-            text-align: center;
             mix-blend-mode: screen;
           }
 
+          .separator {
+            border-color: #ffffff22;
+            margin: ${space(1)} 0 ${space(1 / 2)};
+          }
+
+          .price {
+            display: flex;
+            gap: ${space(2)};
+            flex-direction: column;
+
+            .price-usd {
+              display: flex;
+              gap: ${space(1)};
+              margin: ${space(1)} auto;
+              position: relative;
+              left: -8px;
+
+              .amount {
+                font-family: var(--font-nunito-sans);
+                display: flex;
+                align-items: center;
+                color: var(--white-color);
+
+                .amount-sign {
+                  font-size: 30px;
+                  line-height: 1;
+                  font-weight: 800;
+                }
+                .amount-number {
+                  font-size: 70px;
+                  line-height: 1;
+                  font-weight: 800;
+                }
+              }
+              .amount-details {
+                width: 0;
+                white-space: nowrap;
+                color: var(--secondary-color);
+                font-size: 13px;
+                line-height: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                margin-bottom: ${space(4 / 3)};
+                text-transform: uppercase;
+
+                .amount-currency {
+                }
+                .amount-period {
+                  font-weight: 600;
+                }
+              }
+            }
+
+            .price-ars {
+              display: flex;
+              gap: ${space(1)};
+              align-items: baseline;
+
+              .info {
+                font-size: 13px;
+                line-height: 1;
+                text-transform: uppercase;
+              }
+            }
+          }
+
+          .included,
+          .requirements {
+            font-size: 16px;
+            line-height: 1;
+            font-family: var(--font-jost);
+            font-weight: 400;
+          }
+
           .list {
-            ${fontSize4};
+            font-size: 16px;
+            line-height: 1.2;
             display: flex;
             gap: ${space(1)};
             flex-direction: column;
             font-family: var(--font-jost);
             color: var(--white-color);
-            padding: 0 ${space(2)};
-
-            ${desktopLarge(css`
-              ${fontSize5};
-            `)}
+            margin-bottom: ${space(2)};
 
             .item {
               display: flex;
               gap: ${space(1)};
 
               .item-disc {
-                ${fontSize4};
-                color: var(--primary-color);
+                font-size: 16px;
+                line-height: 1;
+                color: var(--secondary-color);
                 position: relative;
-                top: 3px;
+                top: 1px;
               }
-            }
-          }
-
-          .price {
-            flex: 1;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-direction: column;
-
-            .info {
-              display: flex;
-              flex-direction: column;
-              align-items: flex-end;
-
-              .amount {
-                display: block;
-                font-weight: 800;
-                font-family: var(--font-nunito-sans);
-                border-bottom: 1px solid #87a7cb44;
-
-                span {
-                  font-size: 60px;
-                  line-height: 1;
-                  display: flex;
-                  align-items: center;
-
-                  &:before {
-                    content: "$";
-                    width: 0;
-                    position: relative;
-                    left: -1ch;
-                    font-size: 30px;
-                  }
-                  /* &:after {
-                    content: "";
-                    display: block;
-                    height: 1px;
-                    margin: ${space(1 / 2)} 0 ${space(1)};
-                    background-color: var(--secondary-color);
-                    opacity: 0.2;
-                  } */
-
-                  ${mobile(css`
-                    font-size: 65px;
-                    line-height: 0.9;
-                  `)}
-                }
-              }
-              small {
-                font-size: 13px;
-                line-height: 1.6;
-                text-transform: uppercase;
-              }
-            }
-
-            &:before {
-              content: "";
-              border-radius: ${space(1 / 2)};
-              box-shadow: 0 -1px 1px -1px var(--white-color),
-                0 -10px 30px 10px #ffffff04, 0 1px 1px 0px #ffffff08,
-                0 10px 30px 10px #ffffff16;
-              background-color: var(--background-color);
-              transform: skew(0deg, -4deg);
-              position: absolute;
-              bottom: 0;
-              left: -10px;
-              right: -10px;
-              height: 100%;
-              z-index: -1;
             }
           }
         }
@@ -339,24 +370,22 @@ const styles = css`
       ${fontSize4};
       font-family: var(--font-oswald);
       padding: ${space(2)} ${space(3)};
+      margin: ${space(1)} 0 ${space(0)};
       border-radius: 10px;
-      border: 2px solid #fd5f44;
       text-transform: uppercase;
-      background-color: #fd5f44;
       display: block;
-      transition: 200ms ease all;
+      transition: 600ms ease all;
+      background-color: var(--primary-color);
       width: 100%;
       box-shadow: 0 4px 5px rgba(0, 0, 0, 0.24), 0 1px 10px rgba(0, 0, 0, 0.28),
         0 2px 4px rgba(0, 0, 0, 0.24), 0 -1px 3px rgba(0, 0, 0, 0.2);
 
       &:hover {
-        transform: scale(1.05);
+        box-shadow: 0 4px 5px rgba(70, 70, 70, 0.24),
+          0 1px 10px rgba(70, 70, 70, 0.28), 0 2px 4px rgba(70, 70, 70, 0.24),
+          0 -1px 3px rgba(70, 70, 70, 0.2);
+        transform: scale(1.02);
       }
-
-      ${tablet(css`
-        width: max-content;
-        margin: 0 auto;
-      `)}
     }
   }
 
@@ -966,64 +995,62 @@ const Programs = () => {
             className="card-background"
             parent={cardContainerGymRef}
             position="left"
-            image="images/card-background.jpg"
           >
             <div className="card-content">
               <h3 className="title">Gym Virtual</h3>
+              <hr className="separator" />
+              <div className="price">
+                <div className="price-usd">
+                  <div className="amount">
+                    <span className="amount-sign">$</span>
+                    <span className="amount-number">132</span>
+                  </div>
+                  <div className="amount-details">
+                    <span className="amount-currency">usd</span>
+                    <span className="amount-period">3 meses</span>
+                  </div>
+                </div>
+                <div className="price-ars">
+                  <p className="info">Precio en ars $132.000 cada 3 meses</p>
+                </div>
+              </div>
+              <button className="plan-cta" onClick={handleVirtualGymCTA}>
+                Activar mi plan
+              </button>
+
+              <hr className="separator" />
+
+              <h4 className="included">Incluye:</h4>
 
               <ul className="list">
                 <li className="item">
                   <TaskAltIcon className="item-disc" /> Acceso completo a los 3
-                  desafíos y a todos sus niveles (Inicial, Intermedio y
-                  Avanzado).
+                  desafíos
                 </li>
                 <li className="item">
                   <TaskAltIcon className="item-disc" /> Clase grupal en vivo
-                  semanal para complementar tu entrenamiento.
+                  semanal
                 </li>
                 <li className="item">
                   <TaskAltIcon className="item-disc" /> Seguimiento semanal
-                  personalizado por WhatsApp.
+                  personalizado
                 </li>
                 <li className="item">
                   <TaskAltIcon className="item-disc" /> Acceso a un grupo
-                  privado para acompañamiento y comunidad.
+                  privado
                 </li>
                 <li className="item">
                   <TaskAltIcon className="item-disc" /> Guía nutricional básica
-                  para tu alimentación según tu objetivo.
                 </li>
               </ul>
-
-              <div className="price">
-                <div className="info">
-                  <div className="amount">
-                    <span>
-                      {
-                        "132"
-                        // ||
-                        //   Number(
-                        //     plansData.plans.find(
-                        //       (plan) => plan.sku === PlansTypes.VirtualGym
-                        //     )?.price.ars )
-                      }
-                    </span>
-                  </div>
-                  <small>usd / 3 meses</small>
-                </div>
-              </div>
             </div>
           </CardDesktop>
           <CardDesktop
-            className="card-image hide"
+            className="card-image gym-virtual hide"
             parent={cardContainerGymRef}
             position="right"
-            image={"/images/gym_virtual_image.jpg"}
           />
         </div>
-        <button className="plan-cta" onClick={handleVirtualGymCTA}>
-          Activar mi plan gym virtual
-        </button>
       </article>
       <article className="article-program" id="calistenia-online">
         <header className="header">
@@ -1097,69 +1124,75 @@ const Programs = () => {
             className="card-background"
             parent={cardContainerPlanificationRef}
             position="left"
-            image="images/card-background.jpg"
           >
             <div className="card-content">
               <h3 className="title">Calistenia Online</h3>
+              <hr className="separator" />
+              <div className="price">
+                <div className="price-usd">
+                  <div className="amount">
+                    <span className="amount-sign">$</span>
+                    <span className="amount-number">132</span>
+                  </div>
+                  <div className="amount-details">
+                    <span className="amount-currency">usd</span>
+                    <span className="amount-period">3 meses</span>
+                  </div>
+                </div>
+                <div className="price-ars">
+                  <p className="info">Precio en ars $132.000 cada 3 meses</p>
+                </div>
+              </div>
+              <button
+                className="plan-cta"
+                onClick={handleOnlinePlanificationCTA}
+              >
+                activar mi plan
+              </button>
+
+              <hr className="separator" />
+
+              <h4 className="included">Incluye:</h4>
 
               <ul className="list">
                 <li className="item">
                   <TaskAltIcon className="item-disc" /> Una rutina nueva cada 14
-                  días.
+                  días
                 </li>
                 <li className="item">
                   <TaskAltIcon className="item-disc" /> Clase grupal en vivo
-                  semanal para complementar tu entrenamiento.
+                  semanal
                 </li>
                 <li className="item">
                   <TaskAltIcon className="item-disc" /> Seguimiento semanal
-                  personalizado por WhatsApp.
+                  personalizado
                 </li>
                 <li className="item">
                   <TaskAltIcon className="item-disc" /> Acceso a un grupo
-                  privado para acompañamiento y comunidad.
+                  privado
                 </li>
                 <li className="item">
                   <TaskAltIcon className="item-disc" /> Guía nutricional básica
-                  para tu alimentación según tu objetivo.
                 </li>
+              </ul>
+
+              <h4 className="requirements">Requerimientos:</h4>
+
+              <ul className="list">
                 <li className="item">
                   <TaskAltIcon className="item-disc" /> Necesitas barra de
                   dominadas y paralelas o acceso a un parque con ese
                   equipamiento.
                 </li>
               </ul>
-
-              <div className="price">
-                <div className="info">
-                  <div className="amount">
-                    <span>
-                      {
-                        "132"
-                        // ||
-                        //   Number(
-                        //     plansData.plans.find(
-                        //       (plan) => plan.sku === PlansTypes.VirtualGym
-                        //     )?.price.ars
-                        //   )
-                      }
-                    </span>
-                  </div>
-                  <small>usd / 3 meses</small>
-                </div>
-              </div>
             </div>
           </CardDesktop>
           <CardDesktop
-            className="card-image hide"
+            className="card-image calistenia-online hide"
             parent={cardContainerPlanificationRef}
             position="right"
-            image={"/images/calistenia_online.jpg"}
           />
         </div>
-        <button className="plan-cta" onClick={handleOnlinePlanificationCTA}>
-          activar mi plan calistenia online
-        </button>
       </article>
 
       <div className={classNames(["modal", { open: isOpen }])}>

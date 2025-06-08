@@ -66,6 +66,7 @@ const styles = css`
   .slide {
     height: 100vh;
     position: sticky;
+    /* padding: 160px 80px; */
     top: 0;
     width: 100%;
 
