@@ -1,10 +1,13 @@
 "use client";
 import Stories, { PersonType, StoryProps } from "@/components/Stories";
+import { useMediaQuery } from "@/hooks/use-media-query";
 import { desktop, fontSize1, fontSize2, space } from "@/styles/global";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import classNames from "classnames";
+import { useInView } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const styles = css`
   overflow-x: hidden;
@@ -31,6 +34,37 @@ const styles = css`
     flex-wrap: wrap;
     justify-content: center;
     gap: 24px;
+
+    .people-item {
+      transition: all 300ms ease;
+    }
+
+    &.isMobile {
+      position: relative;
+      width: 300px;
+      height: 450px;
+      overflow: hidden;
+      margin: 0 auto 72px;
+
+      .people-item {
+        position: absolute;
+        z-index: 0;
+        left: 0;
+        top: 0;
+
+        &.active {
+          z-index: 1;
+        }
+
+        &.before {
+          transform: translateX(-100%);
+        }
+
+        &.after {
+          transform: translateX(100%);
+        }
+      }
+    }
   }
 `;
 
@@ -78,6 +112,15 @@ const people = [
 
 const Changes = () => {
   const [triggerPersonId, setTriggerPersonId] = useState(-1);
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const ref = useRef(null);
+  const isInView = useInView(ref, { amount: 0.5, once: true });
+  const [storiesStates, setStoriesStates] = useState(
+    {} as { [key: string]: boolean }
+  );
+
+  const [stillTriggering, setStillTriggering] = useState(true);
+
   const buildPeopleFigure = (person: PersonType) => {
     const stories: StoryProps[] = [
       {
@@ -110,21 +153,70 @@ const Changes = () => {
     ];
 
     return (
-      <li className="people-item" key={person.name}>
+      <li
+        className={classNames([
+          "people-item",
+          { active: person.id === triggerPersonId },
+          { after: person.id > triggerPersonId },
+          { before: person.id < triggerPersonId },
+        ])}
+        key={person.name}
+      >
         <Stories
           stories={stories}
           person={person}
           triggerId={triggerPersonId}
-          finish={(id: number) => setTriggerPersonId(id % people.length)}
+          back={() =>
+            setTriggerPersonId(
+              (triggerPersonId + people.length - 1) % people.length
+            )
+          }
+          next={() => setTriggerPersonId((triggerPersonId + 1) % people.length)}
+          finish={(id: number) =>
+            stillTriggering && setTriggerPersonId(id % people.length)
+          }
         />
       </li>
     );
   };
 
+  useEffect(() => {
+    const ids = Object.keys(people);
+    const states = ids.reduce((prev, curr) => {
+      return { ...prev, [curr]: false };
+    }, {});
+    setStoriesStates(states);
+  }, []);
+
+  useEffect(() => {
+    const personId = (triggerPersonId + people.length) % people.length;
+
+    if (triggerPersonId < 0) return;
+    setStoriesStates({
+      ...storiesStates,
+      [personId]: true,
+    });
+  }, [setStoriesStates, triggerPersonId]);
+
+  useEffect(() => {
+    if (!isMobile) return;
+    if (!isInView) return;
+    setTriggerPersonId(0);
+  }, [isInView, setTriggerPersonId]);
+
+  useEffect(() => {
+    if (!isInView) return;
+    const ids: string[] = Object.keys(people);
+    const st = ids.filter((id) => !storiesStates[id])?.length > 0;
+    setStillTriggering(st);
+  }, [isInView, setTriggerPersonId, storiesStates]);
+
   return (
     <section css={styles} className="section-changes" id="cambios-visibles">
       <h2 className="title">CAMBIOS VISIBLES</h2>
-      <ul className="people-list">{people.map(buildPeopleFigure)}</ul>
+      <ul ref={ref} className={classNames(["people-list", { isMobile }])}>
+        {people.map(buildPeopleFigure)}
+      </ul>
     </section>
   );
 };
