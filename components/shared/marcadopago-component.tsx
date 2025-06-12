@@ -27,10 +27,6 @@ export default function MercadopagoComponent(props: Props) {
     window.location.href = url;
   };
 
-  const allowedToBuy = localStorage.getItem("allowedToBuy");
-
-  if (!allowedToBuy) return <></>;
-
   return (
     <button formAction={handleSubmit} className={className}>
       <Image

@@ -64,10 +64,6 @@ export default function PayPalComponent(props: Props) {
     console.log("error: ", data);
   };
 
-  const allowedToBuy = localStorage.getItem("allowedToBuy");
-
-  if (!allowedToBuy) return <></>;
-
   return (
     <PayPalScriptProvider options={options}>
       <PayPalButtons
