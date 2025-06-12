@@ -64,7 +64,7 @@ const sendBackupEmail = async (userId: string, status: string) => {
   const resend = new Resend(apiKey);
   await resend.emails.send({
     from: `E.C.N.U. <noreply@ecnuteam.com>`,
-    to: "facundopereztomasek@gmail.com",
+    to: "lucas@ecnuteam.com",
     subject: `Intento de pago de alumno ${userId}`,
     react: UpdateUserErrorTemplate(paymentData),
   });
@@ -73,7 +73,7 @@ const sendBackupEmail = async (userId: string, status: string) => {
 const sendOwnerPaymentSuccessfulEmail = async (payer: PayerInterface) => {
   await resend.emails.send({
     from: `E.C.N.U. <noreply@ecnuteam.com>`,
-    to: "facundopereztomasek@gmail.com",
+    to: "lucas@ecnuteam.com",
     subject: `Un nuevo alumno: ${payer.name} suscripto a ${payer.plan}!`,
     react: OwnerPaymentSuccessfulTemplate(payer),
   });
