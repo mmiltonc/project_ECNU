@@ -64,7 +64,7 @@ const createPreference = async (
     items: [{ id, unit_price, quantity, title, description }],
     metadata,
     back_urls: { failure, pending, success },
-    category_id: "others",
+    category_id: "services",
     auto_return: "approved",
     binary_mode: true,
     payment_methods: {
