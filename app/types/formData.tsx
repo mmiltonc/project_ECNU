@@ -27,7 +27,7 @@ export type CountryNames = (typeof COUNTRIES)[number]["name"];
 
 export enum PlansTypes {
   VirtualGym = "plan-plus-gym-virtual",
-  OnlinePlanification = "plan-plus-planificacion-online",
+  OnlineCalisthenics = "plan-plus-calistenia-online",
 }
 
 export interface FormDataType {

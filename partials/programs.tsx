@@ -635,14 +635,14 @@ const styles = css`
 const planificationCards = [
   {
     main: true,
-    plan: PlansTypes.OnlinePlanification,
+    plan: PlansTypes.OnlineCalisthenics,
     type: "plani",
     typeVideo: "plani",
     imagen: "/images/planificaciones_online.jpg",
   },
   {
     main: false,
-    plan: PlansTypes.OnlinePlanification,
+    plan: PlansTypes.OnlineCalisthenics,
     type: "plan",
     typeVideo: "plani",
     imagen: "/images/plan_plani_online.jpg",
@@ -666,6 +666,13 @@ const virtualGymCards = [
   },
 ];
 
+type PriceType = {
+  [sku: string]: {
+    usd: number;
+    ars: number;
+  };
+};
+
 // type PlanCode = keyof typeof PLANS_CODES;
 
 const Programs = () => {
@@ -679,6 +686,7 @@ const Programs = () => {
   const cardContainerGymRef = useRef(null);
   const cardContainerPlanificationRef = useRef(null);
   const router = useRouter();
+  const [prices, setPrices] = useState<PriceType>({});
 
   const [formData, setFormData] = useState<FormDataType>({
     plan: "",
@@ -769,7 +777,7 @@ const Programs = () => {
     lenis?.stop();
   };
 
-  const handleOnlinePlanificationCTA = () => {
+  const handleOnlineCalisthenicsCTA = () => {
     setFormData({ ...formData, plan: planificationCards[0].plan });
     openModal();
     lenis?.stop();
@@ -805,7 +813,6 @@ const Programs = () => {
     });
 
     if (error) {
-      console.log(error);
       const errores: Record<string, string> = {};
       error.details.forEach((err) => {
         if (err.context?.key) {
@@ -815,7 +822,6 @@ const Programs = () => {
       setFormErrors(errores); // Guardamos los errores
     } else {
       setFormErrors({}); // Limpiamos errores si pasa la validación
-      console.log("Datos validados:", value);
       setStepForm(2);
     }
   };
@@ -874,6 +880,19 @@ const Programs = () => {
 
     setPlanInfo(info);
   }, [formData.plan]);
+
+  useEffect(() => {
+    const prices = plansData.plans.reduce((prev, curr) => {
+      return {
+        ...prev,
+        [curr.sku]: {
+          usd: curr.price.usd,
+          ars: curr.price.ars,
+        },
+      };
+    }, {});
+    setPrices(prices);
+  }, [planInfo]);
 
   const textInputStyles = {
     "& .MuiInputBase-input": {
@@ -1009,7 +1028,9 @@ const Programs = () => {
                 <div className="price-usd">
                   <div className="amount">
                     <span className="amount-sign">$</span>
-                    <span className="amount-number">132</span>
+                    <span className="amount-number">
+                      {prices["plan-plus-gym-virtual"]?.usd}
+                    </span>
                   </div>
                   <div className="amount-details">
                     <span className="amount-currency">usd</span>
@@ -1017,7 +1038,10 @@ const Programs = () => {
                   </div>
                 </div>
                 <div className="price-ars">
-                  <p className="info">Precio en ars $132.000 cada 3 meses</p>
+                  <p className="info">
+                    Precio en ars ${prices["plan-plus-gym-virtual"]?.ars} cada 3
+                    meses
+                  </p>
                 </div>
               </div>
               <button className="plan-cta" onClick={handleVirtualGymCTA}>
@@ -1085,7 +1109,7 @@ const Programs = () => {
             />
           </div>
         </header>
-        <div className="container plan-plus-planificacion-online">
+        <div className="container plan-plus-calistenia-online">
           <section className="text-section">
             <h3 className="heading">
               Entrenamientos diseñados según{" "}
@@ -1138,7 +1162,9 @@ const Programs = () => {
                 <div className="price-usd">
                   <div className="amount">
                     <span className="amount-sign">$</span>
-                    <span className="amount-number">132</span>
+                    <span className="amount-number">
+                      {prices["plan-plus-calistenia-online"]?.usd}
+                    </span>
                   </div>
                   <div className="amount-details">
                     <span className="amount-currency">usd</span>
@@ -1146,12 +1172,15 @@ const Programs = () => {
                   </div>
                 </div>
                 <div className="price-ars">
-                  <p className="info">Precio en ars $132.000 cada 3 meses</p>
+                  <p className="info">
+                    Precio en ars ${prices["plan-plus-calistenia-online"]?.ars}{" "}
+                    cada 3 meses
+                  </p>
                 </div>
               </div>
               <button
                 className="plan-cta"
-                onClick={handleOnlinePlanificationCTA}
+                onClick={handleOnlineCalisthenicsCTA}
               >
                 activar mi plan
               </button>
