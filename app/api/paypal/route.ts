@@ -26,11 +26,15 @@ const dateConfig = { timeZone: "America/Argentina/Buenos_Aires" };
 
 const oAuthClientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "";
 const oAuthClientSecret = process.env.PAYPAL_CLIENT_SECRET || "";
+const environment =
+  process.env.NODE_ENV === "production"
+    ? Environment.Production
+    : Environment.Sandbox;
 
 const client = new Client({
   clientCredentialsAuthCredentials: { oAuthClientId, oAuthClientSecret },
   timeout: 0,
-  environment: Environment.Sandbox,
+  environment,
   logging: {
     logLevel: LogLevel.Info,
     logRequest: { logBody: true },
