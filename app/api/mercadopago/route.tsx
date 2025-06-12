@@ -74,6 +74,7 @@ const createPreference = async (
       },
     },
     external_reference: userId,
+    notification_url: "https://ecnuteam.com/api/webhooks/mercadopago",
   } as PreferenceRequest;
 
   try {
