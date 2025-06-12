@@ -153,7 +153,7 @@ export async function POST(request: Request) {
       // paymentExpirationDays:,
       // paymentId:,
       paymentStatus: "STARTED",
-      paymentValue: Number(planInfo.price.usd),
+      paymentValue: Number(planInfo.price.ars),
       phone: formData.celular,
       plan: planInfo.name,
       planSKU: planInfo.sku,

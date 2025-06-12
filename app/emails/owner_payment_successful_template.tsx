@@ -6,7 +6,6 @@ import {
   Html,
   Preview,
   Text,
-  Hr,
   Img,
 } from "@react-email/components";
 
@@ -15,6 +14,7 @@ interface OwnerPaymentSuccessfulEmailType {
   plan: string;
   email: string;
   phone: string;
+  goals: string;
 }
 
 const styles = {
@@ -41,6 +41,7 @@ export const OwnerPaymentSuccessfulTemplate = ({
   plan,
   email,
   phone,
+  goals,
 }: Readonly<OwnerPaymentSuccessfulEmailType>) => {
   return (
     <Html>
@@ -69,6 +70,7 @@ export const OwnerPaymentSuccessfulTemplate = ({
           <Text style={styles.text}>Plan: {plan}</Text>
           <Text style={styles.text}>Teléfono: {phone}</Text>
           <Text style={styles.text}>Email: {email}</Text>
+          <Text style={styles.text}>Objetivos: {goals}</Text>
         </Container>
       </Body>
     </Html>
@@ -81,6 +83,7 @@ OwnerPaymentSuccessfulTemplate.PreviewProps = {
   email: "jdoe@example.com",
   phone: "11111111",
   date: new Date().toDateString(),
+  goals: "Mis objetivos",
 } as OwnerPaymentSuccessfulEmailType;
 
 export default OwnerPaymentSuccessfulTemplate;

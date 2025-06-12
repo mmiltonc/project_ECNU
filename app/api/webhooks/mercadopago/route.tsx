@@ -48,6 +48,7 @@ interface PayerInterface {
   name: string;
   plan: string;
   phone: string;
+  goals: string;
 }
 
 const sendBackupEmail = async (userId: string, status: string) => {
@@ -135,10 +136,14 @@ const handlePaymentWebhook = async (paymentId: string) => {
     const user = documentRef.data() as FirestoreUser | undefined;
 
     const payerData: PayerInterface = {
-      name: user?.name || metadata.name || payer.first_name,
+      name:
+        user?.name ||
+        metadata.nombre ||
+        `${payer.first_name} ${payer.last_name}`,
       email: user?.email || metadata.email || payer.email,
       plan: user?.plan || description,
       phone: user?.phone || "",
+      goals: user?.goals || metadata.objetivos || "",
     };
 
     if (status === PaymentStatus.APPROVED) {
