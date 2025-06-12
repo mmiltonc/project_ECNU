@@ -43,6 +43,13 @@ const createPreference = async (
     plan: formData.plan,
   };
 
+  const [firstName, ...lastNames] = formData.nombre?.split(" ");
+  const contactData = {
+    name: firstName,
+    surname: lastNames.join(" "),
+    email: metadata.email,
+  };
+
   const id = sku;
   const quantity = 1;
   const title = name;
@@ -57,6 +64,7 @@ const createPreference = async (
     items: [{ id, unit_price, quantity, title, description }],
     metadata,
     back_urls: { failure, pending, success },
+    category_id: "others",
     auto_return: "approved",
     binary_mode: true,
     payment_methods: {
@@ -75,7 +83,21 @@ const createPreference = async (
     },
     external_reference: userId,
     notification_url: "https://ecnuteam.com/api/webhooks/mercadopago",
+    payer: {
+      name: contactData.name,
+      surname: contactData.surname,
+      email: contactData.email,
+    },
   } as PreferenceRequest;
+
+  console.log("==========DATOS NUEVOS DE USUARIO==============");
+  console.log({
+    payer: {
+      name: contactData.name,
+      surname: contactData.surname,
+      email: contactData.email,
+    },
+  });
 
   try {
     const preference = (await new Preference(mercadopago).create({
