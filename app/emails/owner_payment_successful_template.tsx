@@ -15,7 +15,6 @@ interface OwnerPaymentSuccessfulEmailType {
   plan: string;
   email: string;
   phone: string;
-  date: string;
 }
 
 const styles = {
@@ -42,7 +41,6 @@ export const OwnerPaymentSuccessfulTemplate = ({
   plan,
   email,
   phone,
-  date,
 }: Readonly<OwnerPaymentSuccessfulEmailType>) => {
   return (
     <Html>
@@ -71,7 +69,6 @@ export const OwnerPaymentSuccessfulTemplate = ({
           <Text style={styles.text}>Plan: {plan}</Text>
           <Text style={styles.text}>Teléfono: {phone}</Text>
           <Text style={styles.text}>Email: {email}</Text>
-          <Text style={styles.text}>Fecha: {date}</Text>
         </Container>
       </Body>
     </Html>

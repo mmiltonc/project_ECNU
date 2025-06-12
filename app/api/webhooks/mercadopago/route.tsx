@@ -48,7 +48,6 @@ interface PayerInterface {
   name: string;
   plan: string;
   phone: string;
-  date: string;
 }
 
 const sendBackupEmail = async (userId: string, status: string) => {
@@ -140,7 +139,6 @@ const handlePaymentWebhook = async (paymentId: string) => {
       email: user?.email || metadata.email || payer.email,
       plan: user?.plan || description,
       phone: user?.phone || "",
-      date: user?.paymentDate || "",
     };
 
     if (status === PaymentStatus.APPROVED) {

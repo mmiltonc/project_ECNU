@@ -36,19 +36,11 @@ interface FirestoreUser {
   planSKU: string;
 }
 
-interface MercadopagoWebhookInterface {
-  type: string;
-  data: {
-    id: string;
-  };
-}
-
 interface PayerInterface {
   email: string;
   name: string;
   plan: string;
   phone: string;
-  date: string;
 }
 
 const sendBackupEmail = async (userId: string, status: string) => {
@@ -127,7 +119,6 @@ const handlePaymentWebhook = async (body: any) => {
       email: user?.email,
       plan: user?.plan,
       phone: user?.phone,
-      date: user?.paymentDate,
     };
 
     if (status === PaymentStatus.APPROVED) {
