@@ -6,6 +6,8 @@ import { Resend } from "resend";
 import { getStatus, PaymentStatus } from "../helpers";
 import OwnerPaymentSuccessfulTemplate from "@/app/emails/owner_payment_successful_template";
 import UpdateUserErrorTemplate from "@/app/emails/update_user_error_template";
+import PaymentPendingTemplate from "@/app/emails/payment_pending_template";
+import PaymentRejectedTemplate from "@/app/emails/payment_rejected_template";
 
 const apiKey = process.env.RESEND_API_KEY;
 
@@ -93,7 +95,7 @@ const sendPaymentPendingEmail = async (payer: PayerInterface) => {
     from: "E.C.N.U. <noreply@ecnuteam.com>",
     to: payer.email,
     subject: "Pago pendiente de aprobación",
-    react: PaymentSuccessfulTemplate(payer),
+    react: PaymentPendingTemplate(payer),
   });
 };
 
@@ -102,7 +104,7 @@ const sendPaymentRejectedEmail = async (payer: PayerInterface) => {
     from: "E.C.N.U. <noreply@ecnuteam.com>",
     to: payer.email,
     subject: "Pago rechazado",
-    react: PaymentSuccessfulTemplate(payer),
+    react: PaymentRejectedTemplate(payer),
   });
 };
 
