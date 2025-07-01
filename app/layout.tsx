@@ -2,9 +2,9 @@ import "./globals.css";
 import classNames from "classnames";
 import { Jost, Oswald, Nunito_Sans } from "next/font/google";
 import type { Viewport } from "next";
-import Script from "next/script";
 import { GTMScript } from "@/components/shared/GTPScript";
 import { GTMNoScript } from "@/components/shared/GTPNoScript";
+
 const jost = Jost({
   subsets: ["latin"],
   variable: "--font-jost",

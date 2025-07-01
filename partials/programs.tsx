@@ -577,6 +577,23 @@ const styles = css`
                         height: 50px;
                         background-color: #ffe700;
                         border-radius: ${space(1)};
+                        position: relative;
+
+                        &.loading {
+                          opacity: 0.5;
+
+                          .loading-circle {
+                            display: block;
+                          }
+                        }
+
+                        .loading-circle {
+                          display: none;
+                          position: absolute;
+                          left: 50%;
+                          top: 50%;
+                          transform: translate(-50%, -50%) !important;
+                        }
 
                         img {
                           height: 100%;
