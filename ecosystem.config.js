@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "onepage-ecnu-team",
+      name: "ecnu-team-website",
       script: "npm",
       args: "start",
       env_production: {
@@ -15,7 +15,7 @@ module.exports = {
       host: "77.37.40.29",
       user: "deployer",
       key: "~/.ssh/deployer-ecnuteam",
-      ref: "origin/develop",
+      ref: "origin/main",
       repo: "https://github.com/mmiltonc/project_ECNU.git",
       path: "/home/deployer/app",
 

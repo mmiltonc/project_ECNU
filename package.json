@@ -1,6 +1,6 @@
 {
-  "name": "onepage-ecnu-team",
-  "version": "0.1.0",
+  "name": "ecnu-team-website",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,8 +12,8 @@
     "deploy": "pm2 deploy production",
     "deploy:list": "pm2 deploy production exec \"pm2 list\"",
     "deploy:logs": "pm2 deploy production exec \"pm2 logs\"",
-    "deploy:restart": "pm2 deploy production exec \"pm2 restart onepage-ecnu-team\"",
-    "deploy:stop": "pm2 deploy production exec \"pm2 stop onepage-ecnu-team\"",
+    "deploy:restart": "pm2 deploy production exec \"pm2 restart ecnu-team-website\"",
+    "deploy:stop": "pm2 deploy production exec \"pm2 stop ecnu-team-website\"",
     "certbot:setup": "pm2 deploy production exec \"bash /home/deployer/app/current/deploy-scripts/certbot-setup.sh\""
   },
   "dependencies": {
