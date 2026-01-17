@@ -1,0 +1,213 @@
+import plansData from "@/app/data/plans.json";
+import { PaymentSuccessfulTemplate } from "@/app/emails/payment_successful_template";
+import { db } from "@/app/lib/firebaseAdmin";
+import { NextResponse } from "next/server";
+import { Resend } from "resend";
+import { getStatus, PaymentStatus } from "../helpers";
+import OwnerPaymentSuccessfulTemplate from "@/app/emails/owner_payment_successful_template";
+import UpdateUserErrorTemplate from "@/app/emails/update_user_error_template";
+import PaymentPendingTemplate from "@/app/emails/payment_pending_template";
+import PaymentRejectedTemplate from "@/app/emails/payment_rejected_template";
+
+const apiKey = process.env.RESEND_API_KEY;
+
+if (!apiKey) throw new Error("RESEND_API_KEY is not defined.");
+
+const resend = new Resend(apiKey);
+
+const dateConfig = { timeZone: "America/Argentina/Buenos_Aires" };
+
+interface FirestoreUser {
+  name: string;
+  email: string;
+  phone: string;
+  city: string;
+  country: string;
+  goals: string;
+  orderDate: string;
+  paymentDate: string;
+  paymentExpirationDate: string;
+  paymentId: string;
+  paymentStatus: string;
+  paymentCurrency: string;
+  paymentValue: number;
+  gatewayId: string;
+  plan: string;
+  planSKU: string;
+}
+
+interface MercadopagoWebhookInterface {
+  type: string;
+  data: {
+    id: string;
+  };
+}
+
+interface PayerInterface {
+  email: string;
+  name: string;
+  plan: string;
+  phone: string;
+  goals: string;
+}
+
+const sendBackupEmail = async (userId: string, status: string) => {
+  const paymentDate = new Date();
+
+  const paymentData = {
+    paymentStatus: status || "",
+    paymentDate:
+      status === PaymentStatus.APPROVED
+        ? paymentDate.toLocaleString("es-AR", dateConfig)
+        : "",
+    id: userId,
+  };
+  const apiKey = process.env.RESEND_API_KEY;
+  const resend = new Resend(apiKey);
+  await resend.emails.send({
+    from: `E.C.N.U. <noreply@ecnuteam.com>`,
+    to: "lucas@ecnuteam.com",
+    subject: `Intento de pago de alumno ${userId}`,
+    react: UpdateUserErrorTemplate(paymentData),
+  });
+};
+
+const sendOwnerPaymentSuccessfulEmail = async (payer: PayerInterface) => {
+  await resend.emails.send({
+    from: `E.C.N.U. <noreply@ecnuteam.com>`,
+    to: "lucas@ecnuteam.com",
+    subject: `Un nuevo alumno: ${payer.name} suscripto a ${payer.plan}!`,
+    react: OwnerPaymentSuccessfulTemplate(payer),
+  });
+};
+
+const sendPaymentSuccessfulEmail = async (payer: PayerInterface) => {
+  await resend.emails.send({
+    from: `E.C.N.U. <noreply@ecnuteam.com>`,
+    to: payer.email,
+    subject: `¡Bienvenido ${payer.name} a tu ${payer.plan}!`,
+    react: PaymentSuccessfulTemplate(payer),
+  });
+};
+
+const sendPaymentPendingEmail = async (payer: PayerInterface) => {
+  await resend.emails.send({
+    from: "E.C.N.U. <noreply@ecnuteam.com>",
+    to: payer.email,
+    subject: "Pago pendiente de aprobación",
+    react: PaymentPendingTemplate(payer),
+  });
+};
+
+const sendPaymentRejectedEmail = async (payer: PayerInterface) => {
+  await resend.emails.send({
+    from: "E.C.N.U. <noreply@ecnuteam.com>",
+    to: payer.email,
+    subject: "Pago rechazado",
+    react: PaymentRejectedTemplate(payer),
+  });
+};
+
+const handlePaymentWebhook = async (paymentId: string) => {
+  if (!paymentId) throw new Error("Invalid request.");
+
+  const url = `https://api.mercadopago.com/v1/payments/${paymentId}`;
+  const headers = {
+    Authorization: `Bearer ${process.env.MERCADO_PAGO_ACCESS_TOKEN}`,
+  };
+
+  const response = await fetch(url, { headers });
+
+  const jsonResponse = await response.json();
+
+  const {
+    payer,
+    metadata,
+    description,
+    order,
+    external_reference: userId,
+  } = jsonResponse;
+
+  const status = getStatus(jsonResponse.status, "mercadopago") as string;
+
+  try {
+    const document = db.collection("users").doc(userId);
+    const documentRef = await document.get();
+    const user = documentRef.data() as FirestoreUser | undefined;
+
+    const payerData: PayerInterface = {
+      name:
+        user?.name ||
+        metadata.nombre ||
+        `${payer.first_name} ${payer.last_name}`,
+      email: user?.email || metadata.email || payer.email,
+      plan: user?.plan || description,
+      phone: user?.phone || "",
+      goals: user?.goals || metadata.objetivos || "",
+    };
+
+    if (status === PaymentStatus.APPROVED) {
+      await sendPaymentSuccessfulEmail(payerData);
+      await sendOwnerPaymentSuccessfulEmail(payerData);
+    }
+    if (status === PaymentStatus.REJECTED) {
+      await sendPaymentRejectedEmail(payerData);
+    }
+    if (status === PaymentStatus.PENDING) {
+      await sendPaymentPendingEmail(payerData);
+    }
+
+    const planInfo = plansData.plans.find(
+      (plan: any) => plan.sku === metadata.plan
+    );
+
+    if (!planInfo) throw new Error("Plan not found.");
+
+    const paymentDate = new Date();
+    const paymentExpirationDate = new Date(paymentDate);
+    paymentExpirationDate.setDate(paymentDate.getDate() + planInfo.duration);
+
+    const paymentData = {
+      paymentStatus: status,
+      paymentDate:
+        status === PaymentStatus.APPROVED
+          ? paymentDate.toLocaleString("es-AR", dateConfig)
+          : null,
+      paymentExpirationDate:
+        status === PaymentStatus.APPROVED
+          ? paymentExpirationDate.toLocaleString("es-AR", dateConfig)
+          : null,
+      orderId: order.id,
+    };
+
+    document.update(paymentData);
+  } catch (error) {
+    await sendBackupEmail(userId, status);
+    console.error("Error updating getting user document: ", error);
+  }
+};
+
+export async function POST(request: Request) {
+  try {
+    const body: MercadopagoWebhookInterface = await request.json();
+
+    if (body.type == "payment") await handlePaymentWebhook(body.data?.id);
+
+    console.log("==============> body");
+    console.log(body.data?.id);
+    console.log(body.data);
+    console.log(body);
+    console.log("==============");
+
+    return new Response(null, { status: 204 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    } else {
+      return NextResponse.json(
+        { error: "Unknown server error" },
+        { status: 500 }
+      );
+    }
+  }
+}

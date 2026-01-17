@@ -1,0 +1,179 @@
+@tailwind base;
+
+:root {
+  --default-color: #3463d2;
+  --primary-color: #fd5f44;
+  --secondary-color: #87a7cb;
+  --background-color: #051422;
+  --light-color: #eaf5ff;
+  --white-color: #ffffff;
+}
+
+body {
+  width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  font-weight: 300;
+  color: var(--white-color);
+  background: var(--background-color);
+
+  &.modal-open {
+    overflow: hidden;
+  }
+}
+
+input:focus{
+  outline: none;
+}
+
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 40;
+  z-index: -1; /* Asegura que el video esté detrás del contenido */
+}
+
+.arrow {
+  bottom: 20px;
+  position: relative;
+  right: 50%;
+  transform: translate(-50%, -50%);
+  transform: rotate(180deg);
+  cursor: pointer;
+}
+
+.arrow span {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-bottom: 5px solid var(--white-color);
+  border-right: 5px solid var(--white-color);
+  transform: rotate(45deg);
+  margin: -10px;
+  animation: animate 2s infinite;
+}
+
+.arrow span:nth-child(2) {
+  animation-delay: -0.2s;
+}
+
+.arrow span:nth-child(3) {
+  animation-delay: -0.4s;
+}
+
+.parallax {
+  width: 100%;
+  overflow: hidden;
+  letter-spacing: -2px;
+  line-height: 0.8;
+  margin: 0;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.parallax .scroller {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 64px;
+  display: flex;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.parallax span {
+  display: block;
+}
+
+
+@keyframes animate {
+  0% {
+      opacity: 0;
+      transform: rotate(45deg) translate(-20px, -20px);
+  }
+  50% {
+      opacity: 1;
+  }
+  100% {
+      opacity: 0;
+      transform: rotate(45deg) translate(20px, 20px);
+  }
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Estilos para los gradientes radiales */
+.bg-radial-blue-yellow {
+  background: radial-gradient(circle, #1e40af 0%, #eab308 100%);
+}
+
+.bg-radial-black-gray {
+  background: radial-gradient(circle, #111827 0%, #4b5563 100%);
+}
+
+.bg-radial-red-gray {
+  background: radial-gradient(circle, var(--primary-color) 0%, #4b5563 100%);
+}
+
+.bg-radial-gray-black {
+  background: radial-gradient(circle, #4b5563 0%, #111827 100%);
+}
+
+/* Estilos personalizados para Swiper */
+.gym-swiper {
+  padding: 20px 0 40px 0;
+}
+
+.gym-swiper .swiper-pagination-bullet {
+  background: var(--primary-color);
+  opacity: 0.5;
+}
+
+.gym-swiper .swiper-pagination-bullet-active {
+  background: var(--primary-color);
+  opacity: 1;
+}
+
+.gym-swiper .swiper-button-next,
+.gym-swiper .swiper-button-prev {
+  color: var(--primary-color);
+}
+
+/* Ajustes para centrar el contenido en el slider */
+.gym-swiper .swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.sr-only {
+  display: none;
+}
+
+.show-mobile {
+  display: block;
+
+  @media only screen and (min-width: 1025px) {
+    display: none;
+  }
+}
+
+.show-desktop {
+  display: none;
+
+  @media only screen and (min-width: 1025px) {
+    display: block;
+  }
+}
