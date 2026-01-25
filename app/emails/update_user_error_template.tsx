@@ -36,6 +36,8 @@ const styles = {
   firm: { fontSize: "14px", color: "#333", marginTop: "20px" },
   footer: { backgroundColor: "#ffffff", width: "100%" },
 };
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
 export const UpdateUserErrorTemplate = (
   user: Readonly<UpdateErrorUserType>
 ) => {
@@ -52,7 +54,7 @@ export const UpdateUserErrorTemplate = (
           <a href="https://ecnuteam.com">
             <Img
               width="180px"
-              src="https://ecnuteam.com/images/new-logo.png"
+              src={`${baseUrl}/images/new-logo.png`}
               alt="ECNU Logo"
               style={styles.logo}
             />
