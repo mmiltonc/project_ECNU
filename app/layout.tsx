@@ -84,7 +84,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className="scroll-smooth">
+    <html lang="es" className="scroll-smooth" suppressHydrationWarning>
       <head>
         <GTMScript
           src="https://ecnuteam.com/precision/6oicubakbvo.js"
@@ -97,6 +97,7 @@ export default function RootLayout({
         />
       </head>
       <body
+        suppressHydrationWarning
         className={classNames([
           jost.variable,
           oswald.variable,

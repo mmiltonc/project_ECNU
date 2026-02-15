@@ -1,15 +1,14 @@
 import { render } from "@react-email/render";
 import PaymentSuccessfulTemplate from "../payment_successful_template";
-import { useRouter } from "next/router";
-import { redirect } from "next/navigation";
+
 import PaymentRejectedTemplate from "../payment_rejected_template";
 import PaymentPendingTemplate from "../payment_pending_template";
 import OwnerPaymentSuccessfulTemplate from "../owner_payment_successful_template";
 import CreateUserErrorTemplate from "../create_user_error_template";
 import UpdateUserErrorTemplate from "../update_user_error_template";
-const isDevelopmentMode = process.env.NODE_ENV === "development";
+const isDevelopmentMode = ["development", "local"].includes(process.env.NODE_ENV);
 
-function EmailPreview() {
+async function EmailPreview() {
   const PaymentSuccessProps = PaymentSuccessfulTemplate.PreviewProps;
   const PaymentRejectedProps = PaymentRejectedTemplate.PreviewProps;
   const PaymentPendingProps = PaymentPendingTemplate.PreviewProps;
@@ -17,7 +16,7 @@ function EmailPreview() {
     OwnerPaymentSuccessfulTemplate.PreviewProps;
   const CreateUserErrorProps = CreateUserErrorTemplate.PreviewProps;
   const UpdateUserErrorProps = UpdateUserErrorTemplate.PreviewProps;
-  const html = render(
+  const html = await render(
     <div className="flex flex-col gap-[40px]">
       <div>
         <h2 className="text-black text-3xl font-bold">Pago Exitoso</h2>
