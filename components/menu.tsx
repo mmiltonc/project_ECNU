@@ -5,7 +5,7 @@ import { desktop, fontSize2, space } from "@/styles/global";
 import Image from "next/image";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 
 const styles = css`
@@ -130,31 +130,44 @@ const Menu = () => {
     setOpen((prev) => !prev);
   };
 
+  const menuRef = useRef<HTMLElement>(null);
+
   useEffect(() => {
-    const menu = document.querySelector(".menu");
+    const menu = menuRef.current;
     const body = document.querySelector("body");
     const stopScrollPropagation = (e: Event) => e.stopPropagation();
-    if (open) {
-      body?.classList.add("modal-open");
-      menu!.addEventListener("wheel", stopScrollPropagation, {
-        passive: false,
-      });
-      menu!.addEventListener("touchmove", stopScrollPropagation, {
-        passive: false,
-      });
-    } else {
-      body?.classList.remove("modal-open");
-      menu!.removeEventListener("wheel", stopScrollPropagation);
-      menu!.removeEventListener("touchmove", stopScrollPropagation);
+
+    if (menu) {
+      if (open) {
+        body?.classList.add("modal-open");
+        menu.addEventListener("wheel", stopScrollPropagation, {
+          passive: false,
+        });
+        menu.addEventListener("touchmove", stopScrollPropagation, {
+          passive: false,
+        });
+      } else {
+        body?.classList.remove("modal-open");
+        menu.removeEventListener("wheel", stopScrollPropagation);
+        menu.removeEventListener("touchmove", stopScrollPropagation);
+      }
     }
+
     return () => {
-      menu!.removeEventListener("wheel", stopScrollPropagation);
-      menu!.removeEventListener("touchmove", stopScrollPropagation);
+      if (menu) {
+        menu.removeEventListener("wheel", stopScrollPropagation);
+        menu.removeEventListener("touchmove", stopScrollPropagation);
+      }
     };
   }, [open]);
 
   return (
-    <nav css={styles} className={classNames("menu", { open })}>
+    <nav
+      ref={menuRef}
+      css={styles}
+      className={classNames("menu", { open })}
+      suppressHydrationWarning
+    >
       <div className="trigger-area">
         <button className="menu-trigger" onClick={handleMenu}>
           {!open && <MenuIcon className="icon" />}

@@ -1,19 +1,19 @@
-const withVideos = require("next-videos");
 
-const isDevelopmentMode = process.env.NODE_ENV === "development";
+
+const isDevelopmentMode = ["development", "local"].includes(process.env.NODE_ENV);
 
 const nextConfig = {
   async redirects() {
     return isDevelopmentMode
       ? [] // no redirections in development mode
       : [
-          {
-            source: "/emails/preview",
-            destination: "/",
-            permanent: false,
-          },
-        ];
+        {
+          source: "/emails/preview",
+          destination: "/",
+          permanent: false,
+        },
+      ];
   },
 };
 
-module.exports = withVideos(nextConfig);
+module.exports = nextConfig;

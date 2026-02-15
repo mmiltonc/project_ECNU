@@ -1271,8 +1271,8 @@ const Programs = () => {
                       <source
                         src={
                           formData.plan === PlansTypes.VirtualGym
-                            ? require("../public/videos/intro_gym.mp4")
-                            : require("../public/videos/intro_planificaciones.mp4")
+                            ? "/videos/intro_gym.mp4"
+                            : "/videos/intro_planificaciones.mp4"
                         }
                         type="video/mp4"
                       />
@@ -1409,7 +1409,7 @@ const Programs = () => {
                                         <span className="field-adornment">
                                           {
                                             PHONE_CODES[
-                                              formData.pais as keyof typeof PHONE_CODES
+                                            formData.pais as keyof typeof PHONE_CODES
                                             ]
                                           }
                                         </span>
@@ -1565,10 +1565,10 @@ const Programs = () => {
                           ? evt.target?.play()
                           : evt.target?.pause();
                       }}
-                      src={require("../public/videos/agradecimiento_pago.mp4")}
+                      src="/videos/agradecimiento_pago.mp4"
                     >
                       <source
-                        src={require("../public/videos/agradecimiento_pago.mp4")}
+                        src="/videos/agradecimiento_pago.mp4"
                         type="video/mp4"
                       />
                     </video>

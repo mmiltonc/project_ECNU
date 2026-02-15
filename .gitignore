@@ -39,3 +39,6 @@ next-env.d.ts
 
 # Firebase service account key
 firebase-adminsdk.json
+# dynamic artifacts
+/dist
+/tmp

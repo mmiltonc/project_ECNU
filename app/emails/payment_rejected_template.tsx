@@ -34,6 +34,8 @@ const styles = {
   firm: { fontSize: "14px", color: "#333", marginTop: "20px" },
   footer: { backgroundColor: "#ffffff", width: "100%" },
 };
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
 export const PaymentRejectedTemplate = ({
   name,
   plan,
@@ -51,7 +53,7 @@ export const PaymentRejectedTemplate = ({
           <a href="https://ecnuteam.com">
             <Img
               width="180px"
-              src="https://ecnuteam.com/images/new-logo.png"
+              src={`${baseUrl}/images/new-logo.png`}
               alt="ECNU Logo"
               style={styles.logo}
             />
@@ -72,7 +74,7 @@ export const PaymentRejectedTemplate = ({
         <Container style={styles.footer}>
           <Img
             width="100%"
-            src="https://ecnuteam.com/images/emails/payment-rejected-footer-image.jpg"
+            src={`${baseUrl}/images/emails/payment-rejected-footer-image.jpg`}
             alt="ECNU Logo"
             style={styles.footerImage}
           />

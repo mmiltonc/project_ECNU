@@ -1,4 +1,3 @@
-
 # Documentación Técnica – Proyecto ecnuteam.com
 
 ## 🧩 Descripción general
@@ -52,7 +51,7 @@ Podés acceder a la vista previa de los templates de email en:
 - `deploy`: realiza el deploy al servidor remoto (`npm run deploy`)
 - `deploy:list`: lista todas las aplicaciones corriendo bajo PM2 en el servidor remoto
 - `deploy:logs`: muestra los logs en tiempo real de la aplicación corriendo en producción
-- `deploy:restart`: reinicia la aplicación `onepage-ecnu-team` en el servidor
+- `deploy:restart`: reinicia la aplicación `ecnu-team-website` en el servidor
 - `deploy:stop`: detiene temporalmente la aplicación en el servidor
 
 ### Certificados SSL
@@ -65,6 +64,7 @@ Podés acceder a la vista previa de los templates de email en:
 ## 🔐 Certificados SSL con Certbot
 
 El certificado SSL se genera usando Let's Encrypt y se instala automáticamente en el servidor. El proceso:
+
 1. Solicita el certificado válido.
 2. Coloca los archivos en la ruta de configuración del servidor.
 3. Configura el servidor para HTTPS.
