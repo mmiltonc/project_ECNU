@@ -17,7 +17,7 @@ const styles = css`
   overflow: hidden;
   width: 100%;
 
-  background-image: url(images/bgbw.jpg);
+  background-image: url("/images/bgbw.jpg");
   background-position: bottom center;
   background-size: auto 120%;
   min-height: 800px;
@@ -96,7 +96,7 @@ const styles = css`
         right: -100px;
         top: -30px;
         height: 300px;
-        background-image: url(images/trazo.png);
+        background-image: url("/images/trazo.png");
         background-repeat: no-repeat;
         background-size: 100% 350px;
         background-position: bottom;
@@ -136,8 +136,10 @@ const styles = css`
         text-transform: uppercase;
         background-color: #fd5f44;
         display: block;
-        box-shadow: 0 4px 5px rgba(0, 0, 0, 0.24),
-          0 1px 10px rgba(0, 0, 0, 0.28), 0 2px 4px rgba(0, 0, 0, 0.24),
+        box-shadow:
+          0 4px 5px rgba(0, 0, 0, 0.24),
+          0 1px 10px rgba(0, 0, 0, 0.28),
+          0 2px 4px rgba(0, 0, 0, 0.24),
           0 -1px 3px rgba(0, 0, 0, 0.2);
         position: relative;
         z-index: 1001;
