@@ -57,7 +57,14 @@ Podés acceder a la vista previa de los templates de email en:
 ### Certificados SSL
 
 - `certbot:setup`: ejecuta el script remoto que solicita e instala el certificado SSL con Certbot.
-  ⚠️ **Este comando no debe volver a ejecutarse**, ya que el certificado SSL ya está instalado y funcionando correctamente.
+
+Se corre de la siguiente manera:
+
+```sh
+CLOUDFLARE_API_TOKEN="TU_TOKEN_REAL" npm run certbot:setup
+```
+
+⚠️ **Este comando no debe volver a ejecutarse**, ya que el certificado SSL ya está instalado y funcionando correctamente.
 
 ---
 

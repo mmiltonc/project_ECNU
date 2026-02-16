@@ -14,7 +14,7 @@
     "deploy:logs": "pm2 deploy production exec \"pm2 logs\"",
     "deploy:restart": "pm2 deploy production exec \"pm2 restart ecnu-team-website\"",
     "deploy:stop": "pm2 deploy production exec \"pm2 stop ecnu-team-website\"",
-    "certbot:setup": "pm2 deploy production exec \"bash /home/deployer/app/current/deploy-scripts/certbot-setup.sh\""
+    "certbot:setup": "pm2 deploy production exec \"bash -lc 'CLOUDFLARE_API_TOKEN=\\\"'$CLOUDFLARE_API_TOKEN'\\\" bash /home/deployer/app/current/deploy-scripts/certbot-setup.sh'\""
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

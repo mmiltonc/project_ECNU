@@ -14,16 +14,26 @@ module.exports = {
     production: {
       host: "77.37.40.29",
       user: "deployer",
-      key: "~/.ssh/deployer-ecnuteam",
+      key: "~/.ssh/id_ecnuteam",
       ref: "origin/main",
       repo: "https://github.com/mmiltonc/project_ECNU.git",
       path: "/home/deployer/app",
 
       "post-setup":
-        "echo '📦 Instalando PM2 y configurando Nginx...' && " +
-        "if ! command -v pm2 > /dev/null; then sudo npm install -g pm2; fi && " +
+        "set -e && " +
+        "echo '📦 Instalando Node, PM2 y Nginx...' && " +
+        "if ! command -v node >/dev/null; then " +
+        "  curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && " +
+        "  sudo apt-get install -y nodejs; " +
+        "fi && " +
+        "if ! command -v nginx >/dev/null; then " +
+        "  sudo apt-get update && sudo apt-get install -y nginx; " +
+        "fi && " +
+        "if ! command -v pm2 >/dev/null; then sudo npm install -g pm2; fi && " +
+        "sudo mkdir -p /etc/nginx/sites-enabled && " +
         "sudo cp /home/deployer/app/source/nginx/default /etc/nginx/sites-enabled/default && " +
-        "sudo service nginx reload && " +
+        "sudo nginx -t && " +
+        "sudo systemctl reload nginx && " +
         "pm2 install pm2-logrotate || true",
 
       "pre-deploy-local":
@@ -35,7 +45,7 @@ module.exports = {
         "echo '🚀 Post-deploy iniciado...' && " +
         "cd /home/deployer/app/current && " +
         "ln -sf /home/deployer/app/shared/.env.production .env.production && " +
-        "npm install && " +
+        "npm install --production && " +
         "npm run build && " +
         "pm2 reload ecosystem.config.js --env production && " +
         "pm2 save &&" +

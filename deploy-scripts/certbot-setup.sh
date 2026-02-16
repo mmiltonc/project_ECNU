@@ -1,46 +1,73 @@
 #!/bin/bash
+set -euo pipefail
 
 DOMAIN="ecnuteam.com"
 EMAIL="sysadmin@ecnuteam.com"
-CRON_LINE="0 3 1,16 * * /usr/bin/certbot renew --quiet >> /var/log/certbot-renew.log 2>&1"
 
-echo "🌐 Verificando que el dominio $DOMAIN apunte a este servidor..."
+# Cloudflare credentials file (root-only)
+CF_INI="/root/.cloudflare.ini"
 
-SERVER_IP=$(curl -4 -s ifconfig.me)
-DOMAIN_IP=$(dig +short "$DOMAIN" | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}' | head -n1)
+echo "🔐 Configurando SSL Let's Encrypt usando DNS-01 con Cloudflare (sin apagar proxy)..."
 
-echo "📡 IP del servidor: $SERVER_IP"
-echo "🌍 IP del dominio:  $DOMAIN_IP"
-
-if [ -z "$DOMAIN_IP" ]; then
-  echo "❌ El dominio $DOMAIN no tiene un registro A válido (o aún no propagado)."
-  exit 1
-fi
-
-if [ "$SERVER_IP" != "$DOMAIN_IP" ]; then
-  echo "❌ El dominio $DOMAIN apunta a otra IP. Certbot fallará."
-  exit 1
-fi
-
-echo "✅ Dominio OK. Procediendo con la emisión del certificado..."
-
-# Instalar Certbot si no está
+# 1) Instalar Certbot + plugin Cloudflare si no están
 if ! command -v certbot >/dev/null 2>&1; then
   echo "🔧 Instalando Certbot..."
   export DEBIAN_FRONTEND=noninteractive
   sudo apt update
-  sudo apt install -y certbot python3-certbot-nginx tzdata
+  sudo apt install -y certbot tzdata
 fi
 
-# Emitir certificado en modo staging
-echo "🔐 Solicitando certificado con Let's Encrypt..."
-sudo certbot --nginx --non-interactive --agree-tos --expand --email "$EMAIL" -d "$DOMAIN" -d www."$DOMAIN"
+if ! dpkg -s python3-certbot-dns-cloudflare >/dev/null 2>&1; then
+  echo "🔧 Instalando plugin Cloudflare para Certbot..."
+  sudo apt update
+  sudo apt install -y python3-certbot-dns-cloudflare
+fi
 
-# Agregar entrada a crontab
-echo "📅 Verificando cron..."
-if crontab -l 2>/dev/null | grep -Fq "$CRON_LINE"; then
-  echo "✅ Cron ya está configurado."
+# 2) Verificar credenciales Cloudflare
+if [ ! -f "$CF_INI" ]; then
+  echo "❌ No existe $CF_INI"
+  echo "Crealo con:"
+  echo "  sudo nano $CF_INI"
+  echo "y adentro:"
+  echo "  dns_cloudflare_api_token = TU_API_TOKEN"
+  exit 1
+fi
+
+# Permisos correctos (certbot exige que sea privado)
+sudo chmod 600 "$CF_INI"
+
+# 3) Emitir/expandir certificado
+echo "🌐 Solicitando/renovando certificado para $DOMAIN y www.$DOMAIN..."
+sudo certbot certonly \
+  --dns-cloudflare \
+  --dns-cloudflare-credentials "$CF_INI" \
+  --non-interactive --agree-tos \
+  --email "$EMAIL" \
+  --keep-until-expiring \
+  -d "$DOMAIN" -d "www.$DOMAIN"
+
+echo "✅ Certificado listo."
+
+# 4) Si usás Nginx: recargar cuando haya renovación
+# (esto NO instala el certificado en la config automáticamente, solo recarga nginx)
+if command -v nginx >/dev/null 2>&1; then
+  echo "🔄 Recargando Nginx..."
+  sudo nginx -t
+  sudo systemctl reload nginx
+fi
+
+# 5) Renovación automática (mejor systemd timer que cron)
+echo "⏱ Verificando timer de certbot..."
+if systemctl list-timers --all 2>/dev/null | grep -q certbot; then
+  echo "✅ systemd timer de certbot ya existe (renovación automática activa)."
 else
-  (crontab -l 2>/dev/null; echo "$CRON_LINE") | crontab -
-  echo "✅ Cron agregado para renovación diaria a las 19:00."
+  echo "ℹ️ No veo timer de certbot. En Ubuntu normalmente viene con el paquete."
+  echo "Podés probar habilitarlo:"
+  echo "  sudo systemctl enable --now certbot.timer"
 fi
+
+# 6) Test de renovación
+echo "🧪 Probando renovación (dry-run)..."
+sudo certbot renew --dry-run
+
+echo "🎉 Todo OK."
