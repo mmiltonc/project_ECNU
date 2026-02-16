@@ -72,16 +72,18 @@ EOF
 sudo chmod +x "$RENEW_SCRIPT"
 
 # 6️⃣ Guardar token para renovaciones futuras (solo sistema)
-if ! grep -q CLOUDFLARE_API_TOKEN /etc/environment; then
+
+if ! sudo grep -q '^CLOUDFLARE_API_TOKEN=' /etc/environment 2>/dev/null; then
   echo "🔐 Guardando token en entorno del sistema para renovaciones..."
-  echo "CLOUDFLARE_API_TOKEN=$CLOUDFLARE_API_TOKEN" | sudo tee -a /etc/environment > /dev/null
+  echo "CLOUDFLARE_API_TOKEN=$CLOUDFLARE_API_TOKEN" | sudo tee -a /etc/environment >/dev/null || true
 fi
+
 
 # 7️⃣ Programar cron diario si no existe
 CRON_JOB="0 3 * * * $RENEW_SCRIPT >> /var/log/certbot-renew.log 2>&1"
 
 if ! sudo crontab -l 2>/dev/null | grep -Fq "$RENEW_SCRIPT"; then
-  (sudo crontab -l 2>/dev/null; echo "$CRON_JOB") | sudo crontab -
+  (sudo crontab -l 2>/dev/null; echo "$CRON_JOB") | sudo crontab - || true
   echo "📅 Renovación automática configurada."
 else
   echo "📅 Renovación ya configurada."

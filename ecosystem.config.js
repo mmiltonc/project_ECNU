@@ -21,7 +21,7 @@ module.exports = {
 
       "pre-setup":
         "set -e && " +
-        'echo "Limpieza previa" && ' +
+        "echo 'Limpieza previa' && " +
         "rm -rf /home/deployer/app/source /home/deployer/app/current || true",
 
       "post-setup":
@@ -43,7 +43,7 @@ module.exports = {
         "  sudo nginx -t && " +
         "  sudo systemctl reload nginx; " +
         "else " +
-        '  echo "WARN: No existe /home/deployer/app/source/nginx/default - salteo Nginx"; ' +
+        " echo 'WARN: No existe /home/deployer/app/source/nginx/default - salteo Nginx'; " +
         "fi && " +
         "pm2 install pm2-logrotate || true",
 
