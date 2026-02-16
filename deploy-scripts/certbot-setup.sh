@@ -4,12 +4,16 @@ set -euo pipefail
 DOMAIN="ecnuteam.com"
 EMAIL="sysadmin@ecnuteam.com"
 
-# Cloudflare credentials file (root-only)
-CF_INI="/root/.cloudflare.ini"
+echo "🔐 SSL Let's Encrypt con Cloudflare DNS-01 (token por env + archivo temporal)"
 
-echo "🔐 Configurando SSL Let's Encrypt usando DNS-01 con Cloudflare (sin apagar proxy)..."
+# 0) Requerir token por variable de entorno
+if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
+  echo "❌ CLOUDFLARE_API_TOKEN no está definido en esta sesión."
+  echo "Solución: cargalo en el entorno del usuario deployer (ej: ~/.profile) o inyectalo en el comando remoto."
+  exit 1
+fi
 
-# 1) Instalar Certbot + plugin Cloudflare si no están
+# 1) Instalar certbot + plugin cloudflare si falta
 if ! command -v certbot >/dev/null 2>&1; then
   echo "🔧 Instalando Certbot..."
   export DEBIAN_FRONTEND=noninteractive
@@ -18,29 +22,22 @@ if ! command -v certbot >/dev/null 2>&1; then
 fi
 
 if ! dpkg -s python3-certbot-dns-cloudflare >/dev/null 2>&1; then
-  echo "🔧 Instalando plugin Cloudflare para Certbot..."
+  echo "🔧 Instalando plugin Cloudflare..."
   sudo apt update
   sudo apt install -y python3-certbot-dns-cloudflare
 fi
 
-# 2) Verificar credenciales Cloudflare
-if [ ! -f "$CF_INI" ]; then
-  echo "❌ No existe $CF_INI"
-  echo "Crealo con:"
-  echo "  sudo nano $CF_INI"
-  echo "y adentro:"
-  echo "  dns_cloudflare_api_token = TU_API_TOKEN"
-  exit 1
-fi
+# 2) Crear cred file temporal (NO persistente)
+CF_FILE="$(mktemp)"
+chmod 600 "$CF_FILE"
+printf "dns_cloudflare_api_token = %s\n" "$CLOUDFLARE_API_TOKEN" > "$CF_FILE"
+trap 'rm -f "$CF_FILE"' EXIT
 
-# Permisos correctos (certbot exige que sea privado)
-sudo chmod 600 "$CF_INI"
-
-# 3) Emitir/expandir certificado
-echo "🌐 Solicitando/renovando certificado para $DOMAIN y www.$DOMAIN..."
+# 3) Emitir/renovar
+echo "🌐 Solicitando certificado para $DOMAIN y www.$DOMAIN..."
 sudo certbot certonly \
   --dns-cloudflare \
-  --dns-cloudflare-credentials "$CF_INI" \
+  --dns-cloudflare-credentials "$CF_FILE" \
   --non-interactive --agree-tos \
   --email "$EMAIL" \
   --keep-until-expiring \
@@ -48,26 +45,15 @@ sudo certbot certonly \
 
 echo "✅ Certificado listo."
 
-# 4) Si usás Nginx: recargar cuando haya renovación
-# (esto NO instala el certificado en la config automáticamente, solo recarga nginx)
+# 4) Recargar nginx si existe
 if command -v nginx >/dev/null 2>&1; then
   echo "🔄 Recargando Nginx..."
   sudo nginx -t
   sudo systemctl reload nginx
 fi
 
-# 5) Renovación automática (mejor systemd timer que cron)
-echo "⏱ Verificando timer de certbot..."
-if systemctl list-timers --all 2>/dev/null | grep -q certbot; then
-  echo "✅ systemd timer de certbot ya existe (renovación automática activa)."
-else
-  echo "ℹ️ No veo timer de certbot. En Ubuntu normalmente viene con el paquete."
-  echo "Podés probar habilitarlo:"
-  echo "  sudo systemctl enable --now certbot.timer"
-fi
-
-# 6) Test de renovación
+# 5) Probar renovación
 echo "🧪 Probando renovación (dry-run)..."
 sudo certbot renew --dry-run
 
-echo "🎉 Todo OK."
+echo "🎉 OK"
