@@ -31,6 +31,7 @@ echo "🌐 Solicitando certificado..."
 sudo certbot certonly \
   --dns-cloudflare \
   --dns-cloudflare-credentials "$CF_FILE" \
+  --dns-cloudflare-propagation-seconds 120 \
   --non-interactive --agree-tos \
   --email "$EMAIL" \
   --keep-until-expiring \
