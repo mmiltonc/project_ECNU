@@ -38,14 +38,19 @@ module.exports = {
         "  sudo nginx -t && " +
         "  sudo systemctl reload nginx; " +
         "else " +
-        "  echo '⚠️  No existe /home/deployer/app/source/nginx/default (salteo Nginx)'; " +
+        "  echo '⚠️  No existe /home/deployer/app/source/nginx/default; salteo Nginx'; " +
         "fi && " +
         "pm2 install pm2-logrotate || true",
 
       "pre-deploy-local":
+        "set -e && " +
         "echo '📁 Verificando si .env.production ya existe en el servidor...' && " +
-        "ssh -F ~/.ssh/config ecnuteam-deployer '[ -f /home/deployer/app/shared/.env.production ]' || " +
-        "(echo '📁 Copiando .env.production al servidor...' && scp -F ~/.ssh/config .env.production ecnuteam-deployer:/home/deployer/app/shared/.env.production)",
+        'if ssh -F ~/.ssh/config ecnuteam-deployer "test -f /home/deployer/app/shared/.env.production"; then ' +
+        "  echo '✅ .env.production ya existe en el servidor.'; " +
+        "else " +
+        "  echo '📁 Copiando .env.production al servidor...' && " +
+        "  scp -F ~/.ssh/config .env.production ecnuteam-deployer:/home/deployer/app/shared/.env.production; " +
+        "fi",
 
       "post-deploy":
         "set -e && " +
