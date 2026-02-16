@@ -19,6 +19,11 @@ module.exports = {
       repo: "https://github.com/mmiltonc/project_ECNU.git",
       path: "/home/deployer/app",
 
+      "pre-setup":
+        "set -e && " +
+        'echo "Limpieza previa" && ' +
+        "rm -rf /home/deployer/app/source /home/deployer/app/current || true",
+
       "post-setup":
         "set -e && " +
         "echo '📦 Instalando Node, PM2 y Nginx...' && " +
