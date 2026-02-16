@@ -38,7 +38,7 @@ module.exports = {
         "  sudo nginx -t && " +
         "  sudo systemctl reload nginx; " +
         "else " +
-        "  echo '⚠️  No existe /home/deployer/app/source/nginx/default; salteo Nginx'; " +
+        '  echo "WARN: No existe /home/deployer/app/source/nginx/default - salteo Nginx"; ' +
         "fi && " +
         "pm2 install pm2-logrotate || true",
 
