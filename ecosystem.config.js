@@ -51,7 +51,7 @@ module.exports = {
         "set -e && " +
         "cd /home/deployer/app/current && " +
         "ln -sf /home/deployer/app/shared/.env.production .env.production && " +
-        "npm ci --omit=dev && " +
+        "npm install && " +
         "npm run build && " +
         "pm2 reload ecosystem.config.js --env production && " +
         "pm2 save && " +

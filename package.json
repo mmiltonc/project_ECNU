@@ -44,25 +44,24 @@
     "resend": "^3.2.0",
     "sass": "^1.88.0",
     "swiper": "^11.1.14",
-    "tailwindcss-animated": "^1.1.2",
-    "tailwindcss-bg-patterns": "^0.3.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.14",
     "@types/paypal__checkout-server-sdk": "^1.0.8",
-    "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react": "^18",
     "autoprefixer": "^10.0.1",
-    "eslint": "^8",
     "eslint-config-next": "14.0.3",
+    "eslint": "^8",
     "install": "^0.13.0",
     "npm": "^11.2.0",
     "pm2": "^6.0.5",
     "postcss": "^8",
-    "tailwindcss": "^3.3.0",
+    "tailwindcss-animated": "^1.1.2",
     "tailwindcss-bg-patterns": "^0.3.0",
+    "tailwindcss": "^3.3.0",
     "typescript": "^5"
   }
 }
