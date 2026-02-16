@@ -5,8 +5,8 @@
       "name": "Plan Plus Gym Virtual",
       "duration": 95,
       "price": {
-        "usd": 150,
-        "ars": 178000
+        "usd": 1,
+        "ars": 100
       }
     },
     {
@@ -14,8 +14,8 @@
       "name": "Calistenia Online",
       "duration": 95,
       "price": {
-        "usd": 150,
-        "ars": 178000
+        "usd": 1,
+        "ars": 100
       }
     }
   ]
