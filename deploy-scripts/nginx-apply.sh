@@ -14,7 +14,7 @@ sudo systemctl reload nginx
 CERT="/etc/letsencrypt/live/ecnuteam.com/fullchain.pem"
 KEY="/etc/letsencrypt/live/ecnuteam.com/privkey.pem"
 
-if [ -f "$CERT" ] && [ -f "$KEY" ]; then
+if sudo test -f "$CERT" && sudo test -f "$KEY"; then
   echo "🔐 Cert encontrado. Aplicando Nginx HTTPS..."
   sudo cp "$SRC/nginx/default.https" "$NGINX_DST"
   sudo nginx -t
