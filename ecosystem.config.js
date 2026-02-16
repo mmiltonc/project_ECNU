@@ -40,7 +40,7 @@ module.exports = {
       "pre-deploy-local":
         "set -e && " +
         "echo '📁 Verificando si .env.production ya existe en el servidor...' && " +
-        'if ssh -F ~/.ssh/config ecnuteam-deployer "test -f /home/deployer/app/shared/.env.production"; then ' +
+        "if ssh -F ~/.ssh/config ecnuteam-deployer 'test -f /home/deployer/app/shared/.env.production'; then " +
         "  echo '✅ .env.production ya existe en el servidor.'; " +
         "else " +
         "  echo '📁 Copiando .env.production al servidor...' && " +
