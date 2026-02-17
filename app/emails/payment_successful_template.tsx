@@ -63,7 +63,7 @@ export const PaymentSuccessfulTemplate = ({
           <Text style={styles.text}>¡Bienvenido {name}!</Text>
           <Text style={styles.text}>
             El pago de tu <strong>{plan}</strong> fue aprobado con éxito! El
-            acceso es por <strong>90 días</strong> antes de la primera
+            acceso es por <strong>un mes</strong> antes de la primera
             renovación.
           </Text>
           <Text style={styles.text}>
@@ -81,7 +81,6 @@ export const PaymentSuccessfulTemplate = ({
             alt="ECNU Logo"
             style={styles.footerImage}
           />
-
         </Container>
       </Body>
     </Html>

@@ -38,7 +38,7 @@ const styles = css`
     animation-fill-mode: forwards;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-    background-image: url(images/hormiga-arriba.png);
+    background-image: url("/images/hormiga-arriba.png");
     background-position: center;
     background-position: center;
     background-repeat: no-repeat;
@@ -106,8 +106,11 @@ const styles = css`
       #7493b311 30%
     );
 
-    box-shadow: 0 -1px 1px -1px #fd5f44, 0 -10px 30px 10px #ffffff05,
-      0 1px 1px 0px #00000022, 0 10px 30px 10px #00000033;
+    box-shadow:
+      0 -1px 1px -1px #fd5f44,
+      0 -10px 30px 10px #ffffff05,
+      0 1px 1px 0px #00000022,
+      0 10px 30px 10px #00000033;
     backdrop-filter: blur(6px);
 
     ${desktop(css`

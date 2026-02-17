@@ -14,7 +14,7 @@
     "deploy:logs": "pm2 deploy production exec \"pm2 logs\"",
     "deploy:restart": "pm2 deploy production exec \"pm2 restart ecnu-team-website\"",
     "deploy:stop": "pm2 deploy production exec \"pm2 stop ecnu-team-website\"",
-    "certbot:setup": "pm2 deploy production exec \"bash /home/deployer/app/current/deploy-scripts/certbot-setup.sh\""
+    "certbot:setup": "pm2 deploy production exec \"bash -lc 'CLOUDFLARE_API_TOKEN=\\\"'$CLOUDFLARE_API_TOKEN'\\\" bash /home/deployer/app/current/deploy-scripts/certbot-setup.sh'\""
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -22,7 +22,7 @@
     "@motionone/utils": "^10.18.0",
     "@mui/icons-material": "^6.0.0",
     "@mui/material": "^6.4.3",
-    "@next/third-parties": "^15.1.0",
+    "@next/third-parties": "^16.1.6",
     "@paypal/paypal-server-sdk": "^1.0.0",
     "@paypal/react-paypal-js": "^8.8.3",
     "@react-email/components": "^1.0.6",
@@ -44,24 +44,24 @@
     "resend": "^3.2.0",
     "sass": "^1.88.0",
     "swiper": "^11.1.14",
-    "tailwindcss-animated": "^1.1.2",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.14",
     "@types/paypal__checkout-server-sdk": "^1.0.8",
-    "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react": "^18",
     "autoprefixer": "^10.0.1",
-    "eslint": "^8",
     "eslint-config-next": "14.0.3",
+    "eslint": "^8",
     "install": "^0.13.0",
     "npm": "^11.2.0",
     "pm2": "^6.0.5",
     "postcss": "^8",
-    "tailwindcss": "^3.3.0",
+    "tailwindcss-animated": "^1.1.2",
     "tailwindcss-bg-patterns": "^0.3.0",
+    "tailwindcss": "^3.3.0",
     "typescript": "^5"
   }
 }

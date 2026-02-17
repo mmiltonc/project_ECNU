@@ -107,7 +107,7 @@ const styles = css`
         height: calc(100% - 32px);
         width: 17px;
         transform: rotate(180deg);
-        background-image: url(images/pasos-hormiga.png);
+        background-image: url("/images/pasos-hormiga.png");
         background-repeat: repeat-y;
         background-size: contain;
         mix-blend-mode: soft-light;
@@ -125,7 +125,7 @@ const styles = css`
         height: 80px;
         width: 80px;
         transform: rotate(180deg);
-        background-image: url(images/hormiga-arriba.png);
+        background-image: url("/images/hormiga-arriba.png");
         background-repeat: no-repeat;
         background-size: contain;
         mix-blend-mode: soft-light;
@@ -190,8 +190,11 @@ const styles = css`
       .card {
         width: 100%;
         border-radius: ${space(1)};
-        box-shadow: 0 -1px 1px -1px #fd5f4402, 0 -10px 30px 10px #fd5f4405,
-          0 1px 1px 0px #fd5f4422, 0 10px 30px 10px #fd5f4433;
+        box-shadow:
+          0 -1px 1px -1px #fd5f4402,
+          0 -10px 30px 10px #fd5f4405,
+          0 1px 1px 0px #fd5f4422,
+          0 10px 30px 10px #fd5f4433;
 
         background: linear-gradient(
           to bottom,
@@ -218,11 +221,11 @@ const styles = css`
           background-position: center;
 
           &.gym-virtual {
-            background-image: url(/images/gym_virtual_image.jpg);
+            background-image: url("/images/gym_virtual_image.jpg");
           }
 
           &.calistenia-online {
-            background-image: url(/images/calistenia_online.jpg);
+            background-image: url("/images/calistenia_online.jpg");
           }
 
           &.hide {
@@ -249,7 +252,7 @@ const styles = css`
 
           &:before {
             content: "";
-            background-image: url(/images/card-background.jpg);
+            background-image: url("/images/card-background.jpg");
             mix-blend-mode: darken;
             background-position: center left;
             position: absolute;
@@ -383,12 +386,17 @@ const styles = css`
       transition: 600ms ease all;
       background-color: var(--primary-color);
       width: 100%;
-      box-shadow: 0 4px 5px rgba(0, 0, 0, 0.24), 0 1px 10px rgba(0, 0, 0, 0.28),
-        0 2px 4px rgba(0, 0, 0, 0.24), 0 -1px 3px rgba(0, 0, 0, 0.2);
+      box-shadow:
+        0 4px 5px rgba(0, 0, 0, 0.24),
+        0 1px 10px rgba(0, 0, 0, 0.28),
+        0 2px 4px rgba(0, 0, 0, 0.24),
+        0 -1px 3px rgba(0, 0, 0, 0.2);
 
       &:hover {
-        box-shadow: 0 4px 5px rgba(70, 70, 70, 0.24),
-          0 1px 10px rgba(70, 70, 70, 0.28), 0 2px 4px rgba(70, 70, 70, 0.24),
+        box-shadow:
+          0 4px 5px rgba(70, 70, 70, 0.24),
+          0 1px 10px rgba(70, 70, 70, 0.28),
+          0 2px 4px rgba(70, 70, 70, 0.24),
           0 -1px 3px rgba(70, 70, 70, 0.2);
         transform: scale(1.02);
       }
@@ -1051,13 +1059,13 @@ const Programs = () => {
                   </div>
                   <div className="amount-details">
                     <span className="amount-currency">usd</span>
-                    <span className="amount-period">3 meses</span>
+                    <span className="amount-period">mes</span>
                   </div>
                 </div>
                 <div className="price-ars">
                   <p className="info">
-                    Precio en ars ${prices["plan-plus-gym-virtual"]?.ars} cada 3
-                    meses
+                    Precio en ars ${prices["plan-plus-gym-virtual"]?.ars} por
+                    mes
                   </p>
                 </div>
               </div>
@@ -1185,13 +1193,13 @@ const Programs = () => {
                   </div>
                   <div className="amount-details">
                     <span className="amount-currency">usd</span>
-                    <span className="amount-period">3 meses</span>
+                    <span className="amount-period">mes</span>
                   </div>
                 </div>
                 <div className="price-ars">
                   <p className="info">
                     Precio en ars ${prices["plan-plus-calistenia-online"]?.ars}{" "}
-                    cada 3 meses
+                    por mes
                   </p>
                 </div>
               </div>
@@ -1409,7 +1417,7 @@ const Programs = () => {
                                         <span className="field-adornment">
                                           {
                                             PHONE_CODES[
-                                            formData.pais as keyof typeof PHONE_CODES
+                                              formData.pais as keyof typeof PHONE_CODES
                                             ]
                                           }
                                         </span>

@@ -97,7 +97,7 @@ const styles = css`
     .background {
       content: "";
       display: block;
-      background-image: url(images/motivation.jpg);
+      background-image: url("/images/motivation.jpg");
       background-repeat: no-repeat;
       background-size: auto 100vh;
       mix-blend-mode: luminosity;

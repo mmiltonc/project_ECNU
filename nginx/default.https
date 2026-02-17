@@ -1,0 +1,63 @@
+# HTTP -> HTTPS (canonical sin www)
+server {
+    listen 80;
+    listen [::]:80;
+    server_name ecnuteam.com www.ecnuteam.com;
+
+    return 301 https://ecnuteam.com$request_uri;
+}
+
+# HTTPS www -> sin www
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name www.ecnuteam.com;
+
+    ssl_certificate     /etc/letsencrypt/live/ecnuteam.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ecnuteam.com/privkey.pem;
+
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    return 301 https://ecnuteam.com$request_uri;
+}
+
+# HTTPS principal (sin www) -> Next.js en 3000
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name ecnuteam.com;
+
+    ssl_certificate     /etc/letsencrypt/live/ecnuteam.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ecnuteam.com/privkey.pem;
+
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    # Estáticos de /public/images
+    location ^~ /images/ {
+        alias /home/deployer/app/current/public/images/;
+        access_log off;
+        expires 30d;
+         add_header Cache-Control "public";
+         try_files $uri =404;
+    }
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    gzip on;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript image/svg+xml;
+    gzip_proxied any;
+    gzip_vary on;
+    gzip_comp_level 6;
+    gzip_min_length 256;
+}

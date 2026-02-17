@@ -4,24 +4,24 @@ server {
     listen [::]:80;
     server_name ecnuteam.com www.ecnuteam.com;
 
-    # Servir solo imágenes y videos desde /public
-    location ~* ^/(.*\.(?:png|jpg|jpeg|gif|ico|svg|webp|mp4|webm))$ {
-        root /home/deployer/app/current/public;
-        try_files /$1 =404;
-
+    # Estáticos de /public/images
+    location ^~ /images/ {
+        alias /home/deployer/app/current/public/images/;
         access_log off;
         expires 30d;
-        add_header Cache-Control "public";
+         add_header Cache-Control "public";
+         try_files $uri =404;
     }
 
-    # Todo lo demás se maneja vía backend
     location / {
         proxy_pass http://localhost:3000;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
+        proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
     }
 
     # Activar GZIP para mejorar performance
