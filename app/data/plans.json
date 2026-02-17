@@ -3,18 +3,18 @@
     {
       "sku": "plan-plus-gym-virtual",
       "name": "Plan Plus Gym Virtual",
-      "duration": 95,
+      "duration": 31,
       "price": {
-        "usd": 1,
+        "usd": 44,
         "ars": 100
       }
     },
     {
       "sku": "plan-plus-calistenia-online",
       "name": "Calistenia Online",
-      "duration": 95,
+      "duration": 31,
       "price": {
-        "usd": 1,
+        "usd": 44,
         "ars": 100
       }
     }
