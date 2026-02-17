@@ -1059,13 +1059,13 @@ const Programs = () => {
                   </div>
                   <div className="amount-details">
                     <span className="amount-currency">usd</span>
-                    <span className="amount-period">3 meses</span>
+                    <span className="amount-period">mes</span>
                   </div>
                 </div>
                 <div className="price-ars">
                   <p className="info">
-                    Precio en ars ${prices["plan-plus-gym-virtual"]?.ars} cada 3
-                    meses
+                    Precio en ars ${prices["plan-plus-gym-virtual"]?.ars} por
+                    mes
                   </p>
                 </div>
               </div>
@@ -1193,13 +1193,13 @@ const Programs = () => {
                   </div>
                   <div className="amount-details">
                     <span className="amount-currency">usd</span>
-                    <span className="amount-period">3 meses</span>
+                    <span className="amount-period">mes</span>
                   </div>
                 </div>
                 <div className="price-ars">
                   <p className="info">
                     Precio en ars ${prices["plan-plus-calistenia-online"]?.ars}{" "}
-                    cada 3 meses
+                    por mes
                   </p>
                 </div>
               </div>
