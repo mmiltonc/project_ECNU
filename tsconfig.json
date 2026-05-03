@@ -18,6 +18,7 @@
     "jsx": "react-jsx",
     "incremental": true,
     "types": [
+      "jasmine",
       "@emotion/react/types/css-prop"
     ],
     "plugins": [

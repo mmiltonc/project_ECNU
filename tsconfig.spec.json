@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "types": [
+      "jasmine",
+      "node",
+      "@emotion/react/types/css-prop"
+    ]
+  },
+  "include": [
+    "specs/**/*.ts"
+  ]
+}
