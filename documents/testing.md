@@ -69,11 +69,9 @@ La idea es cargar el modulo bajo prueba reemplazando dependencias como Firestore
 Patron recomendado:
 
 ```ts
-import proxyquireFactory from "proxyquire";
+import { proxyquireFromRoot } from "@/specs/helpers/proxyquire";
 
-const proxyquire = proxyquireFactory.noCallThru();
-
-const route = proxyquire("../../../../app/api/mercadopago/route.tsx", {
+const route = proxyquireFromRoot("app/api/mercadopago/route.tsx", {
   "@/app/lib/firebaseAdmin": {
     db: firestoreMock,
   },
@@ -83,7 +81,7 @@ const route = proxyquire("../../../../app/api/mercadopago/route.tsx", {
 });
 ```
 
-Usar `noCallThru()` evita que una propiedad no mockeada caiga accidentalmente en el modulo real.
+El helper usa `proxyquire.noCallThru()` internamente y resuelve modulos desde la raiz del proyecto, evitando rutas relativas largas como `../../../../`.
 
 ## Estilo de specs
 
