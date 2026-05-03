@@ -10,9 +10,7 @@
     ]
   },
   "include": [
-    "spec/**/*.ts",
-    "app/**/*.spec.ts",
-    "components/**/*.spec.ts",
-    "partials/**/*.spec.ts"
+    "spec/**/*.js",
+    "specs/**/*.ts"
   ]
 }

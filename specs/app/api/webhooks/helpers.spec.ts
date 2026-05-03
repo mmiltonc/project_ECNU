@@ -1,4 +1,4 @@
-import { getStatus, PaymentStatus } from "./helpers";
+import { getStatus, PaymentStatus } from "@/app/api/webhooks/helpers";
 
 describe("webhook status helpers", () => {
   describe("MercadoPago statuses", () => {

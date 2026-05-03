@@ -29,6 +29,7 @@
 - [ ] T-016 Revisar el manejo de errores cuando falla Firestore: hoy algunos flujos continuan despues de errores de persistencia.
 - [ ] T-017 Revisar el uso fijo de email `@gmail.com` construido desde `emailLocalPart`; puede limitar casos reales o generar errores de datos.
 - [ ] T-018 Revisar URLs hardcodeadas como `https://ecnuteam.com` en componentes y rutas API; conviene centralizarlas con `NEXT_PUBLIC_BASE_URL`.
+- [ ] T-049 Cambiar errores de input/dominio en endpoints de compra, empezando por `Plan not found.`, para responder `400 Bad Request` en vez de `500`. Ver `documents/plans/T-049-plan.md`.
 
 ## Tooling
 
