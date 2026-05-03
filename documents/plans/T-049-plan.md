@@ -6,7 +6,9 @@ Los endpoints de compra devuelven `500` para errores que no son fallas internas 
 
 Lo mismo ocurre cuando MercadoPago recibe un pais distinto de Argentina: el handler lanza `Payment method not allowed outside Argentina.` antes de buscar plan, crear usuario o llamar al SDK.
 
-Ese caso ocurre antes de llamar a MercadoPago. No depende de la documentacion de errores de MercadoPago ni de la respuesta del SDK.
+PayPal tiene el caso inverso: cuando recibe Argentina como pais, el handler lanza `Payment method not allowed in Argentina.` antes de buscar plan, crear usuario o llamar al SDK.
+
+Estos casos ocurren antes de llamar a MercadoPago o PayPal. No dependen de la documentacion de errores del gateway ni de la respuesta del SDK.
 
 ## Objetivo
 
@@ -15,7 +17,7 @@ Responder `400 Bad Request` para errores causados por input invalido o datos de 
 ## Casos candidatos
 
 - Campos requeridos faltantes.
-- Pais no permitido para el gateway, por ejemplo `Payment method not allowed outside Argentina.` en MercadoPago.
+- Pais no permitido para el gateway, por ejemplo `Payment method not allowed outside Argentina.` en MercadoPago y `Payment method not allowed in Argentina.` en PayPal.
 - Plan inexistente.
 
 ## Criterios de implementacion
