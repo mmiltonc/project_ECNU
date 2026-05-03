@@ -67,3 +67,7 @@ const route = proxyquire("./ruta-del-modulo", {
 ```
 
 Usar `noCallThru()` evita que una propiedad no mockeada caiga accidentalmente en el modulo real.
+
+## Estilo de specs
+
+Escribir cada `it` de forma explicita. No generar specs con loops como `forEach`, incluso cuando haya tablas de casos. Esto hace que cada caso sea mas facil de leer, buscar, debuggear y ejecutar con `--filter`.

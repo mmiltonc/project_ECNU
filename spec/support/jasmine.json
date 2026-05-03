@@ -1,0 +1,14 @@
+{
+  "spec_dir": ".",
+  "spec_files": [
+    "spec/**/*.spec.ts",
+    "app/**/*.spec.ts",
+    "components/**/*.spec.ts",
+    "partials/**/*.spec.ts"
+  ],
+  "helpers": [
+    "spec/support/setup.js"
+  ],
+  "random": false,
+  "stopSpecOnExpectationFailure": false
+}

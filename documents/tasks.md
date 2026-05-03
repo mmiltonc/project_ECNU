@@ -40,7 +40,7 @@
 
 - [x] T-022 Definir e instalar stack de testing con Jasmine para unit/integration tests del flujo de compra.
 - [ ] T-023 Extraer y testear el schema de validacion del formulario de compra hoy embebido en `partials/programs.tsx`, cubriendo campos requeridos, nombre/ciudad alfabeticos, email local sin dominio, celular numerico, objetivos minimos y plan requerido.
-- [ ] T-024 Agregar tests unitarios para `app/api/webhooks/helpers.tsx`, cubriendo el mapeo de estados de MercadoPago y PayPal a `APPROVED`, `PENDING` y `REJECTED`, incluyendo estados desconocidos.
+- [x] T-024 Agregar tests unitarios para `app/api/webhooks/helpers.tsx`, cubriendo el mapeo de estados de MercadoPago y PayPal a `APPROVED`, `PENDING` y `REJECTED`, incluyendo estados desconocidos. Ver `documents/plans/T-024-plan.md`.
 - [ ] T-025 Extraer y testear la construccion del usuario inicial de compra para MercadoPago y PayPal, validando moneda, pais, gateway, plan, precio, email, telefono y estado inicial `STARTED`.
 - [ ] T-026 Extraer y testear la construccion de la preferencia de MercadoPago, validando `items`, `metadata`, `back_urls`, `external_reference`, `payer`, moneda/precio ARS y `notification_url`.
 - [ ] T-027 Extraer y testear la construccion de la orden de PayPal, validando `purchaseUnits`, `customId`, payer, telefono con codigo pais, moneda/precio USD, SKU e intent `Capture`.
