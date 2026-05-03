@@ -29,7 +29,7 @@ npm run test:watch
 
 ## Variables de entorno
 
-Los tests cargan `.env.test` desde `spec/support/setup.js` usando `@next/env`.
+Los tests cargan `.env.test` desde `specs/support/setup.js` usando `@next/env`.
 
 `.env.test` debe contener solo valores dummy de test. El archivo esta ignorado por git por la regla `.env.*`, asi que no debe usarse para secretos reales ni para configuracion que tenga que versionarse.
 
@@ -42,7 +42,7 @@ Ejemplos:
 - `app/api/webhooks/helpers.tsx` se testea en `specs/app/api/webhooks/helpers.spec.ts`.
 - `app/api/mercadopago/route.tsx` se testea en `specs/app/api/mercadopago/route.spec.ts`.
 
-La carpeta `spec/support/` queda reservada para configuracion de Jasmine y helpers globales del runner.
+La carpeta `specs/support/` queda reservada para configuracion de Jasmine y helpers globales del runner.
 
 ## Ejecutar un test particular
 

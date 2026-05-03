@@ -6,13 +6,13 @@ Crear utilidades de test para backend de compra que eviten duplicacion y asegure
 
 ## Ubicacion sugerida
 
-- `spec/factories/purchase.ts`
-- `spec/factories/payments.ts`
-- `spec/mocks/firestore.ts`
-- `spec/mocks/resend.ts`
-- `spec/mocks/mercadopago.ts`
-- `spec/mocks/paypal.ts`
-- `spec/helpers/request.ts`
+- `specs/factories/purchase.ts`
+- `specs/factories/payments.ts`
+- `specs/mocks/firestore.ts`
+- `specs/mocks/resend.ts`
+- `specs/mocks/mercadopago.ts`
+- `specs/mocks/paypal.ts`
+- `specs/helpers/request.ts`
 
 ## Factories sugeridas
 

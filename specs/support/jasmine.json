@@ -4,7 +4,7 @@
     "specs/**/*.spec.ts"
   ],
   "helpers": [
-    "spec/support/setup.js"
+    "specs/support/setup.js"
   ],
   "random": false,
   "stopSpecOnExpectationFailure": false
